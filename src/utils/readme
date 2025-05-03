@@ -1,0 +1,15 @@
+The utils directory should contain pure utility functions that:
+
+Have no side effects
+
+Don't depend on external services
+
+Can be easily tested in isolation
+
+Examples include:
+
+Date formatting functions
+
+String manipulation helpers
+
+Calculation utilities
