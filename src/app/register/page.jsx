@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import { Button, buttonVariants } from "@/components/ui/button";
 export default function Page() {
   return (
     <main className="flex flex-col items-center w-full h-screen gap-2">
@@ -38,12 +38,11 @@ export default function Page() {
             required
           />
         </div>
-
-        <button className=" bg-blue-500 w-full rounded-lg py-2 px-5 text-[14px] hover:bg-blue-600 transition-all cursor-pointer text-white ">
+        <Button className="w-full">
           Submit
-        </button>
+        </Button>
       </form>
-      <Link href="/" className="text-[14px] text-blue-600 hover:underline">
+      <Link href="/" className={`${buttonVariants({ variant: "outline" })}`}>
         Go to Login
       </Link>
     </main>
