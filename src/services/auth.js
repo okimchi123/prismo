@@ -8,3 +8,12 @@ export async function register(data){
         console.error(error)
     }
 }
+
+export async function login(data){
+    try {
+        const response = await axios.post('/api/auth/login', data) 
+        return response.data;
+    } catch (error) {
+        console.error(error)
+    }
+}   
