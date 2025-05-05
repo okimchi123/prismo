@@ -2,14 +2,17 @@
 
 import Link from 'next/link';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { useState, useEffect, useRef } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { login } from '@/services/auth';
 
 export default function Page() {
   const [user, setUser] = useState(null);
   const router = useRouter();
-
+  const searchParams = useSearchParams();
+  const isToast = useRef(false);
+  
   const handleChange = (e) =>{
     setUser({
       ...user,
@@ -26,6 +29,21 @@ export default function Page() {
       console.error(error)
     }
   }
+
+  useEffect(()=>{
+
+    if(!isToast.current && searchParams.get('loggedout')==='true'){
+      toast('Logged out successfully!')
+      isToast.current = true;
+
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.delete('loggedout');
+
+      const newUrl = `${window.location.pathname}?${newParams.toString()}`;
+      router.replace(newUrl, { scroll: false });
+    }
+
+  },[searchParams])
 
   return (
     <main className="flex flex-col items-center w-full h-screen gap-2">
@@ -57,7 +75,7 @@ export default function Page() {
           Submit
         </Button>
       </form>
-      <div className="flex gap-1 items-center text-[14px] text-gray-500">
+      <div className="flex gap-1 select-none items-center text-[14px] text-gray-500">
         <p>Don't have an account?</p>
         <Link href="/register" className={`${buttonVariants({ variant: "outline" })}`}>
           Sign up now
