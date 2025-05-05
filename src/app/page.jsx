@@ -1,11 +1,36 @@
+'use client'
+
 import Link from 'next/link';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { login } from '@/services/auth';
 
 export default function Page() {
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  const handleChange = (e) =>{
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await login(user)
+      router.push('/dashboard')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <main className="flex flex-col items-center w-full h-screen gap-2">
       <form
-        action=""
+        onSubmit={handleSubmit}
         className="bg-white mt-[5%] select-none rounded-xl flex flex-col items-center gap-3 p-5"
       >
         <h1 className="text-[22px] font-semibold mb-2">Login</h1>
@@ -13,7 +38,7 @@ export default function Page() {
           className="border border-gray-400 py-3 pl-3 pr-5 rounded-md text-[12px]"
           type="email"
           name="email"
-         
+          onChange={handleChange}
           placeholder="Email"
           required
         />
@@ -22,7 +47,7 @@ export default function Page() {
             className="border border-gray-400 py-3 pl-3 pr-5 rounded-md text-[12px]"
             type="password"
             name="password"
-           
+            onChange={handleChange}
             placeholder="Password"
             required
           />
