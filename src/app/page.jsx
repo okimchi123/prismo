@@ -33,7 +33,7 @@ export default function Page() {
   useEffect(()=>{
 
     if(!isToast.current && searchParams.get('loggedout')==='true'){
-      toast('Logged out successfully!')
+      toast.success('Logged out successfully!')
       isToast.current = true;
 
       const newParams = new URLSearchParams(searchParams.toString());
