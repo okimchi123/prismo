@@ -9,13 +9,8 @@ export default function Page() {
   const [user, setUser] = useState(null)
   const router = useRouter()
 
-  const handleLogout = async () => {
-    await logout();
-    router.push('/?loggedout=true')
-  }
-
   const handleToast = () =>{
-    toast('Hello');
+    toast.warning('Hello');
   }
 
   useEffect(() => {
@@ -36,7 +31,6 @@ export default function Page() {
       <h1>Dashboard</h1>
       <p>{user?.email}</p>
       <Button onClick={handleToast}> Toast here </Button>
-      <Button onClick={handleLogout}>Log out</Button>
     </main>
   );
 }
