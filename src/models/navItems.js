@@ -12,7 +12,7 @@ import {
     },
     {
       title: "Friends",
-      url: "/dashboard/friends",
+      url: "/friends",
       icon: Users,
     },
   ];
