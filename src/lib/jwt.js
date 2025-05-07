@@ -1,9 +1,13 @@
-import jwt from 'jsonwebtoken'
+import { jwtVerify } from "jose";
 
-export const verifyToken = (token) => {
+export async function verifyToken(token) {
+    if(!token) return null;
     try {
-        return jwt.verify(token, process.env.JWT_SECRET)
+        const secret = new TextEncoder().encode(process.env.JWT_SECRET)
+        const { payload } = await jwtVerify(token, secret)
+        return payload;
     } catch (error) {
+        console.error("JWT verification error:", error.message);
         return null
     }
 }
