@@ -32,17 +32,17 @@ export default function Page() {
 
   useEffect(()=>{
 
-    // const checkAuth = async () => {
-    //   try {
-    //     const res = await userAuth(); 
-    //     if (res?.user) {
-    //       router.replace('/dashboard');
-    //     }
-    //   } catch (err) {
-    //   }
-    // };
+     const checkAuth = async () => {
+       try {
+         const res = await userAuth(); 
+         if (res?.user) {
+           router.replace('/dashboard');
+         }
+       } catch (err) {
+       }
+     };
 
-    // checkAuth();
+     checkAuth();
 
     if(!isToast.current && searchParams.get('loggedout')==='true'){
       toast.success('Logged out successfully!')
