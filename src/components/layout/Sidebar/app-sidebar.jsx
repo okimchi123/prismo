@@ -1,5 +1,5 @@
-'use client'
-import { useRouter } from 'next/navigation';
+"use client";
+import { useRouter } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -17,38 +17,40 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import {
-  ChevronUp,
-  User2,
-} from "lucide-react";
+import { ChevronUp, User2 } from "lucide-react";
 import { items } from "@/models/navItems";
 import { SearchInput } from "@/components/ui/input";
 import { logout } from "@/services/auth";
+import { storeUser } from "@/hooks/state";
+import Link from "next/link";
 const navItems = items;
 
-
 export function AppSidebar() {
-  const router = useRouter()
+  const router = useRouter();
+  const user = storeUser((state)=> state.user)
+  console.log('this is the user', user)
   const handleLogout = async () => {
     await logout();
-    router.push('/?loggedout=true')
-  }
+    router.push("/?loggedout=true");  
+  };
 
   return (
-    <Sidebar>
+    <Sidebar className="select-none">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-lg mb-2 select-none">Mikosystem</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-lg mb-2 select-none">
+            Mikosystem
+          </SidebarGroupLabel>
           <SearchInput type="text" placeholder="Search" className="mb-4" />
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -62,7 +64,7 @@ export function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="">
                 <SidebarMenuButton>
-                  <User2 /> Username
+                  <User2 /> {user.email}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
@@ -73,15 +75,8 @@ export function AppSidebar() {
                 <DropdownMenuItem>
                   <span>Account</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Billing</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                 onClick={handleLogout}
-                >
-                  <span
-                 
-                  >Sign out</span>
+                <DropdownMenuItem onClick={handleLogout}>
+                  <span>Sign out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

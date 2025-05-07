@@ -7,12 +7,12 @@ import {
   export const items = [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: Home,
     },
     {
       title: "Friends",
-      url: "#",
+      url: "/dashboard/friends",
       icon: Users,
     },
   ];
