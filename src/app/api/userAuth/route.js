@@ -4,8 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(params){
     const token = (await cookies()).get('token')?.value;
-    const user = verifyToken(token)
-
+    const user = await verifyToken(token)
     if(!user){
         return NextResponse.json({message:'Unauthorized'}, {status: 401})
     }
