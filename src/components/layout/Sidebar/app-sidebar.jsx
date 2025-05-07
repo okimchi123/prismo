@@ -28,7 +28,7 @@ const navItems = items;
 export function AppSidebar() {
   const router = useRouter();
   const user = storeUser((state)=> state.user)
-  console.log('this is the user', user)
+  
   const handleLogout = async () => {
     await logout();
     router.push("/?loggedout=true");  

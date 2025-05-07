@@ -5,7 +5,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { login } from '@/services/auth';
+import { login, userAuth } from '@/services/auth';
 
 export default function Page() {
   const [user, setUser] = useState(null);
@@ -31,6 +31,18 @@ export default function Page() {
   }
 
   useEffect(()=>{
+
+    // const checkAuth = async () => {
+    //   try {
+    //     const res = await userAuth(); 
+    //     if (res?.user) {
+    //       router.replace('/dashboard');
+    //     }
+    //   } catch (err) {
+    //   }
+    // };
+
+    // checkAuth();
 
     if(!isToast.current && searchParams.get('loggedout')==='true'){
       toast.success('Logged out successfully!')
