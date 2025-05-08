@@ -119,3 +119,8 @@
     @apply bg-background text-foreground;
   }
 }
+@layer utilities {
+  .prismo{
+    color: #FFA1B3;
+  } 
+}
