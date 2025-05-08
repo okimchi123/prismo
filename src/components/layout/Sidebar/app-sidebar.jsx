@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -23,30 +23,45 @@ import { SearchInput } from "@/components/ui/input";
 import { logout } from "@/services/auth";
 import { storeUser } from "@/hooks/state";
 import Link from "next/link";
+import clsx from "clsx";
 const navItems = items;
 
 export function AppSidebar() {
+  const pathname = usePathname();
   const router = useRouter();
-  const user = storeUser((state)=> state.user)
-  
+  const user = storeUser((state) => state.user);
+
   const handleLogout = async () => {
     await logout();
-    router.push("/?loggedout=true");  
+    router.push("/?loggedout=true");
   };
+
+  const defStyle = "";  
 
   return (
     <Sidebar className="select-none">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-lg mb-2 select-none">
-            Mikosystem
+          <SidebarGroupLabel className="text-lg mb-2 select-none prismo">
+            <img src="/icon.png" className="w-8" />
+            prismo
           </SidebarGroupLabel>
           <SearchInput type="text" placeholder="Search" className="mb-4" />
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                  variant="normal"
+                    asChild
+                    className={clsx(
+                      defStyle,
+                      {
+                        "bg-pink-100 text-[#F9617E]":
+                          pathname === item.url,
+                      }
+                    )}
+                  >
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
