@@ -1,8 +1,19 @@
 "use client";
+
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
-import { register } from "@/services/auth";
+import { auth, db } from "@/lib/firebase";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { toast } from "sonner";
+import {
+  setDoc,
+  doc,
+  query,
+  where,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 
 export default function Page() {
   const [userData, setUserData] = useState({
@@ -10,22 +21,58 @@ export default function Page() {
     lastname: "",
     email: "",
     password: "",
+    username: "",
   });
+
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const usernameQuery = query(
+      collection(db, "users"),
+      where("username", "==", userData.username)
+    );
+    const querySnapshot = await getDocs(usernameQuery);
+
+    if (!querySnapshot.empty) {
+      toast.error("Username already taken.");
+      return;
+    }
+
     try {
-      await register(userData);
-      console.log(userData);
-      alert("successful!");
+      const userCredential = await createUserWithEmailAndPassword(
+        userData.email,
+        userData.password
+      );
+
+      const uid = userCredential.user.uid;
+
+      await setDoc(doc(db, "users", uid), {
+        firstname: userData.firstname,
+        lastname: userData.lastname,
+        username: userData.username,
+        email: userData.email,
+        createdAt: new Date(),
+      });
+
+      toast.success("Account created successfully!");
+
       setUserData({
         firstname: "",
         lastname: "",
         email: "",
         password: "",
+        username: "",
       });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("Email is already in use.");
+      } else {
+        toast.error("Something went wrong.");
+        console.error(err);
+      }
     }
   };
 
@@ -67,18 +114,27 @@ export default function Page() {
           value={userData.email}
           required
         />
-        <div className="w-full relative">
-          <input
-            className="border border-gray-400 py-3 pl-3 pr-5 rounded-md text-[12px]"
-            type="password"
-            onChange={handleChange}
-            name="password"
-            placeholder="Password"
-            value={userData.password}
-            required
-          />
-        </div>
-        <Button className="w-full">Submit</Button>
+        <input
+          className="border border-gray-400 py-3 pl-3 pr-5 rounded-md text-[12px]"
+          type="text"
+          onChange={handleChange}
+          name="username"
+          placeholder="Username"
+          value={userData.username}
+          required
+        />
+        <input
+          className="border border-gray-400 py-3 pl-3 pr-5 rounded-md text-[12px]"
+          type="password"
+          onChange={handleChange}
+          name="password"
+          placeholder="Password"
+          value={userData.password}
+          required
+        />
+        <Button className="w-full" disabled={loading}>
+          {loading ? "Submitting..." : "Submit"}
+        </Button>
       </form>
       <Link href="/" className={`${buttonVariants({ variant: "outline" })}`}>
         Go to Login
