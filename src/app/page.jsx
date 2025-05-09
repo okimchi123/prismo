@@ -1,61 +1,55 @@
-'use client'
+"use client";
 
-import Link from 'next/link';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { toast } from 'sonner';
-import { useState, useEffect, useRef } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { login, userAuth } from '@/services/auth';
+import Link from "next/link";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { toast } from "sonner";
+import { useState, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "@/lib/firebase";
 
 export default function Page() {
-  const [user, setUser] = useState(null);
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [signInWithEmailAndPassword, user, loading, error] =
+  useSignInWithEmailAndPassword(auth);
   const router = useRouter();
   const searchParams = useSearchParams();
   const isToast = useRef(false);
-  
-  const handleChange = (e) =>{
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value
-    })
-  }
+
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      await login(user)
-      router.push('/dashboard')
-    } catch (error) {
-      console.error(error)
+    e.preventDefault();
+    await signInWithEmailAndPassword(form.email, form.password);
+  };
+
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard");
     }
-  }
+  }, [user]);
 
-  useEffect(()=>{
-
-     const checkAuth = async () => {
-       try {
-         const res = await userAuth(); 
-         if (res?.user) {
-           router.replace('/dashboard');
-         }
-       } catch (err) {
-       }
-     };
-
-     checkAuth();
-
-    if(!isToast.current && searchParams.get('loggedout')==='true'){
-      toast.success('Logged out successfully!')
+  useEffect(() => {
+    if (!isToast.current && searchParams.get("loggedout") === "true") {
+      toast.success("Logged out successfully!");
       isToast.current = true;
 
       const newParams = new URLSearchParams(searchParams.toString());
-      newParams.delete('loggedout');
+      newParams.delete("loggedout");
 
       const newUrl = `${window.location.pathname}?${newParams.toString()}`;
       router.replace(newUrl, { scroll: false });
     }
 
-  },[searchParams])
+    if (error) {
+      toast.error(error.message);
+    }
+  }, [searchParams, error]);
 
   return (
     <main className="flex flex-col items-center w-full h-screen gap-2">
@@ -81,18 +75,20 @@ export default function Page() {
             placeholder="Password"
             required
           />
-          
         </div>
-        <Button className=" w-full">
-          Submit
+        <Button className="w-full" disabled={loading}>
+          {loading ? "Logging in..." : "Submit"}
         </Button>
       </form>
       <div className="flex gap-1 select-none items-center text-[14px] text-gray-500">
         <p>Don't have an account?</p>
-        <Link href="/register" className={`${buttonVariants({ variant: "outline" })}`}>
+        <Link
+          href="/register"
+          className={`${buttonVariants({ variant: "outline" })}`}
+        >
           Sign up now
         </Link>
       </div>
     </main>
-  )
+  );
 }
