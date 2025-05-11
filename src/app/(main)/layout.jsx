@@ -1,26 +1,23 @@
 'use client'
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/layout/Sidebar/app-sidebar"
-import { useEffect } from "react";
-import { userAuth } from "@/services/auth";
-import { useRouter } from 'next/navigation';
-import { storeUser } from "@/hooks/state";
+import { useEffect } from "react"
+import { useRouter } from 'next/navigation'
+import { storeUser } from "@/hooks/state"
+import { listenToUserProfile } from "@/services/user.service"
 
 export default function Layout({ children }) {
   const router = useRouter()
-  const setUser = storeUser((state) => state.setUser);
+  const setUser = storeUser((state) => state.setUser)
 
   useEffect(() => {
-    async function loadUser() {
-      try {
-        const data = await userAuth()
-        setUser(data.user)
-      } catch (error) {
-        router.push('/')
-      }
-    }
-    loadUser();
-  }, []);
+    const unsubscribe = listenToUserProfile(setUser, (error) => {
+      router.push("/")
+      console.error("Error:", error);
+    });
+
+    return () => unsubscribe();
+  }, [setUser]);
 
   return (
     <SidebarProvider>

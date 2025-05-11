@@ -20,7 +20,8 @@ import {
 import { ChevronUp, User2 } from "lucide-react";
 import { items } from "@/models/navItems";
 import { SearchInput } from "@/components/ui/input";
-import { logout } from "@/services/auth";
+
+import { logout } from "@/services/user.service";
 import { storeUser } from "@/hooks/state";
 import Link from "next/link";
 import clsx from "clsx";
