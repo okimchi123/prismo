@@ -79,7 +79,6 @@ export default function Page() {
   const handleChange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
   return (
     <main className="flex flex-col items-center w-full h-screen gap-2">
       <form

@@ -34,7 +34,7 @@ export function AppSidebar() {
 
   const handleLogout = async () => {
     await logout();
-    router.push("/?loggedout=true");
+    router.push("/");
   };
 
   const defStyle = "";  
