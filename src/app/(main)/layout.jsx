@@ -4,7 +4,8 @@ import { AppSidebar } from "@/components/layout/Sidebar/app-sidebar"
 import { useEffect } from "react"
 import { useRouter } from 'next/navigation'
 import { storeUser } from "@/hooks/state"
-import { listenToUserProfile } from "@/services/user.service"
+import { listenToUserProfile, useAuthRedirect } from "@/services/user.service"
+import Loading from "@/components/Loading"
 
 export default function Layout({ children }) {
   const router = useRouter()
@@ -19,6 +20,8 @@ export default function Layout({ children }) {
     return () => unsubscribe();
   }, [setUser]);
 
+  const loadingAuth = useAuthRedirect("dashboard");
+  if (loadingAuth) return <Loading />;
   return (
     <SidebarProvider>
       <AppSidebar />

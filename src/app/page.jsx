@@ -3,18 +3,18 @@
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useState, useEffect, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
+import { useAuthRedirect } from "@/services/user.service";
+import Loading from "@/components/Loading";
 
 export default function Page() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [signInWithEmailAndPassword, user, loading, error] =
-  useSignInWithEmailAndPassword(auth);
+    useSignInWithEmailAndPassword(auth);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const isToast = useRef(false);
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -25,7 +25,20 @@ export default function Page() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signInWithEmailAndPassword(form.email, form.password);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        form.email,
+        form.password
+      );
+      if (!userCredential?.user) {
+        toast.error("invalid credentials");
+        return;
+      }
+      const token = await userCredential.user.getIdToken();
+      document.cookie = `__session=${token}; path=/; max-age=3600`;
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -34,23 +47,8 @@ export default function Page() {
     }
   }, [user]);
 
-  useEffect(() => {
-    if (!isToast.current && searchParams.get("loggedout") === "true") {
-      toast.success("Logged out successfully!");
-      isToast.current = true;
-
-      const newParams = new URLSearchParams(searchParams.toString());
-      newParams.delete("loggedout");
-
-      const newUrl = `${window.location.pathname}?${newParams.toString()}`;
-      router.replace(newUrl, { scroll: false });
-    }
-
-    if (error) {
-      toast.error(error.message);
-    }
-  }, [searchParams, error]);
-
+  const loadingAuth = useAuthRedirect("login");
+  if (loadingAuth) return <Loading />;
   return (
     <main className="flex flex-col items-center w-full h-screen gap-2">
       <form

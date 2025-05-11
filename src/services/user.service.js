@@ -1,5 +1,29 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
+import { toast } from "sonner"
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+
+export function useAuthRedirect(page) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user && page === "login") {
+        router.replace("/dashboard");
+      }else if(!user && page === "dashboard"){
+        router.replace("/");
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
+  return loading;
+}
 
 export function listenToUserProfile(onSuccess, onError) {
   const unsubscribeAuthState = auth.onAuthStateChanged((user) => {
@@ -30,6 +54,8 @@ export function listenToUserProfile(onSuccess, onError) {
 export async function logout(){
   try {
     await auth.signOut();
+    document.cookie = "__session=; path=/; max-age=0";
+    toast.success("Logged out successfully!");
   } catch (error) {
     toast.error("Logout failed. Please try again.");
     console.error("Logout error: ", error);
