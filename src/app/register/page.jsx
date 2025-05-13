@@ -3,17 +3,8 @@
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
-import { auth, db } from "@/lib/firebase";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { toast } from "sonner";
-import {
-  setDoc,
-  doc,
-  query,
-  where,
-  collection,
-  getDocs,
-} from "firebase/firestore";
+import { registerUser, useAuthRedirect } from "@/services/user.service";
+import Loading from "@/components/Loading";
 
 export default function Page() {
   const [userData, setUserData] = useState({
@@ -23,42 +14,13 @@ export default function Page() {
     password: "",
     username: "",
   });
-
-  const [createUserWithEmailAndPassword, user, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const usernameQuery = query(
-      collection(db, "users"),
-      where("username", "==", userData.username)
-    );
-    const querySnapshot = await getDocs(usernameQuery);
-
-    if (!querySnapshot.empty) {
-      toast.error("Username already taken.");
-      return;
-    }
-
+    setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        userData.email,
-        userData.password
-      );
-
-      const uid = userCredential.user.uid;
-
-      await setDoc(doc(db, "users", uid), {
-        firstname: userData.firstname,
-        lastname: userData.lastname,
-        username: userData.username,
-        email: userData.email,
-        createdAt: new Date(),
-      });
-
-      toast.success("Account created successfully!");
-
+      await registerUser(userData);
       setUserData({
         firstname: "",
         lastname: "",
@@ -67,18 +29,18 @@ export default function Page() {
         username: "",
       });
     } catch (err) {
-      if (error.code === "auth/email-already-in-use") {
-        toast.error("Email is already in use.");
-      } else {
-        toast.error("Something went wrong.");
-        console.error(err);
-      }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const loadingAuth = useAuthRedirect("login");
+  if (loadingAuth) return <Loading />;
+
   return (
     <main className="flex flex-col items-center w-full h-screen gap-2">
       <form
