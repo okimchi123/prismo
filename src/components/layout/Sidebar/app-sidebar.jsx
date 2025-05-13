@@ -58,7 +58,7 @@ export function AppSidebar() {
                     className={clsx(
                       defStyle,
                       {
-                        "bg-pink-100 text-[#F9617E]":
+                        "bg-pink-100 text-[#F9617E] active:text-[#F9617E] active:bg-pink-100":
                           pathname === item.url,
                       }
                     )}
