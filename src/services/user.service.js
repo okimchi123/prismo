@@ -21,8 +21,8 @@ export async function registerUser(userData) {
   const querySnapshot = await getDocs(usernameQuery);
 
   if (!querySnapshot.empty) {
-    toast.error("Username already taken.");
-    throw new Error("Username taken");
+    toast.error("Username is already used.");
+    throw new Error("Username is already used");
   }
 
   try {
@@ -46,7 +46,7 @@ export async function registerUser(userData) {
     await auth.signOut();
   } catch (error) {
     if (error.code === "auth/email-already-in-use") {
-      toast.error("Email is already in use.");
+      toast.error("Email is already used.");
     } else {
       toast.error("Something went wrong.");
       console.error(error);
@@ -64,7 +64,6 @@ export function useAuthRedirect(page) {
       if (user && page === "login") {
         router.replace("/dashboard");
       } else if (!user && page === "dashboard") {
-        console.log("balik ka")
         router.replace("/");
       } else {
         setLoading(false);
