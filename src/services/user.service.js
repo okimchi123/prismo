@@ -9,8 +9,6 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export async function registerUser(userData) {
@@ -53,27 +51,6 @@ export async function registerUser(userData) {
     }
     throw error;
   }
-}
-
-export function useAuthRedirect(page) {
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user && page === "login") {
-        router.replace("/dashboard");
-      } else if (!user && page === "dashboard") {
-        router.replace("/");
-      } else {
-        setLoading(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [router]);
-
-  return loading;
 }
 
 export function listenToUserProfile(onSuccess, onError) {
