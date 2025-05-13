@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
-import { useAuthRedirect } from "@/services/user.service";
+import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 import Loading from "@/components/Loading";
 
 export default function Page() {

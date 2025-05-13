@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
-import { registerUser, useAuthRedirect } from "@/services/user.service";
+import { registerUser } from "@/services/user.service";
+import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 import Loading from "@/components/Loading";
 
 export default function Page() {

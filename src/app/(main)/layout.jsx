@@ -4,7 +4,8 @@ import { AppSidebar } from "@/components/layout/Sidebar/app-sidebar"
 import { useEffect } from "react"
 import { useRouter } from 'next/navigation'
 import { storeUser } from "@/hooks/state"
-import { listenToUserProfile, useAuthRedirect } from "@/services/user.service"
+import { listenToUserProfile } from "@/services/user.service"
+import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 import Loading from "@/components/Loading"
 
 export default function Layout({ children }) {
