@@ -47,8 +47,6 @@ export default function Page() {
     }
   }, [user]);
 
-   const loadingAuth = useAuthRedirect("login");
-   if (loadingAuth) return <Loading />;
   return (
     <main className="flex flex-col items-center w-full h-screen gap-2">
       <form
