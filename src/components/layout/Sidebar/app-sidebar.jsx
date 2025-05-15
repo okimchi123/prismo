@@ -20,11 +20,13 @@ import {
 import { ChevronUp, User2 } from "lucide-react";
 import { items } from "@/models/navItems";
 import { SearchInput } from "@/components/ui/input";
-
+import Image from "next/image";
 import { logout } from "@/services/user.service";
 import { storeUser } from "@/hooks/state";
 import Link from "next/link";
 import clsx from "clsx";
+import { darumadrop_one } from "@/components/ui/fonts";
+
 const navItems = items;
 
 export function AppSidebar() {
@@ -43,9 +45,9 @@ export function AppSidebar() {
     <Sidebar className="select-none">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-lg mb-2 select-none prismo">
-            <img src="/icon.png" className="w-8" />
-            prismo
+          <SidebarGroupLabel className="text-lg mb-2 flex items-center gap-1 select-none prismo">
+            <Image src="/icon.svg" width="18" height="18" alt="icon" />
+            <h1 className={`${darumadrop_one.className} mb-[6px]`}>prismo</h1>
           </SidebarGroupLabel>
           <SearchInput type="text" placeholder="Search" className="mb-4" />
           <SidebarGroupContent>
@@ -58,7 +60,7 @@ export function AppSidebar() {
                     className={clsx(
                       defStyle,
                       {
-                        "bg-pink-100 text-[#F9617E] active:text-[#F9617E] active:bg-pink-100":
+                        "bg-pink-100 text-[#F9617E] active:text-[#F9617E]":
                           pathname === item.url,
                       }
                     )}

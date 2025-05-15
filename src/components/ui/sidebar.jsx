@@ -2,7 +2,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority";
-import { PanelLeftIcon } from "lucide-react"
+import Image from "next/image";
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -240,7 +240,7 @@ function SidebarTrigger({
         toggleSidebar()
       }}
       {...props}>
-      <PanelLeftIcon />
+      <Image src="/hamburger.svg" width="20" height="20" alt="icon"/>
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );
@@ -459,7 +459,7 @@ const sidebarMenuButtonVariants = cva(
         default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         outline:
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
-        normal:"hover:bg-pink-100 py-5 px-5 transition-all hover:text-none",
+        normal:"hover:bg-pink-100 py-5 px-5 transition-all active:bg-pink-50 hover:text-none",
         },
       size: {
         default: "h-8 text-sm",
@@ -484,14 +484,14 @@ function SidebarMenuButton({
   ...props
 }) {
   const Comp = asChild ? Slot : "button"
-  const { isMobile, state } = useSidebar()
-
+  const { isMobile, state, toggleSidebar } = useSidebar()
   const button = (
     <Comp
       data-slot="sidebar-menu-button"
       data-sidebar="menu-button"
       data-size={size}
       data-active={isActive}
+      onClick={toggleSidebar}
       className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
       {...props} />
   )
