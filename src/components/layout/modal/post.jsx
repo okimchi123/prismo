@@ -1,9 +1,9 @@
 "use client";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Image } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { storeUser } from "@/hooks/state";
 import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
+import NextImage from "next/image";
 import clsx from "clsx";
 
 export default function PostModal({ isOpen, onClose }) {
@@ -24,17 +24,22 @@ export default function PostModal({ isOpen, onClose }) {
           <section className="px-3 py-2 flex flex-col">
             <div className="flex gap-2 mb-2">
               <figure className="w-12 h-12 relative">
-                <Image
+                <NextImage
                   src="/finn.jpg"
                   fill
                   alt="profile_pic"
                   className="object-cover rounded-md"
                 />
               </figure>
-              <span className="text-[14px] font-semibold text-black"> {user.firstname} {user.lastname} </span>
+              <span className="text-[14px] font-semibold text-black">
+                {user.firstname} {user.lastname}
+              </span>
             </div>
-            <Textarea className="" placeholder="What's on your mind?" />
-            <Image src="" />
+            <Textarea className="mb-3" placeholder="What's on your mind?" />
+            <div className="flex items-center gap-1 text-md prismo">
+              <Image size="22" />
+              <span>Photos|Videos</span>
+            </div>
           </section>
         </form>
       </main>
