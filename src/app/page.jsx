@@ -51,7 +51,7 @@ export default function Page() {
     <main className="flex flex-col items-center w-full h-screen gap-2">
       <form
         onSubmit={handleSubmit}
-        className="bg-white mt-[5%] select-none rounded-xl flex flex-col items-center gap-3 p-5"
+        className="bg-white mt-[30%] sm:mt-[10%] md:mt-[5%] select-none rounded-xl flex flex-col items-center gap-3 p-5"
       >
         <h1 className="text-[22px] font-semibold mb-2">Login</h1>
         <input

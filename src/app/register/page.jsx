@@ -46,7 +46,7 @@ export default function Page() {
     <main className="flex flex-col items-center w-full h-screen gap-2">
       <form
         onSubmit={handleSubmit}
-        className="bg-white mt-[5%] select-none rounded-xl flex flex-col items-center gap-3 p-5"
+        className="bg-white mt-[10%] sm:mt-[8%] md:mt-[5%] select-none rounded-xl flex flex-col items-center gap-3 p-5"
       >
         <h1 className="text-[22px] mb-2">Register Now</h1>
         <input
