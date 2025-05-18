@@ -1,6 +1,7 @@
 'use client'
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/layout/Sidebar/app-sidebar"
+import { FriendListBar } from "@/components/layout/Sidebar/friendlist-bar"
 import { useEffect } from "react"
 import { useRouter } from 'next/navigation'
 import { storeUser } from "@/hooks/state"
@@ -27,16 +28,20 @@ export default function Layout({ children }) {
   if (loadingAuth) return <Loading />;
   return (
     <SidebarProvider>
-      <AppSidebar />
       <main className="w-full px-2">
-            <nav className="w-full flex py-2 justify-between"> 
-                    <figure className="flex">
-                      <SidebarTrigger className="md:hidden" />
-                      <h1 className={`${darumadrop_one.className} prismo`}>prismo</h1>
-                    </figure>  
-                    <Image src="/friends.svg" width="20" height="20" alt="friend_icon" />
-                  </nav>
-            {children}
+        <nav className="w-full flex py-2 justify-between">
+          <figure className="flex border">
+
+            <AppSidebar />
+            <SidebarTrigger className="md:hidden" icon="/hamburger.svg" />
+
+
+            <h1 className={`${darumadrop_one.className} prismo`}>prismo</h1>
+          </figure>
+          <FriendListBar />
+          <SidebarTrigger className="md:hidden" icon="/friends.svg" />
+        </nav>
+        {children}
       </main>
     </SidebarProvider>
   )

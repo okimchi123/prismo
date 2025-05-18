@@ -224,6 +224,7 @@ function Sidebar({
 function SidebarTrigger({
   className,
   onClick,
+  icon,
   ...props
 }) {
   const { toggleSidebar } = useSidebar()
@@ -240,7 +241,7 @@ function SidebarTrigger({
         toggleSidebar()
       }}
       {...props}>
-      <Image src="/hamburger.svg" width="20" height="20" alt="icon"/>
+      <Image src={icon} width="20" height="20" alt="icon"/>
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );
