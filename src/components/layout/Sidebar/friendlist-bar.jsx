@@ -1,37 +1,51 @@
 "use client";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import Image from "next/image";
 
 export function FriendListBar() {
-    return(
-        <Sidebar side="right" className="select-none">
-            <SidebarContent>
-                <SidebarGroup>
-                    <SidebarGroupLabel className="text-lg mb-2 flex items-center gap-1 select-none prismo">
-                        <h1 className="mb-[6px]">Friends</h1>
-                    </SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu>
-                            <SidebarMenuItem key="friends">
-                                <SidebarMenuButton variant="normal" asChild className="w-full">
-                                    <div className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-200 cursor-pointer">
-                                        <span>Friend 1</span>
-                                    </div>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                            {/* Add more friends here */}
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
-            </SidebarContent>
-        </Sidebar>
-    )
+  return (
+    <Sheet>
+      <SheetTrigger>
+        <Image src="/friends.svg" width="20" height="20" alt="icon" />
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle className="prismo">Friends</SheetTitle>
+        </SheetHeader>
+        <main className="px-4">
+          <section className="flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <figure className="w-10 h-10 relative">
+                <Image
+                  src="/jake.jpg"
+                  fill
+                  alt="profile_pic"
+                  className="object-cover rounded-md"
+                />
+              </figure>
+              <span className="text-[18px] font-semibold">Jake The Dog</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <figure className="w-10 h-10 relative">
+                <Image
+                  src="/jake.jpg"
+                  fill
+                  alt="profile_pic"
+                  className="object-cover rounded-md"
+                />
+              </figure>
+              <span className="text-[18px] font-semibold">Jake The Dog</span>
+            </div>
+          </section>
+        </main>
+      </SheetContent>
+    </Sheet>
+  );
 }
