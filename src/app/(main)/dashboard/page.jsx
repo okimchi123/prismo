@@ -1,10 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
+import DisplayImage from "@/components/ui/display-image";
 import { useState } from "react";
 import { storeUser } from "@/hooks/state";
 import PostModal from "@/components/layout/modal/post";
+import UserPost from "@/components/layout/Dashboard/post";
 
 export default function Page() {
   const user = storeUser((state) => state.user);
@@ -16,16 +17,14 @@ export default function Page() {
   }
 
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex flex-col items-center gap-2">
       <PostModal 
       isOpen={isOpen} 
       onClose={() => setIsOpen(false)}
       />
 
       <section className="w-full flex items-center justify-center rounded-lg gap-2 bg-white px-2 py-3">
-        <figure className="w-10 h-10 relative">
-          <Image src="/finn.jpg" fill alt="profile_pic" className="object-cover rounded-md" />
-        </figure>
+        <DisplayImage img="/finn.jpg" />
         <Button 
         onClick={() => setIsOpen(isOpen => !isOpen)}
         className="bg-white text-gray-500 font-normal gray-bg w-[80%] flex justify-start py-5 active:scale-98 transition-transform"
@@ -34,6 +33,7 @@ export default function Page() {
         </Button>
       </section>
 
+      <UserPost />
     </main>
   );
 }

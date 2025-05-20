@@ -1,0 +1,27 @@
+import DisplayImage from "@/components/ui/display-image";
+
+export default function UserPost() {
+  return (
+    <main className="bg-white p-3">
+      <header>
+        <figure className="flex gap-1">
+          <DisplayImage img="/jake.jpg" />
+          <div className="flex flex-col">
+            <h1 className="text-[14px]">Jake The Dog</h1>
+            <p className="text-[12px] prismo">@jakey</p>
+            <span className="text-gray-500 text-[13px]">1 h</span>
+          </div>
+        </figure>
+      </header>
+      <article>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </p>
+      </article>
+      <footer></footer>
+    </main>
+  );
+}
