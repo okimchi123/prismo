@@ -21,7 +21,9 @@ export default function UserPost() {
           aliquip ex ea commodo consequat.
         </p>
       </article>
-      <footer></footer>
+      <footer>
+        <h1> Like </h1>
+      </footer>
     </main>
   );
 }
