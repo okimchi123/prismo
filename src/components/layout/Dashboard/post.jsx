@@ -2,7 +2,7 @@ import DisplayImage from "@/components/ui/display-image";
 
 export default function UserPost() {
   return (
-    <main className="bg-white p-3">
+    <main className="bg-white p-3 flex flex-col gap-2">
       <header>
         <figure className="flex gap-1">
           <DisplayImage img="/jake.jpg" />
@@ -13,7 +13,7 @@ export default function UserPost() {
           </div>
         </figure>
       </header>
-      <article>
+      <article className="">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -21,8 +21,10 @@ export default function UserPost() {
           aliquip ex ea commodo consequat.
         </p>
       </article>
-      <footer>
+      <footer className="flex gap-3">
         <h1> Like </h1>
+        <span>Comment</span>
+        <span>Share</span>
       </footer>
     </main>
   );
