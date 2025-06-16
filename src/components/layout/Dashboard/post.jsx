@@ -9,7 +9,7 @@ export default function UserPost() {
           <div className="flex flex-col">
             <h1 className="text-[14px]">Jake The Dog</h1>
             <p className="text-[12px] prismo">@jakey</p>
-            <span className="text-gray-500 text-[13px]">1 h</span>
+            <span className="text-gray-500 text-[13px]">1h</span>
           </div>
         </figure>
       </header>
@@ -21,6 +21,7 @@ export default function UserPost() {
           aliquip ex ea commodo consequat.
         </p>
       </article>
+     {/* add icons for like comment share */}
       <footer className="flex gap-3">
         <h1> Like </h1>
         <span>Comment</span>
