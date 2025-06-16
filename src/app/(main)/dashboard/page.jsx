@@ -34,6 +34,8 @@ export default function Page() {
       </section>
 
       <UserPost />
+      <UserPost />
+      <UserPost />
     </main>
   );
 }
