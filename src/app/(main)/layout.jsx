@@ -28,10 +28,11 @@ export default function Layout({ children }) {
   if (loadingAuth) return <Loading />;
   return (
     <SidebarProvider>
+      <AppSidebar />
       <main className="w-full px-2">
         <nav className="w-full flex py-2 justify-between">
           <figure className="flex border">
-            <AppSidebar />
+            
             <SidebarTrigger className="md:hidden" icon="/hamburger.svg" />
             <h1 className={`${darumadrop_one.className} prismo`}>prismo</h1>
           </figure>
