@@ -1,6 +1,10 @@
 import DisplayImage from "@/components/ui/display-image";
+import Image from "next/image";
 
 export default function UserPost() {
+
+  const postIcons = [{name:"like", style:"mr-1"},{name:"comment", style:""},{name:"share", style:""}];
+
   return (
     <main className="bg-white p-3 flex flex-col gap-2">
       <header>
@@ -22,10 +26,12 @@ export default function UserPost() {
         </p>
       </article>
      {/* add icons for like comment share */}
-      <footer className="flex gap-3">
-        <h1> Like </h1>
-        <span>Comment</span>
-        <span>Share</span>
+      <footer className="flex">
+        {postIcons.map((icon)=>(
+          <Image key={icon.name} src={`/post/${icon.name}.svg`} width="35" height="35" alt={icon.name} className={icon.style} />
+        ))
+
+        }
       </footer>
     </main>
   );
