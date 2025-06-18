@@ -36,10 +36,10 @@ export default function Layout({ children }) {
             <SidebarTrigger className="md:hidden" icon="/hamburger.svg" />
             <h1 className={`${darumadrop_one.className} prismo`}>prismo</h1>
           </figure>
-          <FriendListBar />
         </nav>
         {children}
       </main>
+      <FriendListBar />
     </SidebarProvider>
   );
 }
