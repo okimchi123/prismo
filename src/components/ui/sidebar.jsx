@@ -492,7 +492,7 @@ function SidebarMenuButton({
       data-sidebar="menu-button"
       data-size={size}
       data-active={isActive}
-      onClick={toggleSidebar}
+      onClick={isMobile ? toggleSidebar : null}
       className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
       {...props} />
   )
