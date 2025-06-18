@@ -59,7 +59,7 @@ export function FriendListBar() {
       <h1 className="prismo font-semibold mb-3">Friends</h1>
       <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
-              <figure className="w-10 h-10 relative">
+              <figure className="w-8 h-8 relative">
                 <Image
                   src="/jake.jpg"
                   fill
@@ -67,10 +67,10 @@ export function FriendListBar() {
                   className="object-cover rounded-md"
                 />
               </figure>
-              <span className="text-[18px] font-semibold">Jake The Dog</span>
+              <span className="text-[16px] font-semibold">Jake The Dog</span>
             </div>
             <div className="flex items-center gap-2">
-              <figure className="w-10 h-10 relative">
+              <figure className="w-8 h-8 relative">
                 <Image
                   src="/jake.jpg"
                   fill
@@ -78,7 +78,7 @@ export function FriendListBar() {
                   className="object-cover rounded-md"
                 />
               </figure>
-              <span className="text-[18px] font-semibold">Jake The Dog</span>
+              <span className="text-[16px] font-semibold">Jake The Dog</span>
             </div>
       </div>
     </section>
