@@ -241,7 +241,7 @@ function SidebarTrigger({
         toggleSidebar()
       }}
       {...props}>
-      <Image src={icon} width="20" height="20" alt="icon"/>
+      <Image src={icon} width="25" height="25" alt="icon"/>
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );
