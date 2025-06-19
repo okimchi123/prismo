@@ -17,8 +17,8 @@ export function FriendListBar() {
   if(isMobile){
     return (
     <Sheet>
-      <SheetTrigger className="absolute top-3 right-4">
-        <Image src="/friends.svg" width="20" height="20" alt="icon" />
+      <SheetTrigger className="absolute top-4 right-4">
+        <Image src="/friends.svg" width="23" height="23" alt="icon" />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -55,7 +55,7 @@ export function FriendListBar() {
   );
   }
   return(
-    <section className="w-[500px] bg-white p-4">
+    <section className="w-[350px] h-[100vh] sticky top-0 right-0 bg-white p-4">
       <h1 className="prismo font-semibold mb-3">Friends</h1>
       <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
