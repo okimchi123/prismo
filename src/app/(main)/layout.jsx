@@ -8,7 +8,6 @@ import { storeUser } from "@/hooks/state";
 import { listenToUserProfile } from "@/services/user.service";
 import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 import Loading from "@/components/Loading";
-import { darumadrop_one } from "@/components/ui/fonts";
 import Image from "next/image";
 
 export default function Layout({ children }) {
@@ -28,18 +27,12 @@ export default function Layout({ children }) {
   if (loadingAuth) return <Loading />;
   return (
     <SidebarProvider>
-      <AppSidebar />
-      <main className="w-full px-2">
-        <nav className="w-full flex py-2 justify-between">
-          <figure className="flex border">
-            
-            <SidebarTrigger className="md:hidden" icon="/hamburger.svg" />
-            <h1 className={`${darumadrop_one.className} prismo`}>prismo</h1>
-          </figure>
-        </nav>
+      <main className="w-full flex justify-between gap-2 relative">
+        <AppSidebar />
+        <SidebarTrigger className="md:hidden absolute left-1 top-[14px]" icon="/hamburger.svg" />
         {children}
+      <FriendListBar />  
       </main>
-      <FriendListBar />
     </SidebarProvider>
   );
 }
