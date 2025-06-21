@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DisplayImage from "@/components/ui/display-image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { storeUser } from "@/hooks/state";
 import PostModal from "@/components/layout/modal/post";
 import UserPost from "@/components/layout/Dashboard/post";
@@ -20,6 +20,10 @@ export default function Page() {
     e.preventDefault()
   }
 
+  useEffect(()=>{ 
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
+  },[isOpen])
+
   return (
     <main className="flex flex-col md:w-[400px] items-center gap-2 py-2 px-2">
       {IsMobile && <nav className="w-full flex py-2 justify-between">
@@ -36,7 +40,7 @@ export default function Page() {
         <DisplayImage img="/finn.jpg" />
         <Button 
         onClick={() => setIsOpen(isOpen => !isOpen)}
-        className="bg-white text-gray-500 font-normal gray-bg w-[80%] flex justify-start py-5 active:scale-98 transition-transform"
+        className="bg-white text-gray-500 hover:bg-gray-300 transition-all font-normal gray-bg w-[80%] flex justify-start py-5 active:scale-98 transition-transform"
         >
            What's on your mind {user.firstname}? 
         </Button>
