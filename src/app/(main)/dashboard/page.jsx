@@ -19,7 +19,7 @@ export default function Page() {
   const onSubmit = (e) => {
     e.preventDefault()
   }
-
+//add firestore for posting
   useEffect(()=>{ 
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   },[isOpen])
@@ -40,7 +40,7 @@ export default function Page() {
         <DisplayImage img="/finn.jpg" />
         <Button 
         onClick={() => setIsOpen(isOpen => !isOpen)}
-        className="bg-white text-gray-500 hover:bg-gray-300 transition-all font-normal gray-bg w-[80%] flex justify-start py-5 active:scale-98 transition-transform"
+        className="bg-white text-gray-500 hover:bg-gray-300 transition-all font-normal gray-bg w-[80%] flex justify-start py-5 active:scale-98"
         >
            What's on your mind {user.firstname}? 
         </Button>
