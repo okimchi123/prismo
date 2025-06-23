@@ -41,7 +41,7 @@ export default function Page() {
 
   const loadingAuth = useAuthRedirect("login");
   if (loadingAuth) return <Loading />;
-
+  //add register using google account
   return (
     <main className="flex flex-col items-center w-full h-screen gap-2">
       <form
