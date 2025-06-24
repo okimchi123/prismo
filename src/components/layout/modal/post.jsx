@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import NextImage from "next/image";
 import clsx from "clsx";
 import { handlePostSubmit } from "@/services/post.service";
+import { toast } from "sonner";
 
 export default function PostModal({ isOpen, onClose }) {
   const disabledBtn = "bg-gray-400";
@@ -16,6 +17,9 @@ export default function PostModal({ isOpen, onClose }) {
     e.preventDefault();
     if (!postMessage.trim()) return;
     handlePostSubmit(postMessage, user);
+    toast.success("Post Created")
+    setPostMessage("")
+    onClose();
   };
 
   return (

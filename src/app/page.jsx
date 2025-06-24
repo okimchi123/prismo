@@ -34,6 +34,7 @@ export default function Page() {
         toast.error("invalid credentials");
         return;
       }
+      toast.success("Logged in Successfully");
       const token = await userCredential.user.getIdToken();
       document.cookie = `__session=${token}; path=/; max-age=3600`;
     } catch (err) {
