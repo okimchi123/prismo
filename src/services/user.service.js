@@ -66,7 +66,7 @@ export function listenToUserProfile(onSuccess, onError) {
       userRef,
       (docSnap) => {
         if (docSnap.exists()) {
-          onSuccess(docSnap.data());
+          onSuccess({ uid: user.uid, ...docSnap.data() });
         } else {
           onError?.("User document does not exist");
         }
