@@ -8,9 +8,11 @@ import PostModal from "@/components/layout/modal/post";
 import UserPost from "@/components/layout/Dashboard/post";
 import { darumadrop_one } from "@/components/ui/fonts";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useUserPosts } from "@/hooks/fetchUserPost";
 
 export default function Page() {
   const user = storeUser((state) => state.user);
+  const {posts, loading} = useUserPosts(user?.uid)
 
   const IsMobile = useIsMobile();
 
@@ -45,10 +47,9 @@ export default function Page() {
            What's on your mind {user.firstname}? 
         </Button>
       </section>
-
-      <UserPost />
-      <UserPost />
-      <UserPost />
+      {posts.length === 0 ? <p>No post yet</p>: posts.map((post)=>(
+        <UserPost key={post.id} post={post} loading={loading} />
+      ))}
     </main>
   );
 }
