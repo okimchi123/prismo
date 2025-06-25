@@ -11,6 +11,7 @@ export async function handlePostSubmit(postMessage, user){
             text: postMessage,
             userId: user.uid,
             userName: `${user.firstname} ${user.lastname}`,
+            userUsername: user.username,
             createdAt: Timestamp.now(),
         }
     );
