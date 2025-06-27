@@ -13,7 +13,6 @@ import { useUserPosts } from "@/hooks/fetchUserPost";
 export default function Page() {
   const user = storeUser((state) => state.user);
   const {posts, loading} = useUserPosts(user?.uid)
-
   const IsMobile = useIsMobile();
 
   const [isOpen, setIsOpen] = useState(false)
@@ -48,7 +47,7 @@ export default function Page() {
         </Button>
       </section>
       {posts.length === 0 ? <p>No post yet</p>: posts.map((post)=>(
-        <UserPost key={post.id} post={post} loading={loading} />
+        <UserPost key={post.id} post={post} loading={loading} userId={user.uid} />
       ))}
     </main>
   );
