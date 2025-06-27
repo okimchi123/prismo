@@ -1,13 +1,10 @@
 import DisplayImage from "@/components/ui/display-image";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
+import { LikeButton } from "@/components/ui/likeButton";
 
-export default function UserPost({ post, loading }) {
-  const postIcons = [
-    { name: "like", style: "mr-1" },
-    { name: "comment", style: "" },
-    { name: "share", style: "" },
-  ];
+export default function UserPost({ post, loading, userId }) {
+  
   if (loading) return <p>Loading posts...</p>;
   return (
     <main className="bg-white w-full p-3 flex flex-col gap-2">
@@ -30,16 +27,7 @@ export default function UserPost({ post, loading }) {
       </article>
 
       <footer className="flex">
-        {postIcons.map((icon) => (
-          <Image
-            key={icon.name}
-            src={`/post/${icon.name}.svg`}
-            width="35"
-            height="35"
-            alt={icon.name}
-            className={icon.style}
-          />
-        ))}
+        <LikeButton postId={post.id} userId={userId} currentLikes={post.likes || []} />
       </footer>
     </main>
   );
