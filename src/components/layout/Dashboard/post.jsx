@@ -28,6 +28,7 @@ export default function UserPost({ post, loading, userId }) {
 
       <footer className="flex">
         <LikeButton postId={post.id} userId={userId} currentLikes={post.likes || []} />
+        <Image src="/post/comment.svg" height="35" width="35" alt="comment-icon" />
       </footer>
     </main>
   );
