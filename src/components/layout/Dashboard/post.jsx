@@ -1,12 +1,19 @@
+'use client'
 import DisplayImage from "@/components/ui/display-image";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { LikeButton } from "@/components/ui/likeButton";
+import { useState } from "react";
+import { CommentModal } from "../modal/comment";
 
 export default function UserPost({ post, loading, userId }) {
-  
+  const [commentModal, setCommentModal] = useState(false)
+
+
   if (loading) return <p>Loading posts...</p>;
   return (
+    <>
+    <CommentModal isOpen={commentModal} Close={() => setCommentModal(false)}/>
     <main className="bg-white w-full p-3 flex flex-col gap-2">
       <header>
         <figure className="flex gap-1">
@@ -26,10 +33,12 @@ export default function UserPost({ post, loading, userId }) {
         <p>{post.text}</p>
       </article>
 
-      <footer className="flex">
+      <footer className="flex items-start">
         <LikeButton postId={post.id} userId={userId} currentLikes={post.likes || []} />
-        <Image src="/post/comment.svg" height="35" width="35" alt="comment-icon" />
+        <Image onClick={() => setCommentModal(true)} className="cursor-pointer" src="/post/comment.svg" height="35" width="35" alt="comment-icon" />
       </footer>
     </main>
+    
+    </>
   );
 }
