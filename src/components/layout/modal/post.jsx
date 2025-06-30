@@ -24,7 +24,7 @@ export default function PostModal({ isOpen, onClose }) {
 
   return (
     isOpen && (
-      <main className="absolute w-full top-0 right-0 h-screen z-100 flex justify-center items-start bg-white">
+      <main className="absolute w-full top-0 right-0 h-screen z-103 flex justify-center items-start bg-white">
         <form
           onSubmit={handlePost}
           className="flex flex-col w-full justify-start"
