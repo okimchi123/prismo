@@ -17,10 +17,10 @@ export function FriendListBar() {
   if(isMobile){
     return (
     <Sheet>
-      <SheetTrigger className="absolute top-4 right-4">
+      <SheetTrigger className="fixed z-101 top-4 right-3">
         <Image src="/friends.svg" width="23" height="23" alt="icon" />
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="z-200">
         <SheetHeader>
           <SheetTitle className="prismo">Friends</SheetTitle>
         </SheetHeader>
