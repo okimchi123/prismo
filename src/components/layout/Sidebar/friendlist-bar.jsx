@@ -20,7 +20,7 @@ export function FriendListBar() {
       <SheetTrigger className="fixed z-101 top-4 right-3">
         <Image src="/friends.svg" width="23" height="23" alt="icon" />
       </SheetTrigger>
-      <SheetContent className="z-200">
+      <SheetContent className="z-104">
         <SheetHeader>
           <SheetTitle className="prismo">Friends</SheetTitle>
         </SheetHeader>
