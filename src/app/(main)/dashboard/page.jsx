@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { storeUser } from "@/hooks/state";
 import PostModal from "@/components/layout/modal/post";
 import UserPost from "@/components/layout/Dashboard/post";
-import { darumadrop_one } from "@/components/ui/fonts";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useUserPosts } from "@/hooks/fetchUserPost";
 
@@ -26,12 +25,7 @@ export default function Page() {
   },[isOpen])
 
   return (
-    <main className="flex flex-col md:w-[400px] items-center gap-2 py-2 px-2">
-      {IsMobile && <nav className="w-full flex py-2 justify-between">
-          <figure className="flex border">
-            <h1 className={`${darumadrop_one.className} prismo text-[20px] ml-6`}>prismo</h1>
-          </figure>
-      </nav> }
+    <main className="flex flex-col md:w-[400px] xl:ml-20 lg:ml-18 ml-0 items-center gap-2 sm:py-0 md:py-2 px-2">
       <PostModal 
       isOpen={isOpen} 
       onClose={() => setIsOpen(false)}
