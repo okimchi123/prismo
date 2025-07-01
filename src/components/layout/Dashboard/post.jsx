@@ -21,7 +21,7 @@ export default function UserPost({ post, loading, userId }) {
           <div className="flex flex-col">
             <h1 className="text-[14px]">{post.userName}</h1>
             <p className="text-[12px] prismo">@{post.userUsername}</p>
-            <small className="text-gray-500 text-[13px]">
+            <small className="text-gray-500 text-[11px]">
               {formatDistanceToNow(post.createdAt.toDate(), {
                 addSuffix: true,
               })}
