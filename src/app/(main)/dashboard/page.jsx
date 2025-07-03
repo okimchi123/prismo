@@ -41,7 +41,7 @@ export default function Page() {
         </Button>
       </section>
       {posts.length === 0 ? <p>No post yet</p>: posts.map((post)=>(
-        <UserPost key={post.id} post={post} loading={loading} userId={user.uid} />
+        <UserPost key={post.id} post={post} loading={loading} user={user} />
       ))}
     </main>
   );
