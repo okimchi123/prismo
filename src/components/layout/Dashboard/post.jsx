@@ -6,14 +6,12 @@ import { LikeButton } from "@/components/ui/likeButton";
 import { useState } from "react";
 import { CommentModal } from "../modal/comment";
 
-export default function UserPost({ post, loading, userId }) {
+export default function UserPost({ post, loading, user }) {
   const [commentModal, setCommentModal] = useState(false)
-
-
   if (loading) return <p>Loading posts...</p>;
   return (
     <>
-    <CommentModal isOpen={commentModal} Close={() => setCommentModal(false)}/>
+    <CommentModal isOpen={commentModal} Close={() => setCommentModal(false)} postID={post.id} user={user} />
     <main className="bg-white w-full p-3 flex flex-col gap-2">
       <header>
         <figure className="flex gap-1">
@@ -34,7 +32,7 @@ export default function UserPost({ post, loading, userId }) {
       </article>
 
       <footer className="flex items-start">
-        <LikeButton postId={post.id} userId={userId} currentLikes={post.likes || []} />
+        <LikeButton postId={post.id} userId={user?.uid} currentLikes={post.likes || []} />
         <Image onClick={() => setCommentModal(true)} className="cursor-pointer" src="/post/comment.svg" height="35" width="35" alt="comment-icon" />
       </footer>
     </main>
