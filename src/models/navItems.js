@@ -1,7 +1,7 @@
 import {
-    Calendar,
     Home,
     Users,
+    User,
   } from "lucide-react";
 
   export const items = [
@@ -14,6 +14,12 @@ import {
       title: "Friends",
       url: "/friends",
       icon: Users,
+    },
+    {
+      title: "Profile",
+      url: "/profile",
+      icon: 
+      User,
     },
   ];
   
