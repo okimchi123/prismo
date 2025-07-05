@@ -6,6 +6,7 @@ import { SendHorizontal } from "lucide-react";
 import clsx from "clsx";
 import { addComment, getComment } from "@/services/comment.service";
 import { formatDistanceToNow } from "date-fns";
+import { motion } from "framer-motion";
 
 export function CommentModal({ isOpen, Close, postID, user }) {
   const [commentData, setCommentData] = useState("");
@@ -22,7 +23,7 @@ export function CommentModal({ isOpen, Close, postID, user }) {
   return (
     isOpen && (
       <div className="fixed top-0 right-0 z-100 w-full h-screen bg-[#FFA1B3]/30 flex justify-center items-center">
-        <div className="w-[400px] relative h-[400px] rounded-xl pt-6 pb-2 px-2 bg-white">
+        <motion.div initial={{scale:0}} animate={{scale:1}} className="w-[400px] relative h-[400px] rounded-xl pt-6 pb-2 px-2 bg-white">
           <button className="text-sm absolute right-2 top-2" onClick={Close}>
             Close
           </button>
@@ -67,7 +68,7 @@ export function CommentModal({ isOpen, Close, postID, user }) {
               )}
             />
           </div>
-        </div>
+        </motion.div>
       </div>
     )
   );
