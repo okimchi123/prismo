@@ -8,6 +8,7 @@ import NextImage from "next/image";
 import clsx from "clsx";
 import { handlePostSubmit } from "@/services/post.service";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 export default function PostModal({ isOpen, onClose }) {
   const disabledBtn = "bg-gray-400";
@@ -24,10 +25,12 @@ export default function PostModal({ isOpen, onClose }) {
 
   return (
     isOpen && (
-      <main className="absolute w-full top-0 right-0 h-screen z-103 flex justify-center items-start bg-white">
-        <form
+      <main className="absolute w-full md:fixed top-0 right-0 h-screen z-103 flex justify-center items-start md:items-center bg-[#FFA1B3]/30">
+        <motion.form
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
           onSubmit={handlePost}
-          className="flex flex-col w-full justify-start"
+          className="flex flex-col w-full h-full md:h-[95%] md:w-[400px] rounded-sm bg-white justify-start"
         >
           <section className="flex items-center p-2 justify-between border-b-1">
             <div className="flex items-center gap-4">
@@ -71,7 +74,7 @@ export default function PostModal({ isOpen, onClose }) {
               <span>Photos|Videos</span>
             </div>
           </section>
-        </form>
+        </motion.form>
       </main>
     )
   );
