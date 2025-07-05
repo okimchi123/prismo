@@ -25,7 +25,7 @@ export default function Page() {
   },[isOpen])
 
   return (
-    <main className="flex flex-col md:w-[400px] xl:ml-20 lg:ml-18 ml-0 items-center gap-2 sm:py-0 md:py-2 px-2">
+    <main className="flex flex-col md:w-[400px] items-center gap-2 sm:py-0 md:py-2 px-2">
       <PostModal 
       isOpen={isOpen} 
       onClose={() => setIsOpen(false)}

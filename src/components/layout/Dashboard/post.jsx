@@ -12,7 +12,7 @@ export default function UserPost({ post, loading, user }) {
   return (
     <>
     <CommentModal isOpen={commentModal} Close={() => setCommentModal(false)} postID={post.id} user={user} />
-    <main className="bg-white w-full p-3 flex flex-col gap-2">
+    <main className="bg-white rounded-xs w-full p-3 flex flex-col gap-2">
       <header>
         <figure className="flex gap-1">
           <DisplayImage img="/jake.jpg" />

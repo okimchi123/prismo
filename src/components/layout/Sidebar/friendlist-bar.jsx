@@ -55,7 +55,7 @@ export function FriendListBar() {
   );
   }
   return(
-    <section className="w-[550px] h-[100vh] sticky top-0 right-0 bg-white p-4">
+    <section className="w-[350px] h-[100vh] sticky top-0 right-0 bg-white p-4">
       <h1 className="prismo font-semibold mb-3">Friends</h1>
       <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
