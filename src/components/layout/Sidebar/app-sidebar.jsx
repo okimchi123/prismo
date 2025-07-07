@@ -42,7 +42,7 @@ export function AppSidebar() {
   const defStyle = "";  
 
   return (
-    <Sidebar className="select-none md:w-[200px] lg:w-[350px]">
+    <Sidebar className="select-none md:w-[16rem] lg:w-[350px]">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-lg mb-2 flex items-center gap-1 select-none prismo">
