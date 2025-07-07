@@ -27,7 +27,7 @@ export default function UserPost({ post, loading, user }) {
           </div>
         </figure>
       </header>
-      <article className="">
+      <article className="max-w-[500px]">
         <p>{post.text}</p>
       </article>
 
