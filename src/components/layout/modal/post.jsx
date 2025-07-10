@@ -51,7 +51,7 @@ export default function PostModal({ isOpen, onClose }) {
             <div className="flex gap-2 mb-2">
               <figure className="w-12 h-12 relative">
                 <NextImage
-                  src="/finn.jpg"
+                  src={ user.dpURL || "/finn.jpg"}
                   fill
                   alt="profile_pic"
                   className="object-cover rounded-md"
