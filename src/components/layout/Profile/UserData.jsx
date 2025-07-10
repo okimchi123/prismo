@@ -36,7 +36,7 @@ export default function UserData({ user, posts }) {
   return (
     <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
       <button
-        className="absolute right-3 top-3 select-none not-last:cursor-pointer"
+        className="absolute right-3 top-3 select-none"
         onClick={() => setEdit(true)}
         disabled={edit}
       >
@@ -44,17 +44,25 @@ export default function UserData({ user, posts }) {
           height="20"
           width="20"
           className={clsx(" transition-all", {
-            "text-gray-300": edit,
-            "prismo hover:scale-115": !edit,
+            "text-gray-400": edit,
+            "prismo hover:scale-115 cursor-pointer": !edit,
           })}
         />
       </button>
 
       <h1 className="prismo font-semibold mb-2">{user.username}</h1>
       <figure className="flex items-start gap-4">
-        <div className="PROFILE-PIC relative yellow-bg h-[100px] w-[100px]">
+        <div className="PROFILE-PIC flex justify-center items-center relative yellow-bg h-[100px] w-[100px]">
+          <figure className="w-18 h-18 relative">
+                    <Image
+                    src={user.dpURL||"/jake.jpg"}
+                    fill
+                    className="rounded-full object-cover"
+                    alt="DP"
+                  />
+                </figure>
           {edit ? (
-            <div className="shadow absolute flex justify-center items-center w-full h-full bg-black/50">
+            <div className="shadow absolute top-0 right-0 flex justify-center items-center w-full h-full bg-black/50">
               <label htmlFor="profileID" className="cursor-pointer">
                 {previewPic ? (
                 <figure className="w-18 h-18 relative">
