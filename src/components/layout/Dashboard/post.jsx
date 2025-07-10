@@ -15,7 +15,7 @@ export default function UserPost({ post, loading, user }) {
     <main className="bg-white rounded-xs w-full p-3 flex flex-col gap-2">
       <header>
         <figure className="flex gap-1">
-          <DisplayImage img="/jake.jpg" />
+          <DisplayImage img={ user.dpURL || "/jake.jpg"} />
           <div className="flex flex-col">
             <h1 className="text-[14px]">{post.userName}</h1>
             <p className="text-[12px] prismo">@{post.userUsername}</p>
