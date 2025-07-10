@@ -32,7 +32,7 @@ export default function Page() {
       />
 
       <section className="w-full flex items-center justify-center rounded-lg gap-2 bg-white px-2 py-3">
-        <DisplayImage img="/finn.jpg" />
+        <DisplayImage img={ user.dpURL || "/finn.jpg"} />
         <Button 
         onClick={() => setIsOpen(isOpen => !isOpen)}
         className="bg-white text-gray-500 hover:bg-gray-300 transition-all font-normal gray-bg w-[80%] flex justify-start py-5 active:scale-98"
