@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import DisplayImage from "@/components/ui/display-image";
 import { useState, useEffect } from "react";
 import { storeUser } from "@/hooks/state";
-import PostModal from "@/components/layout/Modal/post";
+import PostModal from "@/components/layout/modal/Post";
 import UserPost from "@/components/layout/Dashboard/post";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useUserPosts } from "@/hooks/fetchUserPost";
