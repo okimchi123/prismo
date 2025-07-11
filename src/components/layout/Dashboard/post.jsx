@@ -4,7 +4,7 @@ import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { LikeButton } from "@/components/ui/likeButton";
 import { useState } from "react";
-import { CommentModal } from "../Modal/comment";
+import CommentModal from "../Modal/comment";
 
 export default function UserPost({ post, loading, user }) {
   const [commentModal, setCommentModal] = useState(false)
