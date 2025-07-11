@@ -8,7 +8,7 @@ import { addComment, getComment } from "@/services/comment.service";
 import { formatDistanceToNow } from "date-fns";
 import { motion } from "framer-motion";
 
-export function CommentModal({ isOpen, Close, postID, user }) {
+export default function CommentModal({ isOpen, Close, postID, user }) {
   const [commentData, setCommentData] = useState("");
   const comments = getComment(postID);
 
@@ -23,22 +23,36 @@ export function CommentModal({ isOpen, Close, postID, user }) {
   return (
     isOpen && (
       <div className="fixed top-0 right-0 z-100 w-full h-screen bg-[#FFA1B3]/30 flex justify-center items-center">
-        <motion.div initial={{scale:0}} animate={{scale:1}} className="w-[400px] relative h-[400px] rounded-xl pt-6 pb-2 px-2 bg-white">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          className="w-[400px] relative h-[400px] rounded-xl pt-6 pb-2 px-2 bg-white"
+        >
           <button className="text-sm absolute right-2 top-2" onClick={Close}>
             Close
           </button>
           <section className="w-[95%] flex flex-col gap-2">
             {comments.map((comment) => (
-              <div key={comment.id} className="comment-card">
-                <div className="user-data flex gap-2 items-center">
-                  <h1 className="text-[12px] prismo">{comment.userName}</h1>
-                  <small className="text-gray-500 text-[10px]">
-                    {formatDistanceToNow(comment.createdAt.toDate(), {
-                      addSuffix: true,
-                    })}
-                  </small>
+              <div key={comment.id} className="comment-card flex gap-2">
+                <figure className="w-12 h-12 relative">
+                  <Image
+                    src={user.dpURL || "/finn.jpg"}
+                    fill
+                    alt="profile_pic"
+                    className="object-cover rounded-md"
+                  />
+                </figure>
+                <div className="name-message flex flex-col">
+                  <div className="user-data flex gap-2 items-center">
+                    <h1 className="text-[12px] prismo">{comment.userName}</h1>
+                    <small className="text-gray-500 text-[10px]">
+                      {formatDistanceToNow(comment.createdAt.toDate(), {
+                        addSuffix: true,
+                      })}
+                    </small>
+                  </div>
+                  <p className="text-[13px]">{comment.commentData}</p>
                 </div>
-                <p className="text-[13px]">{comment.commentData}</p>
               </div>
             ))}
           </section>
