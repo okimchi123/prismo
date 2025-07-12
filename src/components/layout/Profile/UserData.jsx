@@ -5,6 +5,8 @@ import { useState } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import ChangePic from "@/services/profile-pic.service";
+import { AnimatePresence } from "framer-motion";
+import LoadingSpinner from "@/components/anim/Loading";
 
 export default function UserData({ user, posts }) {
   const [file, setFile] = useState(null);
@@ -34,6 +36,8 @@ export default function UserData({ user, posts }) {
   };
 
   return (
+    <>
+    <AnimatePresence>{loading && <LoadingSpinner />} </AnimatePresence>
     <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
       <button
         className="absolute right-3 top-3 select-none"
@@ -134,5 +138,7 @@ export default function UserData({ user, posts }) {
         <></>
       )}
     </section>
+    </>
+    
   );
 }
