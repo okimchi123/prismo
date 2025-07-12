@@ -6,13 +6,12 @@ import { useState, useEffect } from "react";
 import { storeUser } from "@/hooks/state";
 import PostModal from "@/components/layout/modal/Post";
 import UserPost from "@/components/layout/Dashboard/post";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useUserPosts } from "@/hooks/fetchUserPost";
+import { AnimatePresence } from "framer-motion";
 
 export default function Page() {
   const user = storeUser((state) => state.user);
   const {posts, loading} = useUserPosts(user?.uid)
-  const IsMobile = useIsMobile();
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -26,10 +25,12 @@ export default function Page() {
 
   return (
     <main className="flex flex-col md:w-[400px] items-center gap-2 sm:py-0 md:py-2 px-2">
-      <PostModal 
-      isOpen={isOpen} 
+      <AnimatePresence>
+        {isOpen && <PostModal 
       onClose={() => setIsOpen(false)}
-      />
+      />}
+      </AnimatePresence>
+      
 
       <section className="w-full flex items-center justify-center rounded-lg gap-2 bg-white px-2 py-3">
         <DisplayImage img={ user.dpURL || "/finn.jpg"} />

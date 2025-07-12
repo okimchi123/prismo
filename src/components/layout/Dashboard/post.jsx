@@ -5,13 +5,14 @@ import { formatDistanceToNow } from "date-fns";
 import { LikeButton } from "@/components/ui/likeButton";
 import { useState } from "react";
 import CommentModal from "../modal/CommentModal";
+import { AnimatePresence } from "framer-motion";
 
 export default function UserPost({ post, loading, user }) {
   const [commentModal, setCommentModal] = useState(false)
   if (loading) return <p>Loading posts...</p>;
   return (
     <>
-    <CommentModal isOpen={commentModal} Close={() => setCommentModal(false)} postID={post.id} user={user} />
+   <AnimatePresence> {commentModal &&  <CommentModal Close={() => setCommentModal(false)} postID={post.id} user={user} /> }</AnimatePresence> 
     <main className="bg-white rounded-xs w-full p-3 flex flex-col gap-2">
       <header>
         <figure className="flex gap-1">
