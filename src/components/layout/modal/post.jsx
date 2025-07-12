@@ -8,9 +8,9 @@ import NextImage from "next/image";
 import clsx from "clsx";
 import { handlePostSubmit } from "@/services/post.service";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"
 
-export default function PostModal({ isOpen, onClose }) {
+export default function PostModal({ onClose }) {
   const disabledBtn = "bg-gray-400";
   const user = storeUser((state) => state.user);
   const [postMessage, setPostMessage] = useState("");
@@ -24,11 +24,12 @@ export default function PostModal({ isOpen, onClose }) {
   };
 
   return (
-    isOpen && (
-      <main className="absolute w-full md:fixed top-0 right-0 h-screen z-103 flex justify-center items-start md:items-center bg-[#FFA1B3]/30">
+      <motion.main exit={{opacity:0}} className="absolute w-full md:fixed top-0 right-0 h-screen z-103 flex justify-center items-start md:items-center bg-[#FFA1B3]/30">
         <motion.form
+          key="modal"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
+          exit={{scale: 0}}
           onSubmit={handlePost}
           className="flex flex-col w-full h-full md:h-[95%] md:w-[400px] rounded-sm bg-white justify-start"
         >
@@ -75,7 +76,6 @@ export default function PostModal({ isOpen, onClose }) {
             </div>
           </section>
         </motion.form>
-      </main>
-    )
+      </motion.main>
   );
 }
