@@ -5,15 +5,13 @@ import { useState } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import ChangePic from "@/services/profile-pic.service";
-import { AnimatePresence } from "framer-motion";
-import LoadingSpinner from "@/components/anim/Loading";
+import { toast } from "sonner";
 
 export default function UserData({ user, posts }) {
   const [file, setFile] = useState(null);
   const [previewPic, setPreviewPic] = useState(null);
   const [edit, setEdit] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(false)
   const handleChange = (e) => {
     const newFile = e.target.files[0];
     setFile(newFile);
@@ -22,22 +20,23 @@ export default function UserData({ user, posts }) {
 
   const handleSave = async () => {
     if (!file) return;
+    setLoading(true)
     try {
-      setLoading(true);
+      toast.loading("Updating your profile...",{id:"load"})
       await ChangePic(file, user.uid);
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false);
+      toast.success("Updated!")
+      setTimeout(()=>{toast.dismiss('load')},3000)
       setEdit(false);
       setPreviewPic(null)
       setFile(null)
     }
   };
-
+  
   return (
     <>
-    <AnimatePresence>{loading && <LoadingSpinner />} </AnimatePresence>
     <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
       <button
         className="absolute right-3 top-3 select-none"
@@ -53,7 +52,6 @@ export default function UserData({ user, posts }) {
           })}
         />
       </button>
-
       <h1 className="prismo font-semibold mb-2">{user.username}</h1>
       <figure className="flex items-start gap-4">
         <div className="PROFILE-PIC flex justify-center items-center relative yellow-bg h-[100px] w-[100px]">
@@ -129,7 +127,7 @@ export default function UserData({ user, posts }) {
               "text-white  hover:scale-110 transition-all active:scale-100",
               { "bg-prismo hover:bg-prismo": file }
             )}
-            disabled={!file}
+            disabled={!file || loading}
           >
             Save
           </Button>
