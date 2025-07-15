@@ -18,8 +18,8 @@ export default function ProfileData({ close, user }) {
         <strong onClick={close} className="absolute top-2 right-2">
           close
         </strong>
-
-        <figure className="w-23 h-23 relative">
+        <section className="flex flex-col items-center gap-1 select-none">
+            <figure className="w-23 h-23 relative">
           <Image
             src={user.dpURL || "/jake.jpg"}
             fill
@@ -27,6 +27,10 @@ export default function ProfileData({ close, user }) {
             alt="DP"
           />
         </figure>
+        <span className="text-sm py-1 font-medium prismo cursor-pointer hover:scale-105 transition-all">Change Image</span>
+        </section>
+        
+
       </motion.div>
     </motion.div>
   );
