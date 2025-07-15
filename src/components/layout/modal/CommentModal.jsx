@@ -6,7 +6,7 @@ import { SendHorizontal } from "lucide-react";
 import clsx from "clsx";
 import { addComment, getComment } from "@/services/comment.service";
 import { formatDistanceToNow } from "date-fns";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function CommentModal({ Close, postID, user }) {
   const [commentData, setCommentData] = useState("");
