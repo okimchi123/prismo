@@ -6,12 +6,16 @@ import clsx from "clsx";
 import Image from "next/image";
 import ChangePic from "@/services/profile-pic.service";
 import { toast } from "sonner";
+import ProfileData from "../modal/ProfileData";
+import { AnimatePresence } from "framer-motion";
 
 export default function UserData({ user, posts }) {
   const [file, setFile] = useState(null);
   const [previewPic, setPreviewPic] = useState(null);
   const [edit, setEdit] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+
   const handleChange = (e) => {
     const newFile = e.target.files[0];
     setFile(newFile);
@@ -37,11 +41,12 @@ export default function UserData({ user, posts }) {
   
   return (
     <>
+    <AnimatePresence>{editModal &&  <ProfileData close={()=>setEditModal(false)} user={user} />}</AnimatePresence> 
     <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
       <button
         className="absolute right-3 top-3 select-none"
-        onClick={() => setEdit(true)}
-        disabled={edit}
+        onClick={() => setEditModal(true)}
+        disabled={editModal}
       >
         <Pencil
           height="20"
