@@ -1,43 +1,13 @@
 "use client";
-import { Pencil, Camera } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Pencil } from "lucide-react";
 import { useState } from "react";
-import clsx from "clsx";
 import Image from "next/image";
-import ChangePic from "@/services/profile-pic.service";
-import { toast } from "sonner";
 import ProfileData from "../modal/ProfileData";
 import { AnimatePresence } from "framer-motion";
 
 export default function UserData({ user, posts }) {
-  const [file, setFile] = useState(null);
-  const [previewPic, setPreviewPic] = useState(null);
-  const [edit, setEdit] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [editModal, setEditModal] = useState(false);
 
-  const handleChange = (e) => {
-    const newFile = e.target.files[0];
-    setFile(newFile);
-    setPreviewPic(URL.createObjectURL(newFile));
-  };
-
-  const handleSave = async () => {
-    if (!file) return;
-    setLoading(true)
-    try {
-      toast.loading("Updating your profile...",{id:"load"})
-      await ChangePic(file, user.uid);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      toast.success("Updated!")
-      setTimeout(()=>{toast.dismiss('load')},3000)
-      setEdit(false);
-      setPreviewPic(null)
-      setFile(null)
-    }
-  };
   
   return (
     <>
@@ -51,10 +21,7 @@ export default function UserData({ user, posts }) {
         <Pencil
           height="20"
           width="20"
-          className={clsx(" transition-all", {
-            "text-gray-400": edit,
-            "prismo hover:scale-115 cursor-pointer": !edit,
-          })}
+          className="transition-all prismo hover:scale-115 cursor-pointer"
         />
       </button>
       <h1 className="prismo font-semibold mb-2">{user.username}</h1>
@@ -68,38 +35,6 @@ export default function UserData({ user, posts }) {
                     alt="DP"
                   />
                 </figure>
-          {edit ? (
-            <div className="shadow absolute top-0 right-0 flex justify-center items-center w-full h-full bg-black/50">
-              <label htmlFor="profileID" className="cursor-pointer">
-                {previewPic ? (
-                <figure className="w-18 h-18 relative">
-                    <Image
-                    src={previewPic}
-                    fill
-                    className="rounded-full object-cover"
-                    alt="newPic"
-                  />
-                </figure>
-                  
-                ) : (
-                  <Camera
-                    height="30"
-                    width="30"
-                    className="hover:scale-120 transition-all select-none text-white cursor-pointer hover:text-pink-400 "
-                  />
-                )}
-              </label>
-              <input
-                id="profileID"
-                type="file"
-                accept="image/*"
-                onChange={handleChange}
-                hidden
-              />
-            </div>
-          ) : (
-            <></>
-          )}
         </div>
 
         <div className="USER-DATA flex flex-col gap-2 h-[100px] py-2 justify-between">
@@ -118,28 +53,6 @@ export default function UserData({ user, posts }) {
           </div>
         </div>
       </figure>
-      {edit ? (
-        <div className="absolute right-3 bottom-3 select-none flex gap-2">
-          <Button
-            className="border-red-500 border-2 bg-white/0 text-red-500 hover:bg-red-500 hover:text-white hover:scale-110 transition-all active:scale-100"
-            onClick={() => setEdit(false)}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSave}
-            className={clsx(
-              "text-white  hover:scale-110 transition-all active:scale-100",
-              { "bg-prismo hover:bg-prismo": file }
-            )}
-            disabled={!file || loading}
-          >
-            Save
-          </Button>
-        </div>
-      ) : (
-        <></>
-      )}
     </section>
     </>
     
