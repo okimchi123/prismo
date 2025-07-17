@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import ChangePic from "@/services/profile-pic.service";
 import clsx from "clsx";
+import { Input } from "@/components/ui/input";
 
 export default function ProfileData({ close, user }) {
   const [file, setFile] = useState(null);
@@ -37,13 +38,15 @@ export default function ProfileData({ close, user }) {
     }
   };
 
+  const labelDesign = "text-sm";
+
   return (
     <motion.div
       exit={{ opacity: 0 }}
       className="fixed top-0 right-0 z-100 w-full h-screen bg-[#FFA1B3]/30 flex justify-center items-center"
     >
       <motion.div
-        className="w-[500px] h-[90%] bg-white pt-5 relative rounded-lg flex flex-col items-center"
+        className="w-[500px] h-[80%] bg-white pt-5 relative rounded-lg flex flex-col items-center"
         key="modal"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -81,7 +84,36 @@ export default function ProfileData({ close, user }) {
             hidden
           />
         </section>
-
+        <section className="w-full flex flex-col items-start py-2 px-4 gap-1">
+          <div className="flex w-full justify-between">
+            <div>
+              <label htmlFor="" className={labelDesign}>
+                First name
+              </label>
+              <Input placeholder={user.firstname} />
+            </div>
+            <div>
+              <label htmlFor="" className={labelDesign}>
+                Lastname
+              </label>
+              <Input placeholder={user.lastname} />
+            </div>
+          </div>
+          <div className="flex w-full justify-between">
+            <div>
+              <label htmlFor="" className={labelDesign}>
+                Nickname
+              </label>
+              <Input placeholder={user.username} />
+            </div>
+            <div>
+              <label htmlFor="" className={labelDesign}>
+                Email
+              </label>
+              <Input placeholder={user.email} />
+            </div>
+          </div>
+        </section>
         <div className="absolute right-3 bottom-3 select-none flex gap-2">
           <Button
             className="border-red-500 border-2 bg-white/0 text-red-500 hover:bg-red-500 hover:text-white hover:scale-110 transition-all active:scale-100"
