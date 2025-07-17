@@ -110,7 +110,7 @@ export default function ProfileData({ close, user }) {
               <label htmlFor="" className={labelDesign}>
                 Email
               </label>
-              <Input placeholder={user.email} />
+              <Input placeholder={user.email} disabled className="select-none" />
             </div>
           </div>
         </section>
