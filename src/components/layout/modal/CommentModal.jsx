@@ -43,7 +43,7 @@ export default function CommentModal({ Close, postID, user }) {
                       className="object-cover rounded-md"
                     />
                   </figure>
-                  <div className="name-message flex flex-col">
+                  <div className="name-message flex flex-col w-[85%] ">
                     <div className="user-data flex gap-2 items-center">
                       <h1 className="text-[12px] prismo">{comment.userName}</h1>
                       <small className="text-gray-500 text-[10px]">
