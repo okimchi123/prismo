@@ -7,11 +7,17 @@ import { toast } from "sonner";
 import ChangePic from "@/services/profile-pic.service";
 import clsx from "clsx";
 import { Input } from "@/components/ui/input";
+import EditUserData from "../Profile/EditUserData";
 
 export default function ProfileData({ close, user }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [previewPic, setPreviewPic] = useState(null);
+  const [userData, setUserData] = useState({
+    firstname: "",
+    lastname: "",
+    nickname: "",
+  })
 
   const handleChange = (e) => {
     const newFile = e.target.files[0];
@@ -84,36 +90,7 @@ export default function ProfileData({ close, user }) {
             hidden
           />
         </section>
-        <section className="w-full flex flex-col items-start py-2 px-4 gap-1">
-          <div className="flex w-full justify-between">
-            <div>
-              <label htmlFor="" className={labelDesign}>
-                First name
-              </label>
-              <Input placeholder={user.firstname} />
-            </div>
-            <div>
-              <label htmlFor="" className={labelDesign}>
-                Lastname
-              </label>
-              <Input placeholder={user.lastname} />
-            </div>
-          </div>
-          <div className="flex w-full justify-between">
-            <div>
-              <label htmlFor="" className={labelDesign}>
-                Nickname
-              </label>
-              <Input placeholder={user.username} />
-            </div>
-            <div>
-              <label htmlFor="" className={labelDesign}>
-                Email
-              </label>
-              <Input placeholder={user.email} disabled className="select-none" />
-            </div>
-          </div>
-        </section>
+        <EditUserData user={user} />
         <div className="absolute right-3 bottom-3 select-none flex gap-2">
           <Button
             className="border-red-500 border-2 bg-white/0 text-red-500 hover:bg-red-500 hover:text-white hover:scale-110 transition-all active:scale-100"
