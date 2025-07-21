@@ -1,7 +1,7 @@
 import {doc, updateDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 
-export default async function ChangePic( file, userID){
+export async function ChangePic( file, userID){
     if(!file) return;
 
     const formData = new FormData();
@@ -24,4 +24,12 @@ export default async function ChangePic( file, userID){
     })
 
     return downloadURL;
+}
+export async function ChangeUserData(userID, userData){
+    const filteredData = Object.fromEntries(
+    Object.entries(userData).filter(([_, value]) => value.trim() !== "")
+  );
+
+  const userRef = doc(db, 'users', userID)
+  await updateDoc(userRef, filteredData)
 }
