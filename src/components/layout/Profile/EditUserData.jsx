@@ -1,6 +1,8 @@
+'use client'
 import { Input } from "@/components/ui/input";
 
-export default function EditUserData({user}){
+export default function EditUserData({user, setData, userDatas}){
+
   const labelDesign = "text-sm";
 
     return(
@@ -10,13 +12,13 @@ export default function EditUserData({user}){
                       <label htmlFor="" className={labelDesign}>
                         First name
                       </label>
-                      <Input placeholder={user.firstname} />
+                      <Input value={userDatas.firstname} onChange={(e)=>setData((prev)=>({...prev, firstname:e.target.value,}))} placeholder={user.firstname} />
                     </div>
                     <div>
                       <label htmlFor="" className={labelDesign}>
                         Lastname
                       </label>
-                      <Input placeholder={user.lastname} />
+                      <Input value={userDatas.lastname} onChange={(e)=>setData((prev)=>({...prev, lastname:e.target.value,}))} placeholder={user.lastname} />
                     </div>
                   </div>
                   <div className="flex w-full justify-between">
@@ -24,7 +26,7 @@ export default function EditUserData({user}){
                       <label htmlFor="" className={labelDesign}>
                         Nickname
                       </label>
-                      <Input placeholder={user.username} />
+                      <Input value={userDatas.nickname} onChange={(e)=>setData((prev)=>({...prev, nickname:e.target.value,}))} placeholder={user.username} />
                     </div>
                     <div>
                       <label htmlFor="" className={labelDesign}>
