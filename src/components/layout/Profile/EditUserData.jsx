@@ -8,7 +8,7 @@ export default function EditUserData({user}){
                   <div className="flex w-full justify-between">
                     <div>
                       <label htmlFor="" className={labelDesign}>
-                        First namee
+                        First name
                       </label>
                       <Input placeholder={user.firstname} />
                     </div>
