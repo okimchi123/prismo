@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { Camera } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -78,8 +79,9 @@ export default function ProfileData({ close, user }) {
           </figure>
           <label
             htmlFor="profileID"
-            className="text-sm py-1 font-medium prismo cursor-pointer hover:scale-105 transition-all"
+            className="text-sm gap-[2px] py-1 font-medium prismo cursor-pointer hover:scale-105 transition-all flex items-center"
           >
+            <Camera size="18" />
             Change Image
           </label>
           <input
