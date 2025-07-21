@@ -21,7 +21,7 @@ export function getComment(postID){
         if(!postID) return;
 
         const commentRef = collection(db, "posts", postID, "comments");
-        const q = query(commentRef, orderBy("createdAt", "asc"))
+        const q = query(commentRef, orderBy("createdAt", "desc"))
 
         const unsubscribe = onSnapshot(q, (snapshot) =>{
             const data = snapshot.docs.map((doc)=>({
