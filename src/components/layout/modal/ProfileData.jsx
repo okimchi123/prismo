@@ -5,9 +5,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import ChangePic from "@/services/profile-pic.service";
+import {ChangePic, ChangeUserData} from "@/services/user-update";
 import clsx from "clsx";
-import { Input } from "@/components/ui/input";
 import EditUserData from "../Profile/EditUserData";
 
 export default function ProfileData({ close, user }) {
@@ -25,13 +24,17 @@ export default function ProfileData({ close, user }) {
     setFile(newFile);
     setPreviewPic(URL.createObjectURL(newFile));
   };
-
   const handleSave = async () => {
-    if (!file) return;
     setLoading(true);
     try {
-      toast.loading("Updating your profile...", { id: "load" });
-      await ChangePic(file, user.uid);
+      if(file){
+        toast.loading("Updating your profile...", { id: "load" });
+        await ChangePic(file, user.uid);
+      }
+      if(userData.firstname || userData.lastname || userData.nickname){
+        await ChangeUserData(user.uid, userData)
+      }
+
     } catch (error) {
       console.log(error);
     } finally {
@@ -44,8 +47,6 @@ export default function ProfileData({ close, user }) {
       setFile(null);
     }
   };
-
-  const labelDesign = "text-sm";
 
   return (
     <motion.div
@@ -92,7 +93,7 @@ export default function ProfileData({ close, user }) {
             hidden
           />
         </section>
-        <EditUserData user={user} />
+        <EditUserData user={user} setData={setUserData} userDatas={userData} />
         <div className="absolute right-3 bottom-3 select-none flex gap-2">
           <Button
             className="border-red-500 border-2 bg-white/0 text-red-500 hover:bg-red-500 hover:text-white hover:scale-110 transition-all active:scale-100"
@@ -104,9 +105,9 @@ export default function ProfileData({ close, user }) {
             onClick={handleSave}
             className={clsx(
               "text-white  hover:scale-110 transition-all active:scale-100",
-              { "bg-prismo hover:bg-prismo": file }
+              { "bg-prismo hover:bg-prismo": file || userData.firstname || userData.lastname || userData.nickname }
             )}
-            disabled={!file || loading}
+            disabled={!userData.firstname && !userData.lastname && !userData.nickname && !file || loading}
           >
             Save
           </Button>
