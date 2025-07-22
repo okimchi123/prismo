@@ -82,7 +82,9 @@ export default function ProfileData({ close, user }) {
               <Camera size="18" />
               Change Image
             </button>
-            <motion.div className="absolute -bottom-13 bg-white w-full flex flex-col">
+            <motion.div 
+            initial={{scale}}
+            className="absolute -bottom-13 bg-white w-full flex flex-col">
               <span>Prismo Pics</span>
               <label htmlFor="profileID">From Device</label>
             </motion.div>
