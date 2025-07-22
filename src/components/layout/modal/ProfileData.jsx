@@ -8,11 +8,13 @@ import { toast } from "sonner";
 import { ChangePic, ChangeUserData } from "@/services/user-update";
 import clsx from "clsx";
 import EditUserData from "../Profile/EditUserData";
+import { items } from "@/models/navItems";
 
 export default function ProfileData({ close, user }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [previewPic, setPreviewPic] = useState(null);
+  const [picMenu, setPicMenu] = useState(false);
   const [userData, setUserData] = useState({
     firstname: "",
     lastname: "",
@@ -46,7 +48,27 @@ export default function ProfileData({ close, user }) {
       setFile(null);
     }
   };
-
+   const MenuAnimate = {
+    enter: {
+      opacity: 1,
+      rotateX: 0,
+      transition: {
+        duration: 0.3
+      },
+      display: "flex"
+    },
+    exit: {
+      opacity: 0,
+      rotateX: -15,
+      transition: {
+        duration: 0.3,
+      },
+      transitionEnd: {
+        display: "none"
+      }
+    }
+  };
+  const itemStyle = "py-2 px-1 hover:bg-pink-300 transition-all"
   return (
     <motion.div
       exit={{ opacity: 0 }}
@@ -77,17 +99,23 @@ export default function ProfileData({ close, user }) {
               />
             )}
           </figure>
-          <div className="border border-black relative">
-            <button className="text-sm gap-[2px] py-1 font-medium prismo cursor-pointer hover:scale-105 transition-all flex items-center">
+          <div className="relative">
+            <button 
+            onClick={()=>setPicMenu(!picMenu)}
+            className="text-sm gap-[2px] py-1 font-medium prismo cursor-pointer hover:scale-105 transition-all flex items-center">
               <Camera size="18" />
               Change Image
             </button>
-            <motion.div 
-            initial={{scale}}
-            className="absolute -bottom-13 bg-white w-full flex flex-col">
-              <span>Prismo Pics</span>
-              <label htmlFor="profileID">From Device</label>
-            </motion.div>
+              <motion.div
+                initial="exit"
+                animate={picMenu ? "enter" : "exit"}
+                variants={MenuAnimate}
+                className="absolute -bottom-23 bg-white w-full p-1 gap-2 flex-col text-sm"
+              >
+                <label className={itemStyle}>Prismo Pics</label>
+                <label className={itemStyle} htmlFor="profileID">From Device</label>
+              </motion.div>
+
             <input
               id="profileID"
               type="file"
