@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Camera } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -9,12 +9,14 @@ import { ChangePic, ChangeUserData } from "@/services/user-update";
 import clsx from "clsx";
 import EditUserData from "../Profile/EditUserData";
 import { items } from "@/models/navItems";
+import PrismoPics from "./PrismoPics";
 
 export default function ProfileData({ close, user }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [previewPic, setPreviewPic] = useState(null);
   const [picMenu, setPicMenu] = useState(false);
+  const [prismoPic, setPrismoPic] = useState(false);
   const [userData, setUserData] = useState({
     firstname: "",
     lastname: "",
@@ -69,7 +71,13 @@ export default function ProfileData({ close, user }) {
     }
   };
   const itemStyle = "py-2 px-1 hover:bg-pink-300 transition-all"
+  const chooseMenu = () => {
+    setPicMenu(false)
+    setPrismoPic(true)
+  }
   return (
+    <>
+    <PrismoPics modalState={prismoPic} close={()=>setPrismoPic(false)} />
     <motion.div
       exit={{ opacity: 0 }}
       className="fixed top-0 right-0 z-100 w-full h-screen bg-[#FFA1B3]/30 flex justify-center items-center"
@@ -106,15 +114,17 @@ export default function ProfileData({ close, user }) {
               <Camera size="18" />
               Change Image
             </button>
+            <AnimatePresence>
               <motion.div
                 initial="exit"
                 animate={picMenu ? "enter" : "exit"}
                 variants={MenuAnimate}
                 className="absolute -bottom-23 bg-white w-full p-1 gap-2 flex-col text-sm"
               >
-                <label className={itemStyle}>Prismo Pics</label>
-                <label className={itemStyle} htmlFor="profileID">From Device</label>
+                <label onClick={chooseMenu} className={itemStyle}>Prismo Pics</label>
+                <label onClick={()=>setPicMenu(false)} className={itemStyle} htmlFor="profileID">From Device</label>
               </motion.div>
+            </AnimatePresence>
 
             <input
               id="profileID"
@@ -158,5 +168,6 @@ export default function ProfileData({ close, user }) {
         </div>
       </motion.div>
     </motion.div>
+    </>
   );
 }
