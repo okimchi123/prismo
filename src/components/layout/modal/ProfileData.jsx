@@ -28,6 +28,13 @@ export default function ProfileData({ close, user }) {
     setFile(newFile);
     setPreviewPic(URL.createObjectURL(newFile));
   };
+
+  const handlePrismoPicChange = (pic) => {
+    setFile(pic);
+    setPreviewPic(pic);
+    setPrismoPic(false)
+  }
+
   const handleSave = async () => {
     setLoading(true);
     try {
@@ -77,7 +84,7 @@ export default function ProfileData({ close, user }) {
   }
   return (
     <>
-    <PrismoPics modalState={prismoPic} close={()=>setPrismoPic(false)} />
+    <PrismoPics modalState={prismoPic} close={()=>setPrismoPic(false)}  handlePrismoChange={handlePrismoPicChange} />
     <motion.div
       exit={{ opacity: 0 }}
       className="fixed top-0 right-0 z-100 w-full h-screen bg-[#FFA1B3]/30 flex justify-center items-center"
