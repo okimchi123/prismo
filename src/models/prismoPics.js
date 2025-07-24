@@ -1,0 +1,26 @@
+export const PicItems = [
+    {
+        picName:"finn",
+        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357469/finn_t16odt.jpg",
+    },
+    {
+        picName:"jake",
+        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357468/jake_osjqw6.jpg",
+    },
+    {
+        picName:"bmo",
+        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357468/bmo_iswqdr.jpg",
+    },
+    {
+        picName:"lsp",
+        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357468/lsp_oqoipz.jpg",
+    },
+    {
+        picName:"marci",
+        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357469/marci_drwcim.jpg",
+    },
+    {
+        picName:"pb",
+        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357468/pb_alzto7.jpg",
+    },
+]
