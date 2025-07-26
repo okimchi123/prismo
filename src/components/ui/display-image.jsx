@@ -27,12 +27,18 @@ export function SmallDisplayImg({ img }) {
 export function CommentImage({ img }) {
   return (
     <figure className="w-10 h-10 relative">
+      <Image src={img} fill className="rounded-full object-cover" alt="pic" />
+    </figure>
+  );
+}
+
+export function EditImage({ img }) {
+  return (
       <Image
         src={img}
         fill
         className="rounded-full object-cover"
         alt="pic"
       />
-    </figure>
   );
 }
