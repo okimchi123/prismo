@@ -10,6 +10,7 @@ import clsx from "clsx";
 import EditUserData from "../Profile/EditUserData";
 import { items } from "@/models/navItems";
 import PrismoPics from "./PrismoPics";
+import { EditImage } from "@/components/ui/display-image";
 
 export default function ProfileData({ close, user }) {
   const [file, setFile] = useState(null);
@@ -106,25 +107,11 @@ export default function ProfileData({ close, user }) {
         <section className="flex flex-col items-center gap-1 select-none">
           <figure className="w-23 h-23 relative">
             {previewPic ? (
-              <Image
-                src={previewPic}
-                fill
-                className="rounded-full object-cover"
-                alt="newPic"
-              />
+              <EditImage img={previewPic} />
             ) : user.localPic ? (
-            <Image
-                src={user.localPic}
-                fill
-                className="rounded-full object-cover"
-                alt="localPic"
-              /> ) : (
-              <Image
-                src={user.dpURL || "/jake.jpg"}
-                fill
-                className="rounded-full object-cover"
-                alt="DP"
-              />
+              <EditImage img={user.localPic} />
+            ) : (
+              <EditImage img={user.dpURL} />
             )}
           </figure>
           <div className="relative">
