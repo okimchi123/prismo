@@ -44,7 +44,7 @@ export default function PrismoPics({ modalState, close, handlePrismoChange }) {
           onClick={()=>handlePrismoChange(Pic.picURL)}
           >
             <Image
-              src={`/prismo-pics/${Pic.picName}.jpg`}
+              src={Pic.picURL}
               fill
               className="rounded-full object-cover"
               alt="newPic"
