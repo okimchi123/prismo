@@ -1,26 +1,26 @@
 export const PicItems = [
     {
         picName:"finn",
-        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357469/finn_t16odt.jpg",
+        picURL:"/prismo-pics/finn.jpg",
     },
     {
         picName:"jake",
-        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357468/jake_osjqw6.jpg",
+        picURL:"/prismo-pics/jake.jpg",
     },
     {
         picName:"bmo",
-        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357468/bmo_iswqdr.jpg",
+        picURL:"/prismo-pics/bmo.jpg",
     },
     {
         picName:"lsp",
-        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357468/lsp_oqoipz.jpg",
+        picURL:"/prismo-pics/lsp.jpg",
     },
     {
         picName:"marci",
-        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357469/marci_drwcim.jpg",
+        picURL:"/prismo-pics/marci.jpg",
     },
     {
         picName:"pb",
-        picURL:"https://res.cloudinary.com/dw8mhxm3l/image/upload/v1753357468/pb_alzto7.jpg",
+        picURL:"/prismo-pics/pb.jpg",
     },
 ]
