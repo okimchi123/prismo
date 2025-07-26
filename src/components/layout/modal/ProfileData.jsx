@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ChangePic, ChangeUserData } from "@/services/user-update";
+import { ChangePic, ChangeUserData, ChangeLocalPic } from "@/services/user-update";
 import clsx from "clsx";
 import EditUserData from "../Profile/EditUserData";
 import { items } from "@/models/navItems";
@@ -16,6 +16,7 @@ export default function ProfileData({ close, user }) {
   const [loading, setLoading] = useState(false);
   const [previewPic, setPreviewPic] = useState(null);
   const [picMenu, setPicMenu] = useState(false);
+  const [localPic, setLocalPic] = useState(null);
   const [prismoPic, setPrismoPic] = useState(false);
   const [userData, setUserData] = useState({
     firstname: "",
@@ -26,11 +27,13 @@ export default function ProfileData({ close, user }) {
   const handleChange = (e) => {
     const newFile = e.target.files[0];
     setFile(newFile);
+    setLocalPic(null)
     setPreviewPic(URL.createObjectURL(newFile));
   };
 
   const handlePrismoPicChange = (pic) => {
-    setFile(pic);
+    setLocalPic(pic);
+    setFile(null);
     setPreviewPic(pic);
     setPrismoPic(false)
   }
@@ -41,6 +44,10 @@ export default function ProfileData({ close, user }) {
       if (file) {
         toast.loading("Updating your profile...", { id: "load" });
         await ChangePic(file, user.uid);
+      }
+      if(localPic){
+        toast.loading("Updating your profile...", { id: "load" });
+        await ChangeLocalPic(user.uid, localPic)
       }
       if (userData.firstname || userData.lastname || userData.nickname) {
         await ChangeUserData(user.uid, userData);
@@ -105,7 +112,13 @@ export default function ProfileData({ close, user }) {
                 className="rounded-full object-cover"
                 alt="newPic"
               />
-            ) : (
+            ) : user.localPic ? (
+            <Image
+                src={user.localPic}
+                fill
+                className="rounded-full object-cover"
+                alt="localPic"
+              /> ) : (
               <Image
                 src={user.dpURL || "/jake.jpg"}
                 fill
@@ -159,14 +172,15 @@ export default function ProfileData({ close, user }) {
                   file ||
                   userData.firstname ||
                   userData.lastname ||
-                  userData.nickname,
+                  userData.nickname ||
+                  localPic,
               }
             )}
             disabled={
               (!userData.firstname &&
                 !userData.lastname &&
                 !userData.nickname &&
-                !file) ||
+                !file && !localPic) ||
               loading
             }
           >
