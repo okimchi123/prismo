@@ -28,12 +28,21 @@ export default function UserData({ user, posts }) {
       <figure className="flex items-start gap-4">
         <div className="PROFILE-PIC flex justify-center items-center relative yellow-bg h-[100px] w-[100px]">
           <figure className="w-18 h-18 relative">
+                    {user.localPic ? (
+                      <Image
+                    src={user.localPic||"/jake.jpg"}
+                    fill
+                    className="rounded-full object-cover"
+                    alt="DP"
+                  /> ) : (
                     <Image
                     src={user.dpURL||"/jake.jpg"}
                     fill
                     className="rounded-full object-cover"
                     alt="DP"
                   />
+                  )}
+                    
                 </figure>
         </div>
 
