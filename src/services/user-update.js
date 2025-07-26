@@ -21,6 +21,7 @@ export async function ChangePic( file, userID){
     const userRef = doc(db, 'users', userID)
     await updateDoc(userRef,{
         dpURL: downloadURL,
+        localPic: null,
     })
 
     return downloadURL;
@@ -32,4 +33,12 @@ export async function ChangeUserData(userID, userData){
 
   const userRef = doc(db, 'users', userID)
   await updateDoc(userRef, filteredData)
+}
+
+export async function ChangeLocalPic(userID, localPic){
+    const userRef = doc(db, 'users', userID)
+    await updateDoc(userRef, {
+        dpURL: null,
+        localPic,
+    })
 }
