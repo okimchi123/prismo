@@ -26,6 +26,7 @@ import { storeUser } from "@/hooks/state";
 import Link from "next/link";
 import clsx from "clsx";
 import { darumadrop_one } from "@/components/ui/fonts";
+import SearchUser from "../modal/SearchUser";
 
 const navItems = items;
 
@@ -49,7 +50,11 @@ export function AppSidebar() {
             <Image src="/icon.svg" width="18" height="18" alt="icon" />
             <h1 className={`${darumadrop_one.className} mb-[6px]`}>prismo</h1>
           </SidebarGroupLabel>
-          <SearchInput type="text" placeholder="Search" className="mb-4" />
+          <div className="relative">
+            <SearchInput type="text" placeholder="Search" className="mb-4" />
+            <SearchUser />
+          </div>
+          
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
