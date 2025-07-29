@@ -31,12 +31,12 @@ export default function CommentModal({ Close, postID, user }) {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0 }}
-        className="w-[400px] relative h-[400px] rounded-xl pt-6 pb-2 px-2 bg-white"
+        className="w-[400px] relative h-[410px] rounded-xl pt-7 pb-2 px-2 bg-white"
       >
         <button className="text-sm absolute right-2 top-2" onClick={Close}>
           Close
         </button>
-        <section className="w-[95%] flex flex-col gap-2">
+        <section className="w-full max-h-[300px] overflow-y-auto flex flex-col gap-2">
           {comments.map((comment) => (
             <div key={comment.id} className="comment-card flex gap-2">
               {user.localPic ? (

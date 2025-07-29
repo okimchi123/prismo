@@ -18,7 +18,7 @@ export default function Page() {
   const onSubmit = (e) => {
     e.preventDefault();
   };
-  //add firestore for posting
+
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
