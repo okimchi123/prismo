@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronUp, User2 } from "lucide-react";
 import { items } from "@/models/navItems";
-import { SearchInput } from "@/components/ui/input";
 import Image from "next/image";
 import { logout } from "@/services/user.service";
 import { storeUser } from "@/hooks/state";
@@ -50,10 +49,7 @@ export function AppSidebar() {
             <Image src="/icon.svg" width="18" height="18" alt="icon" />
             <h1 className={`${darumadrop_one.className} mb-[6px]`}>prismo</h1>
           </SidebarGroupLabel>
-          <div className="relative border mb-4 ">
-            <SearchInput type="text" placeholder="Search" />
-            <SearchUser />
-          </div>
+          <SearchUser />
           
           <SidebarGroupContent>
             <SidebarMenu>
