@@ -50,8 +50,8 @@ export function AppSidebar() {
             <Image src="/icon.svg" width="18" height="18" alt="icon" />
             <h1 className={`${darumadrop_one.className} mb-[6px]`}>prismo</h1>
           </SidebarGroupLabel>
-          <div className="relative">
-            <SearchInput type="text" placeholder="Search" className="mb-4" />
+          <div className="relative border mb-4 ">
+            <SearchInput type="text" placeholder="Search" />
             <SearchUser />
           </div>
           
