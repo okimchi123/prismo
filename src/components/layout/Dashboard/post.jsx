@@ -3,12 +3,17 @@ import {DisplayImage} from "@/components/ui/display-image";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { LikeButton } from "@/components/ui/likeButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CommentModal from "../modal/CommentModal";
 import { AnimatePresence } from "framer-motion";
 
 export default function UserPost({ post, loading, user }) {
   const [commentModal, setCommentModal] = useState(false)
+
+  useEffect(() => {
+      document.body.style.overflow = commentModal ? "hidden" : "auto";
+    }, [commentModal]);
+
   if (loading) return <p>Loading posts...</p>;
   return (
     <>

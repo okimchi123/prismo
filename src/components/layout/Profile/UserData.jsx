@@ -1,13 +1,16 @@
 "use client";
 import { Pencil } from "lucide-react";
-import { useState } from "react";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 import ProfileData from "../modal/ProfileData";
 import { AnimatePresence } from "framer-motion";
 import { EditImage } from "@/components/ui/display-image";
 
 export default function UserData({ user, posts }) {
   const [editModal, setEditModal] = useState(false);
+
+  useEffect(() => {
+        document.body.style.overflow = editModal ? "hidden" : "auto";
+      }, [editModal]);
 
   return (
     <>
