@@ -35,7 +35,7 @@ export function CommentImage({ img }) {
 export function EditImage({ img }) {
   return (
       <Image
-        src={img}
+        src={img || '/finn.jpg'}
         fill
         className="rounded-full object-cover"
         alt="pic"
