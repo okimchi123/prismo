@@ -6,9 +6,11 @@ import { LikeButton } from "@/components/ui/likeButton";
 import { useState, useEffect } from "react";
 import CommentModal from "../modal/CommentModal";
 import { AnimatePresence } from "framer-motion";
+import { storeUser } from "@/hooks/state";
 
 export default function UserPost({ post, loading, user }) {
   const [commentModal, setCommentModal] = useState(false)
+  const currentUser = storeUser((state)=>state.user);
 
   useEffect(() => {
       document.body.style.overflow = commentModal ? "hidden" : "auto";
@@ -42,7 +44,7 @@ export default function UserPost({ post, loading, user }) {
       </article>
 
       <footer className="flex items-start">
-        <LikeButton postId={post.id} userId={user?.uid} currentLikes={post.likes || []} />
+        <LikeButton postId={post.id} userId={currentUser?.uid} currentLikes={post.likes || []} />
         <Image onClick={() => setCommentModal(true)} className="cursor-pointer" src="/post/comment.svg" height="35" width="35" alt="comment-icon" />
       </footer>
     </main>
