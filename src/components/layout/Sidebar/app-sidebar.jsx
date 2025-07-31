@@ -25,7 +25,7 @@ import { storeUser } from "@/hooks/state";
 import Link from "next/link";
 import clsx from "clsx";
 import { darumadrop_one } from "@/components/ui/fonts";
-import SearchUser from "../modal/SearchUser";
+import SearchUser from "./SearchUser";
 
 const navItems = items;
 
