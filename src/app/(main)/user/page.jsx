@@ -1,5 +1,6 @@
 "use client";
 import ProfileUserData from "@/components/ui/ProfileUserData";
+import { UserPlus } from "lucide-react";
 import { useUserPosts } from "@/hooks/fetchUserPost";
 import { selectedUser } from "@/hooks/state";
 import { OwnPost } from "@/components/layout/Profile/UserPost";
@@ -11,10 +12,15 @@ export default function Page() {
 
   console.log(posts)
   return (
-    <div className="flex mt-[2%] min-w-[400px] rounded-lg flex-col items-start">
+    <div className="flex mt-[2%] min-w-[420px] rounded-lg flex-col items-start">
       <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
         <h1 className="prismo font-semibold mb-2">{user.username}</h1>
         <ProfileUserData user={user} posts={posts} />
+        <button className="absolute flex gap-1 items-center bottom-4 right-4 text-sm cursor-pointer">
+         
+          <UserPlus size="17" />
+           Add Friend
+          </button>
       </section>
 
       <OwnPost user={user} posts={posts} loading={loading} />
