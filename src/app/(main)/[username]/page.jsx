@@ -2,15 +2,27 @@
 import ProfileUserData from "@/components/ui/ProfileUserData";
 import { UserPlus } from "lucide-react";
 import { useUserPosts } from "@/hooks/fetchUserPost";
-import { selectedUser } from "@/hooks/state";
+import { use } from "react";
 import { OwnPost } from "@/components/layout/Profile/UserPost";
+import { useEffect, useState } from "react";
+import { getAllUsers } from "@/hooks/fetchAllUser";
 
-export default function Page() {
-  const user = selectedUser((state) => state.user);
-  console.log(user)
+export default function Page({params}) {
+  const {username} = use(params);
+  const [user, setUser] = useState({})
+
+  useEffect(()=>{
+    async function fetchUsers() {
+      const users = await getAllUsers()
+    
+    const user = users.find((u) => {
+      return u.username.toLowerCase() === username;
+    })
+    setUser(user)
+  }
+  fetchUsers();
+  },[username])
   const { posts, loading } = useUserPosts(user?.uid);
-
-  console.log(posts)
   return (
     <div className="flex mt-[2%] min-w-[420px] rounded-lg flex-col items-start">
       <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
