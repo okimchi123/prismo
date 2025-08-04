@@ -3,20 +3,17 @@ import { getAllUsers } from "@/hooks/fetchAllUser";
 import { useState, useEffect, useRef } from "react";
 import { SearchInput } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { selectedUser } from "@/hooks/state";
 
 export default function SearchUser() {
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState("");
   const dropdownRef = useRef(null);
-  const setSelectedUser = selectedUser((state) => state.setUser);
   const router = useRouter();
 
-  const handleSelect = (user) => {
-    setSelectedUser(user)
-    router.push('/user');
+  const handleSelectUser = (username) => {
     setQuery("");
-  }
+    router.push(username);
+  };
 
   useEffect(() => {
     async function fetchUsers() {
@@ -53,15 +50,19 @@ export default function SearchUser() {
         <div className="absolute z-200 left-4 w-[90%] bg-white shadow-lg max-h-60 overflow-y-auto">
           {filteredUsers.length > 0 ? (
             <ul className="divide-y divide-gray-100">
-              {filteredUsers.map((user, index) => (
+              {filteredUsers.map((user, index) => {
+                const slug = user.username.toLowerCase();
+                console.log(slug)
+                return (
                 <li
-                  onClick={()=>handleSelect(user)}
+                  onClick={()=>handleSelectUser(user.username.toLowerCase())}
                   key={index}
                   className="px-4 py-2 hover:bg-pink-100 cursor-pointer"
                 >
-                  {user.firstname} {user.lastname}
+                    {user.firstname} {user.lastname}
                 </li>
-              ))}
+              )
+              })}
             </ul>
           ) : <p className="p-2 text-sm">No user found</p>}
         </div>
