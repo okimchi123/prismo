@@ -28,7 +28,9 @@ export default function Page({params}) {
       <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
         <h1 className="prismo font-semibold mb-2">{user.username}</h1>
         <ProfileUserData user={user} posts={posts} />
-        <button className="absolute flex gap-1 items-center bottom-4 right-4 text-sm cursor-pointer">
+        <button 
+      
+        className="absolute flex gap-1 items-center bottom-4 right-4 text-sm cursor-pointer">
          
           <UserPlus size="17" />
            Add Friend
