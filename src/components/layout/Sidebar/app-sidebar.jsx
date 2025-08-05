@@ -39,24 +39,26 @@ export function AppSidebar() {
     router.push("/");
   };
 
-  const defStyle = "";  
+  const defStyle = "";
 
   return (
     <Sidebar className="select-none md:w-[16rem] lg:w-[350px]">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-lg mb-2 flex items-center gap-1 select-none prismo">
-            <Image src="/icon.svg" width="18" height="18" alt="icon" />
-            <h1 className={`${darumadrop_one.className} mb-[6px]`}>prismo</h1>
+          <SidebarGroupLabel className="text-lg mb-2 select-none prismo">
+            <Link className="flex items-center gap-1" href="/dashboard">
+              <Image src="/icon.svg" width="18" height="18" alt="icon" />
+              <h1 className={`${darumadrop_one.className} mb-[6px]`}>prismo</h1>
+            </Link>
           </SidebarGroupLabel>
           <SearchUser />
-          
+
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
-                  variant="normal"
+                    variant="normal"
                     asChild
                     className={clsx(
                       defStyle,
