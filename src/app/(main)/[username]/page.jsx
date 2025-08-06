@@ -7,7 +7,8 @@ import { OwnPost } from "@/components/layout/Profile/UserPost";
 import { useEffect, useState } from "react";
 import { getAllUsers } from "@/hooks/fetchAllUser";
 import { storeUser } from "@/hooks/state";
-import AddFriend from "@/hooks/Friend";
+import {AddFriend} from "@/hooks/Friend";
+import { toast } from "sonner";
 
 export default function Page({params}) {
   const {username} = use(params);
@@ -15,7 +16,13 @@ export default function Page({params}) {
   const currentUser = storeUser((state)=>state.user)
 
   async function handleAddFriend(){
-    await AddFriend(currentUser.uid, user.uid)
+    try {
+      await AddFriend(currentUser.uid, user.uid)
+      toast.success(`Added ${user.firstname} ${user.lastname}`)
+    } catch (error) {
+      
+    }
+    
   }
 
   useEffect(()=>{
