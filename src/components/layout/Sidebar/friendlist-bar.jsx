@@ -9,11 +9,16 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/use-mobile";
+import FriendRequest from "@/hooks/FriendRequest";
+import { storeUser } from "@/hooks/state";
 
 export function FriendListBar() {
-
+  const user = storeUser((state) => state.user)
   const isMobile = useIsMobile();
   
+  const header = "prismo font-semibold"
+
+  const senderProfiles = FriendRequest(user.uid)
   if(isMobile){
     return (
     <Sheet>
@@ -56,8 +61,8 @@ export function FriendListBar() {
   }
   return(
     <section className="md:[250px] lg:w-[300px] xl:w-[350px] h-[100vh] sticky top-0 right-0 bg-white p-4">
-      <h1 className="prismo font-semibold mb-3">Friends</h1>
-      <div className="flex flex-col gap-3">
+      <h1 className={`${header} mb-3`}>Friends</h1>
+      <div className="flex flex-col gap-3 mb-6">
             <div className="flex items-center gap-2">
               <figure className="w-8 h-8 relative">
                 <Image
@@ -80,6 +85,19 @@ export function FriendListBar() {
               </figure>
               <span className="text-[16px] font-semibold">Jake The Dog</span>
             </div>
+      </div>
+      <div>
+        <h1 className={`${header} mb-1`}> Friend Requests </h1>
+        <div className="flex flex-col">
+          {senderProfiles.map((user)=>(
+            <figure key={user.uid}>
+            <h1>{user.username}</h1>
+          </figure>
+          ))
+
+          }
+          
+        </div>
       </div>
     </section>
   )
