@@ -1,6 +1,6 @@
 "use client";
 import ProfileUserData from "@/components/ui/ProfileUserData";
-import { UserPlus } from "lucide-react";
+import { UserPlus, UserRoundCheck } from "lucide-react";
 import { useUserPosts } from "@/hooks/fetchUserPost";
 import { use } from "react";
 import { OwnPost } from "@/components/layout/Profile/UserPost";
@@ -9,20 +9,23 @@ import { getAllUsers } from "@/hooks/fetchAllUser";
 import { storeUser } from "@/hooks/state";
 import {AddFriend} from "@/hooks/Friend";
 import { toast } from "sonner";
+import GetAdds from "@/hooks/GetAdds";
+import clsx from "clsx";
 
 export default function Page({params}) {
   const {username} = use(params);
   const [user, setUser] = useState({})
+  const [toggleButton, setToggleButton] = useState(false)
   const currentUser = storeUser((state)=>state.user)
 
   async function handleAddFriend(){
+    setToggleButton(true)
     try {
       await AddFriend(currentUser.uid, user.uid)
       toast.success(`Added ${user.firstname} ${user.lastname}`)
     } catch (error) {
-      
+      console.error(error)
     }
-    
   }
 
   useEffect(()=>{
@@ -39,16 +42,25 @@ export default function Page({params}) {
 
   const { posts, loading } = useUserPosts(user?.uid);
 
+  const userAddData = GetAdds(currentUser.uid, user.uid, toggleButton)
+  console.log(userAddData)
   return (
     <div className="flex mt-[2%] min-w-[420px] rounded-lg flex-col items-start">
       <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
         <h1 className="prismo font-semibold mb-2">{user.username}</h1>
         <ProfileUserData user={user} posts={posts} />
         <button 
+        disabled={userAddData.length}
         onClick={()=>handleAddFriend()}
-        className="absolute flex gap-1 items-center bottom-4 right-4 text-sm cursor-pointer">
-          <UserPlus size="17" />
-           Add Friend
+        className={clsx(
+          "absolute flex gap-1  items-center bottom-4 right-4 text-sm ",
+          {
+            "prismo":userAddData.length,
+            "hover:scale-105 transition-all cursor-pointer te":!userAddData.length
+          }
+        )}>
+          {userAddData.length ? <UserRoundCheck size="17" /> : <UserPlus size="17" />}
+           {userAddData.length ? <>User Added</> : <>Add Friend</>}
           </button>
       </section>
 
