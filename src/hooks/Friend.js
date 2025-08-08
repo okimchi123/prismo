@@ -10,7 +10,6 @@ export async function AddFriend(userID, addedUserID) {
             status: "pending",
             createdAt: Timestamp.now(),
         })
-        console.log("successsss")
     } catch (error) {
         console.error("Error adding friend request: ", error);
     }
@@ -30,7 +29,22 @@ export async function fetchPendingRequests(addedUserID) {
     }
 }
 
+export async function getUserAdds(uid, addedUserID){
+    const q = query(
+        collection(db, "friend_requests"),
+        where("addedUserID", "==", addedUserID),
+        where("status", "==", "pending"),
+        where("userID", "==", uid)
+    )
+    try {
+        const snapshot = await getDocs(q)
+        return snapshot.docs.map(doc => doc.data());
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 export async function fetchSenderUser(userID){
     const userDoc = await getDoc(doc(db, "users", userID));
-    return userDoc.exists() ? { userID, ...userDoc.data() } : null;
+    return userDoc.exists() ? { uid:userID, ...userDoc.data() } : null;
 }
