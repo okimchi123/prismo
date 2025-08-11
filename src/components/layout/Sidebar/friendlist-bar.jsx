@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useIsMobile } from "@/hooks/use-mobile";
 import FriendRequest from "@/hooks/FriendRequest";
 import { storeUser } from "@/hooks/state";
+import FriendRequestCard from "./friend-request";
 
 export function FriendListBar() {
   const user = storeUser((state) => state.user)
@@ -90,13 +91,9 @@ export function FriendListBar() {
         <h1 className={`${header} mb-1`}> Friend Requests </h1>
         <div className="flex flex-col">
           {senderProfiles.map((user)=>(
-            <figure key={user.uid}>
-            <h1>{user.username}</h1>
-          </figure>
+           <FriendRequestCard user={user} key={user.uid} />
           ))
-
           }
-          
         </div>
       </div>
     </section>
