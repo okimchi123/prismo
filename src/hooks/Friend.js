@@ -23,7 +23,7 @@ export async function fetchPendingRequests(addedUserID) {
     );
     try {
         const snapshot = await getDocs(q)
-        return snapshot.docs.map(doc => doc.data());
+        return snapshot.docs.map(doc => ({id:doc.id , ...doc.data()}));
     } catch (error) {
         console.error(error)
     }
@@ -44,7 +44,7 @@ export async function getUserAdds(uid, addedUserID){
     }
 }
 
-export async function fetchSenderUser(userID){
+export async function fetchSenderUser(userID, reqID){
     const userDoc = await getDoc(doc(db, "users", userID));
-    return userDoc.exists() ? { uid:userID, ...userDoc.data() } : null;
+    return userDoc.exists() ? { uid:userID, reqID, ...userDoc.data() } : null;
 }
