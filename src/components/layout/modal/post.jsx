@@ -4,15 +4,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { storeUser } from "@/hooks/state";
 import { Textarea } from "@/components/ui/textarea";
-import NextImage from "next/image";
 import clsx from "clsx";
 import { handlePostSubmit } from "@/services/post.service";
 import { toast } from "sonner";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { DisplayImage } from "@/components/ui/display-image";
 
 export default function PostModal({ onClose }) {
-  const disabledBtn = "bg-gray-400";
   const user = storeUser((state) => state.user);
   const [postMessage, setPostMessage] = useState("");
   const handlePost = async (e) => {
@@ -45,7 +43,7 @@ export default function PostModal({ onClose }) {
           <Button
             type="submit"
             disabled={!postMessage}
-            className={clsx(disabledBtn, {
+            className={clsx("select-none", {
               "bg-pink-400 hover:bg-pink-500": postMessage,
             })}
           >
