@@ -3,8 +3,9 @@ import { SmallDisplayImg } from "@/components/ui/display-image";
 import { Check, Circle, Ellipsis } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { AcceptRequest } from "@/hooks/Friend";
 
-export default function FriendRequestCard({ user }) {
+export default function FriendRequestCard({ fromUser, toUser, setToggle }) {
   const [hover, setHover] = useState(false);
   const [modal, setModal] = useState(false);
   const acceptIcon = {
@@ -42,15 +43,20 @@ export default function FriendRequestCard({ user }) {
     setModal(true)
   }
 
+  const AcceptFriend = async () => {
+    AcceptRequest( fromUser.uid, toUser.uid, fromUser.reqID )
+    setToggle(e=>!e)
+  } 
+
   return (
     <figure className="flex justify-between items-center p-1">
       <div className="flex gap-1 items-start">
-        {user.localPic ? (
-          <SmallDisplayImg img={user.localPic || "/jake.jpg"} />
+        {fromUser.localPic ? (
+          <SmallDisplayImg img={fromUser.localPic || "/jake.jpg"} />
         ) : (
-          <SmallDisplayImg img={user.dpURL || "/jake.jpg"} />
+          <SmallDisplayImg img={fromUser.dpURL || "/jake.jpg"} />
         )}
-        <h1 className="text-md"> {user.username} </h1>
+        <h1 className="text-md"> {fromUser.username} </h1>
       </div>
       <div
         onMouseEnter={mouseEnter}
@@ -61,6 +67,7 @@ export default function FriendRequestCard({ user }) {
           <>
             <motion.div
             initial="exit"
+            onClick={AcceptFriend}
             animate={modal ? "enter" : "exit"}
             variants={acceptIcon}
             className="border p-2 rounded-md cursor-pointer bg-green-400 hover:bg-green-500 transition-all">
