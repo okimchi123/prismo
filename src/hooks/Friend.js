@@ -1,5 +1,6 @@
 import { db } from "@/lib/firebase";
-import { collection, addDoc, Timestamp, where, getDocs, getDoc, query, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, updateDoc, Timestamp, where, getDocs, getDoc, query, doc } from "firebase/firestore";
+import { toast } from "sonner";
 
 export async function AddFriend(userID, addedUserID) {
     const docRef = collection(db, "friend_requests");
@@ -47,4 +48,26 @@ export async function getUserAdds(uid, addedUserID){
 export async function fetchSenderUser(userID, reqID){
     const userDoc = await getDoc(doc(db, "users", userID));
     return userDoc.exists() ? { uid:userID, reqID, ...userDoc.data() } : null;
+}
+
+export async function AcceptRequest(fromID, toID, reqID){
+    const docRef = doc(db, "friend_requests", reqID);
+    const receiverRef = doc(db, "users", toID, "friends", fromID)
+    const senderRef = doc(db, "users", fromID, "friends", toID)
+    toast.success("Accepted")
+    try {
+        await updateDoc(docRef,{
+            status:"accepted",
+        })
+        await setDoc(receiverRef, {
+            uid:fromID,
+            createdAt: new Date(),
+        })
+        await setDoc(senderRef,{
+            uid:toID,
+            createdAt: new Date(),
+        })
+    } catch (error) {
+        console.error(error)
+    } 
 }
