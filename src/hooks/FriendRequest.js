@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { fetchPendingRequests, fetchSenderUser } from "./Friend";
 
-export default function FriendRequest(userID) {
+export default function FriendRequest(userID, toggle) {
   const [requester, setRequester] = useState([]);
   const [senderProfiles, setSenderProfiles] = useState([]);
   useEffect(() => {
@@ -12,7 +12,7 @@ export default function FriendRequest(userID) {
     if (userID) {
       getRequest();
     }
-  }, [userID]);
+  }, [userID, toggle]);
 
   useEffect(() => {
     async function getRequester() {

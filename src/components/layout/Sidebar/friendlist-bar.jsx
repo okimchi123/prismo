@@ -12,14 +12,16 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import FriendRequest from "@/hooks/FriendRequest";
 import { storeUser } from "@/hooks/state";
 import FriendRequestCard from "./friend-request";
+import { useState } from "react";
 
 export function FriendListBar() {
-  const user = storeUser((state) => state.user)
+  const currentUser = storeUser((state) => state.user)
   const isMobile = useIsMobile();
-  
+  const [toggleReq, setToggleReq] = useState(false);
+
   const header = "prismo font-semibold"
 
-  const senderProfiles = FriendRequest(user.uid)
+  const senderProfiles = FriendRequest(currentUser.uid, toggleReq)
   if(isMobile){
     return (
     <Sheet>
@@ -91,7 +93,7 @@ export function FriendListBar() {
         <h1 className={`${header} mb-1`}> Friend Requests </h1>
         <div className="flex flex-col">
           {senderProfiles.map((user)=>(
-           <FriendRequestCard user={user} key={user.uid} />
+           <FriendRequestCard fromUser={user} toUser={currentUser} key={user.uid} setToggle={setToggleReq} />
           ))
           }
         </div>
