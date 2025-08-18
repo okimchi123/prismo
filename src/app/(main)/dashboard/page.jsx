@@ -12,7 +12,7 @@ import { AnimatePresence } from "framer-motion";
 export default function Page() {
   const user = storeUser((state) => state.user);
   const { posts, loading } = useUserPosts(user?.uid);
-
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const onSubmit = (e) => {

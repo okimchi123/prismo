@@ -8,6 +8,7 @@ import { AcceptRequest, RejectRequest } from "@/hooks/Friend";
 export default function FriendRequestCard({ fromUser, toUser, setToggle }) {
   const [hover, setHover] = useState(false);
   const [modal, setModal] = useState(false);
+  
   const acceptIcon = {
     enter: {
       transform: "translateX(0px)",
