@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase";
-import { collection, addDoc, setDoc, updateDoc, Timestamp, where, getDocs, getDoc, query, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, deleteDoc, updateDoc, Timestamp, where, getDocs, getDoc, query, doc } from "firebase/firestore";
 import { toast } from "sonner";
 
 export async function AddFriend(userID, addedUserID) {
@@ -70,4 +70,13 @@ export async function AcceptRequest(fromID, toID, reqID){
     } catch (error) {
         console.error(error)
     } 
+}
+
+export async function RejectRequest(reqID){
+    try {
+        await deleteDoc(doc(db, "friend_requests", reqID))
+        toast.success("Rejected")
+    } catch (error) {
+        console.error(error)
+    }
 }
