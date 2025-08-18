@@ -91,7 +91,7 @@ export function FriendListBar() {
       </div>
       <div>
         <h1 className={`${header} mb-1`}> Friend Requests </h1>
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1">
           {senderProfiles.map((user)=>(
            <FriendRequestCard fromUser={user} toUser={currentUser} key={user.uid} setToggle={setToggleReq} />
           ))
