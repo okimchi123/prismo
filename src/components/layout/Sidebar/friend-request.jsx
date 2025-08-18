@@ -3,7 +3,7 @@ import { SmallDisplayImg } from "@/components/ui/display-image";
 import { Check, Circle, Ellipsis } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { AcceptRequest } from "@/hooks/Friend";
+import { AcceptRequest, RejectRequest } from "@/hooks/Friend";
 
 export default function FriendRequestCard({ fromUser, toUser, setToggle }) {
   const [hover, setHover] = useState(false);
@@ -48,6 +48,11 @@ export default function FriendRequestCard({ fromUser, toUser, setToggle }) {
     setToggle(e=>!e)
   } 
 
+  const RejectFriend = async () => {
+    RejectRequest(fromUser.reqID)
+    setToggle(e=>!e)
+  } 
+
   return (
     <figure className="flex justify-between items-center p-1">
       <div className="flex gap-1 items-start">
@@ -74,6 +79,7 @@ export default function FriendRequestCard({ fromUser, toUser, setToggle }) {
               <Check size="23" color="white" />
             </motion.div>
             <motion.div 
+            onClick={RejectFriend}
             initial="exit"
             animate={modal ? "enter" : "exit"}
             variants={declineIcon}
