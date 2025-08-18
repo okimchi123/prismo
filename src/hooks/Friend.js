@@ -80,3 +80,8 @@ export async function RejectRequest(reqID){
         console.error(error)
     }
 }
+
+export async function fetchAFriend(userID){
+    const userDoc = await getDoc(doc(db, "users", userID));
+    return userDoc.exists() ? { uid:userID, ...userDoc.data() } : null;
+}
