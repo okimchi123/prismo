@@ -39,11 +39,15 @@ export default function CommentModal({ Close, postID, user }) {
         <section className="w-full max-h-[300px] overflow-y-auto flex flex-col gap-2">
           {comments.map((comment) => (
             <div key={comment.id} className="comment-card flex gap-2">
-              {user.localPic ? (
-                <SmallDisplayImg img={user.localPic || "/finn.jpg"} />
-              ) : (
-                <SmallDisplayImg img={user.dpURL || "/finn.jpg"} />
-              )}
+              <SmallDisplayImg
+                img={
+                  user.localPic
+                    ? user.localPic
+                    : user.dpUrl
+                    ? user.dpUrl
+                    : "/jake.jpg"
+                }
+              />
               <div className="name-message flex flex-col w-[85%] ">
                 <div className="user-data flex gap-2 items-center">
                   <h1 className="text-[12px] prismo">{comment.userName}</h1>
