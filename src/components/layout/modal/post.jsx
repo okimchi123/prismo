@@ -52,11 +52,15 @@ export default function PostModal({ onClose }) {
         </section>
         <section className="px-3 py-2 flex flex-col">
           <div className="flex gap-2 mb-2">
-            {user.localPic ? (
-              <DisplayImage img={user.localPic || "/finn.jpg"} />
-            ) : (
-              <DisplayImage img={user.dpURL || "/finn.jpg"} />
-            )}
+            <DisplayImage
+              img={
+                user.localPic
+                  ? user.localPic
+                  : user.dpUrl
+                  ? user.dpUrl
+                  : "/jake.jpg"
+              }
+            />
             <span className="text-[14px] font-semibold text-black">
               {user.firstname} {user.lastname}
             </span>
