@@ -5,7 +5,11 @@ import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ChangePic, ChangeUserData, ChangeLocalPic } from "@/services/user-update";
+import {
+  ChangePic,
+  ChangeUserData,
+  ChangeLocalPic,
+} from "@/services/user-update";
 import clsx from "clsx";
 import EditUserData from "../Profile/EditUserData";
 import { items } from "@/models/navItems";
@@ -28,7 +32,7 @@ export default function ProfileData({ close, user }) {
   const handleChange = (e) => {
     const newFile = e.target.files[0];
     setFile(newFile);
-    setLocalPic(null)
+    setLocalPic(null);
     setPreviewPic(URL.createObjectURL(newFile));
   };
 
@@ -36,8 +40,8 @@ export default function ProfileData({ close, user }) {
     setLocalPic(pic);
     setFile(null);
     setPreviewPic(pic);
-    setPrismoPic(false)
-  }
+    setPrismoPic(false);
+  };
 
   const handleSave = async () => {
     setLoading(true);
@@ -46,9 +50,9 @@ export default function ProfileData({ close, user }) {
         toast.loading("Updating your profile...", { id: "load" });
         await ChangePic(file, user.uid);
       }
-      if(localPic){
+      if (localPic) {
         toast.loading("Updating your profile...", { id: "load" });
-        await ChangeLocalPic(user.uid, localPic)
+        await ChangeLocalPic(user.uid, localPic);
       }
       if (userData.firstname || userData.lastname || userData.nickname) {
         await ChangeUserData(user.uid, userData);
@@ -65,14 +69,14 @@ export default function ProfileData({ close, user }) {
       setFile(null);
     }
   };
-   const MenuAnimate = {
+  const MenuAnimate = {
     enter: {
       opacity: 1,
       rotateX: 0,
       transition: {
-        duration: 0.3
+        duration: 0.3,
       },
-      display: "flex"
+      display: "flex",
     },
     exit: {
       opacity: 0,
@@ -81,101 +85,123 @@ export default function ProfileData({ close, user }) {
         duration: 0.3,
       },
       transitionEnd: {
-        display: "none"
-      }
-    }
+        display: "none",
+      },
+    },
   };
-  const itemStyle = "py-2 px-1 hover:bg-pink-300 transition-all"
+  const itemStyle = "py-2 px-1 hover:bg-pink-300 transition-all";
   const chooseMenu = () => {
-    setPicMenu(false)
-    setPrismoPic(true)
-  }
+    setPicMenu(false);
+    setPrismoPic(true);
+  };
   return (
     <>
-    <PrismoPics modalState={prismoPic} close={()=>setPrismoPic(false)}  handlePrismoChange={handlePrismoPicChange} />
-    <motion.div
-      exit={{ opacity: 0 }}
-      className="fixed top-0 right-0 z-100 w-full h-screen bg-[#FFA1B3]/30 flex justify-center items-center"
-    >
+      <PrismoPics
+        modalState={prismoPic}
+        close={() => setPrismoPic(false)}
+        handlePrismoChange={handlePrismoPicChange}
+      />
       <motion.div
-        className="w-[500px] h-[80%] bg-white pt-5 relative rounded-lg flex flex-col items-center"
-        key="modal"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0 }}
+        exit={{ opacity: 0 }}
+        className="fixed top-0 right-0 z-100 w-full h-screen bg-[#FFA1B3]/30 flex justify-center items-center"
       >
-        <section className="flex flex-col items-center gap-1 select-none">
-          <figure className="w-23 h-23 relative">
-            {previewPic ? (
-              <EditImage img={previewPic} />
-            ) : user.localPic ? (
-              <EditImage img={user.localPic} />
-            ) : (
-              <EditImage img={user.dpURL} />
-            )}
-          </figure>
-          <div className="relative">
-            <button 
-            onClick={()=>setPicMenu(!picMenu)}
-            className="text-sm gap-[2px] py-1 font-medium prismo cursor-pointer hover:scale-105 transition-all flex items-center">
-              <Camera size="18" />
-              Change Image
-            </button>
-            <AnimatePresence>
-              <motion.div
-                initial="exit"
-                animate={picMenu ? "enter" : "exit"}
-                variants={MenuAnimate}
-                className="absolute -bottom-23 bg-white w-full p-1 gap-2 flex-col text-sm"
+        <motion.div
+          className="w-[500px] h-[80%] bg-white pt-5 relative rounded-lg flex flex-col items-center"
+          key="modal"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          exit={{ scale: 0 }}
+        >
+          <section className="flex flex-col items-center gap-1 select-none">
+            <figure className="w-23 h-23 relative">
+              <EditImage
+                img={
+                  previewPic
+                    ? previewPic
+                    : user.localPic
+                    ? user.localPic
+                    : user.dpURL
+                    ? user.dpURL
+                    : "/jake.jpg"
+                }
+              />
+            </figure>
+            <div className="relative">
+              <button
+                onClick={() => setPicMenu(!picMenu)}
+                className="text-sm gap-[2px] py-1 font-medium prismo cursor-pointer hover:scale-105 transition-all flex items-center"
               >
-                <label onClick={chooseMenu} className={itemStyle}>Prismo Pics</label>
-                <label onClick={()=>setPicMenu(false)} className={itemStyle} htmlFor="profileID">From Device</label>
-              </motion.div>
-            </AnimatePresence>
+                <Camera size="18" />
+                Change Image
+              </button>
+              <AnimatePresence>
+                <motion.div
+                  initial="exit"
+                  animate={picMenu ? "enter" : "exit"}
+                  variants={MenuAnimate}
+                  className="absolute -bottom-23 bg-white w-full p-1 gap-2 flex-col text-sm"
+                >
+                  <label onClick={chooseMenu} className={itemStyle}>
+                    Prismo Pics
+                  </label>
+                  <label
+                    onClick={() => setPicMenu(false)}
+                    className={itemStyle}
+                    htmlFor="profileID"
+                  >
+                    From Device
+                  </label>
+                </motion.div>
+              </AnimatePresence>
 
-            <input
-              id="profileID"
-              type="file"
-              accept="image/*"
-              onChange={handleChange}
-              hidden
-            />
-          </div>
-        </section>
-        <EditUserData user={user} setData={setUserData} userDatas={userData} />
-        <div className="absolute right-3 bottom-3 select-none flex gap-2">
-          <Button
-            className="border-red-500 border-2 bg-white/0 text-red-500 hover:bg-red-500 hover:text-white hover:scale-110 transition-all active:scale-100"
-            onClick={close}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSave}
-            className={clsx(
-              "text-white  hover:scale-110 transition-all active:scale-100",
-              {
-                "bg-prismo hover:bg-prismo":
-                  file ||
-                  userData.firstname ||
-                  userData.lastname ||
-                  userData.nickname ||
-                  localPic,
+              <input
+                id="profileID"
+                type="file"
+                accept="image/*"
+                onChange={handleChange}
+                hidden
+              />
+            </div>
+          </section>
+          <EditUserData
+            user={user}
+            setData={setUserData}
+            userDatas={userData}
+          />
+          <div className="absolute right-3 bottom-3 select-none flex gap-2">
+            <Button
+              className="border-red-500 border-2 bg-white/0 text-red-500 hover:bg-red-500 hover:text-white hover:scale-110 transition-all active:scale-100"
+              onClick={close}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSave}
+              className={clsx(
+                "text-white  hover:scale-110 transition-all active:scale-100",
+                {
+                  "bg-prismo hover:bg-prismo":
+                    file ||
+                    userData.firstname ||
+                    userData.lastname ||
+                    userData.nickname ||
+                    localPic,
+                }
+              )}
+              disabled={
+                (!userData.firstname &&
+                  !userData.lastname &&
+                  !userData.nickname &&
+                  !file &&
+                  !localPic) ||
+                loading
               }
-            )}
-            disabled={
-              (!userData.firstname &&
-                !userData.lastname &&
-                !userData.nickname &&
-                !file && !localPic) ||
-              loading
-            }
-          >
-            Save
-          </Button>
-        </div>
+            >
+              Save
+            </Button>
+          </div>
+        </motion.div>
       </motion.div>
-    </motion.div>
     </>
   );
 }
