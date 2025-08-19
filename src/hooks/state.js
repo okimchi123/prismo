@@ -5,7 +5,7 @@ export const storeUser = create((set)=>({
     setUser: (data) => set({user:data}),
 }))
 
-export const selectedUser = create((set)=>({
-    user:{},
-    setUser: (data) => set({user:data}),
+export const userFriends = create((set)=>({
+    friend:{},
+    setFriend: (data) => set({friend:data}),
 }))
