@@ -1,5 +1,5 @@
 "use client";
-import ProfileUserData from "@/components/ui/ProfileUserData";
+import ProfileUserData from "@/components/layout/Profile/ProfileUserData";
 import { UserPlus, UserRoundCheck } from "lucide-react";
 import { useUserPosts } from "@/hooks/fetchUserPost";
 import { use } from "react";
