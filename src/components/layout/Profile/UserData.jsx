@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import ProfileData from "../modal/ProfileData";
 import { AnimatePresence } from "framer-motion";
 import { EditImage } from "@/components/ui/display-image";
-import ProfileUserData from "@/components/ui/ProfileUserData";
+import ProfileUserData from "@/components/layout/Profile/ProfileUserData";
 
 export default function UserData({ user, posts }) {
   const [editModal, setEditModal] = useState(false);
