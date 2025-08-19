@@ -20,7 +20,6 @@ export function FriendListBar() {
   const isMobile = useIsMobile();
   const [toggleReq, setToggleReq] = useState(false);
   const { allFriends, loading } = GetUserFriends(currentUser.uid);
-  console.log(allFriends, loading);
   const header = "prismo font-semibold";
 
   const senderProfiles = FriendRequest(currentUser.uid, toggleReq);
@@ -44,10 +43,10 @@ export function FriendListBar() {
                     <figure className="w-10 h-10 relative">
                       <Image
                         src={
-                          friend.dpUrl
-                            ? friend.dpUrl
-                            : friend.localPic
+                          friend.localPic
                             ? friend.localPic
+                            : friend.dpUrl
+                            ? friend.dpUrl
                             : "/jake.jpg"
                         }
                         fill
