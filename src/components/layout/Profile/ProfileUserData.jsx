@@ -1,15 +1,23 @@
+'use client'
 import { EditImage } from "@/components/ui/display-image";
+import { userFriends } from "@/hooks/state";
 
 export default function ProfileUserData({ user, posts }) {
+  const friends = userFriends((state)=>state.friend)
+  console.log(friends)
   return (
     <figure className="flex items-start w-full gap-4">
       <div className="PROFILE-PIC flex justify-center items-center relative yellow-bg h-[100px] w-[100px]">
         <figure className="w-18 h-18 relative">
-          {user.localPic ? (
-            <EditImage img={user.localPic} />
-          ) : (
-            <EditImage img={user.dpURL} />
-          )}
+          <EditImage
+            img={
+              user.localPic
+                ? user.localPic
+                : user.dpUrl
+                ? user.dpUrl
+                : "/jake.jpg"
+            }
+          />
         </figure>
       </div>
 
@@ -19,7 +27,7 @@ export default function ProfileUserData({ user, posts }) {
         </h1>
         <div className="FRIENDS-POSTS flex gap-3">
           <div className="flex flex-col items-center">
-            <p className="text-sm"> 3 </p>
+            <p className="text-sm"> {friends.length} </p>
             <h2 className="leading-3 text-sm">friends</h2>
           </div>
           <div className="flex flex-col items-center">
