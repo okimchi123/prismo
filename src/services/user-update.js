@@ -23,8 +23,6 @@ export async function ChangePic( file, userID){
         dpURL: downloadURL,
         localPic: null,
     })
-
-    return downloadURL;
 }
 export async function ChangeUserData(userID, userData){
     const filteredData = Object.fromEntries(
