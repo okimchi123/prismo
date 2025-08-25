@@ -11,12 +11,14 @@ import {AddFriend} from "@/hooks/Friend";
 import { toast } from "sonner";
 import GetAdds from "@/hooks/GetAdds";
 import clsx from "clsx";
+import { userFriends } from "@/hooks/state";
 
 export default function Page({params}) {
   const {username} = use(params);
   const [user, setUser] = useState({})
   const [toggleButton, setToggleButton] = useState(false)
   const currentUser = storeUser((state)=>state.user)
+  const friends = userFriends((state) => state.friend)
 
   async function handleAddFriend(){
     setToggleButton(true)
@@ -40,27 +42,26 @@ export default function Page({params}) {
   fetchUsers();
   },[username])
 
+  const isUserFriend = friends?.find((friend) => friend.uid === user.uid)
   const { posts, loading } = useUserPosts(user?.uid);
 
   const userAddData = GetAdds(currentUser.uid, user.uid, toggleButton)
-  console.log(userAddData)
   return (
     <div className="flex mt-[2%] min-w-[420px] rounded-lg flex-col items-start">
       <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
         <h1 className="prismo font-semibold mb-2">{user.username}</h1>
         <ProfileUserData user={user} posts={posts} />
         <button 
-        disabled={userAddData.length}
+        disabled={userAddData.length || isUserFriend}
         onClick={()=>handleAddFriend()}
         className={clsx(
           "absolute flex gap-1  items-center bottom-4 right-4 text-sm ",
           {
-            "prismo":userAddData.length,
-            "hover:scale-105 transition-all cursor-pointer te":!userAddData.length
+            "prismo":userAddData.length || isUserFriend,
+            "hover:scale-105 transition-all cursor-pointer":!userAddData.length && !isUserFriend
           }
         )}>
-          {userAddData.length ? <UserRoundCheck size="17" /> : <UserPlus size="17" />}
-           {userAddData.length ? <>User Added</> : <>Add Friend</>}
+          {userAddData.length ? <> <UserRoundCheck size="17" /> <>User Added</> </> : isUserFriend ? <> <>Friend</> </> : <> <UserPlus size="17" /> <>Add Friend</> </> }
           </button>
       </section>
 
