@@ -6,6 +6,6 @@ export const storeUser = create((set)=>({
 }))
 
 export const userFriends = create((set)=>({
-    friend:{},
+    friend:[],
     setFriend: (data) => set({friend:data}),
 }))
