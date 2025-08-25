@@ -4,7 +4,7 @@ import { userFriends } from "@/hooks/state";
 
 export default function ProfileUserData({ user, posts }) {
   const friends = userFriends((state)=>state.friend)
-  console.log(friends)
+
   return (
     <figure className="flex items-start w-full gap-4">
       <div className="PROFILE-PIC flex justify-center items-center relative yellow-bg h-[100px] w-[100px]">
