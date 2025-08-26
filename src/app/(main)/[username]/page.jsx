@@ -1,6 +1,6 @@
 "use client";
 import ProfileUserData from "@/components/layout/Profile/ProfileUserData";
-import { UserPlus, UserRoundCheck } from "lucide-react";
+import { UserPlus, UserRoundCheck, UserRoundCog } from "lucide-react";
 import { useUserPosts } from "@/hooks/fetchUserPost";
 import { use } from "react";
 import { OwnPost } from "@/components/layout/Profile/UserPost";
@@ -61,7 +61,7 @@ export default function Page({params}) {
             "hover:scale-105 transition-all cursor-pointer":!userAddData.length && !isUserFriend
           }
         )}>
-          {userAddData.length ? <> <UserRoundCheck size="17" /> <>User Added</> </> : isUserFriend ? <> <>Friend</> </> : <> <UserPlus size="17" /> <>Add Friend</> </> }
+          {userAddData.length ? <> <UserRoundCheck size="17" /> <>User Added</> </> : isUserFriend ? <> <>Friend</><button> <UserRoundCog className="bg-pink-300 p-1 rounded-md" color="white" size="28"/> </button> </> : <> <UserPlus size="17" /> <>Add Friend</> </> }
           </button>
       </section>
 
