@@ -12,10 +12,12 @@ import { toast } from "sonner";
 import GetAdds from "@/hooks/GetAdds";
 import clsx from "clsx";
 import { userFriends } from "@/hooks/state";
+import UnfriendModal from "@/components/layout/User-Visit/Unfriend-Modal";
 
 export default function Page({ params }) {
   const { username } = use(params);
   const [user, setUser] = useState({});
+  const [unfriendToggle, setUnfriendToggle] = useState(false);
   const [toggleButton, setToggleButton] = useState(false);
   const currentUser = storeUser((state) => state.user);
   const friends = userFriends((state) => state.friend);
@@ -51,18 +53,12 @@ export default function Page({ params }) {
       <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
         <h1 className="prismo font-semibold mb-2">{user.username}</h1>
         <ProfileUserData user={user} posts={posts} />
-        <button
-          disabled={userAddData.length || isUserFriend}
-          onClick={() => handleAddFriend()}
-          className={clsx(
-            "absolute flex gap-1  items-center bottom-4 right-4 text-sm ",
-            {
-              prismo: userAddData.length || isUserFriend,
-              "hover:scale-105 transition-all cursor-pointer":
-                !userAddData.length && !isUserFriend,
-            }
-          )}
-        >
+        <div className={clsx(
+          "absolute right-4 bottom-4 flex gap-1  items-center",
+          {
+            prismo: userAddData.length || isUserFriend,
+          }
+        )}>
           {userAddData.length ? (
             <>
               <UserRoundCheck size="17" /> <>User Added</>
@@ -70,20 +66,31 @@ export default function Page({ params }) {
           ) : isUserFriend ? (
             <>
               <h1>Friend</h1>
-              <button>
-                <UserRoundCog
-                  className="bg-pink-300 hover:bg-pink-400 transition-all cursor-pointer ml-0.5 p-1 rounded-md"
-                  color="white"
-                  size="28"
-                />
-              </button>
+              <div
+                onClick={() => setUnfriendToggle(!unfriendToggle)}
+                className="bg-pink-300 relative select-none hover:bg-pink-400 transition-all cursor-pointer ml-0.5 p-1 rounded-md"
+              >
+                <UserRoundCog color="white" size="22" />
+                <UnfriendModal toggle={unfriendToggle} />
+              </div>
             </>
           ) : (
-            <>
+            <button
+              disabled={userAddData.length || isUserFriend}
+              onClick={() => handleAddFriend()}
+              className={clsx(
+                "flex gap-1  items-center text-sm ",
+                {
+                  prismo: userAddData.length || isUserFriend,
+                  "hover:scale-105 transition-all cursor-pointer":
+                    !userAddData.length && !isUserFriend,
+                }
+              )}
+            >
               <UserPlus size="17" /> <>Add Friend</>
-            </>
+            </button>
           )}
-        </button>
+        </div>
       </section>
       <OwnPost user={user} posts={posts} loading={loading} />
     </div>
