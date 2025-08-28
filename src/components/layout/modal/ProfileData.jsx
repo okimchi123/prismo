@@ -89,7 +89,7 @@ export default function ProfileData({ close, user }) {
       },
     },
   };
-  const itemStyle = "py-2 px-1 hover:bg-pink-300 transition-all";
+  const itemStyle = "py-2 px-1 hover:bg-pink-300 hover:text-white transition-all";
   const chooseMenu = () => {
     setPicMenu(false);
     setPrismoPic(true);
@@ -139,7 +139,7 @@ export default function ProfileData({ close, user }) {
                   initial="exit"
                   animate={picMenu ? "enter" : "exit"}
                   variants={MenuAnimate}
-                  className="absolute -bottom-23 bg-white w-full p-1 gap-2 flex-col text-sm"
+                  className="absolute bg-white w-full p-1 gap-1 flex-col text-sm"
                 >
                   <label onClick={chooseMenu} className={itemStyle}>
                     Prismo Pics
