@@ -53,12 +53,14 @@ export default function Page({ params }) {
       <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
         <h1 className="prismo font-semibold mb-2">{user.username}</h1>
         <ProfileUserData user={user} posts={posts} />
-        <div className={clsx(
-          "absolute right-4 bottom-4 flex gap-1  items-center",
-          {
-            prismo: userAddData.length || isUserFriend,
-          }
-        )}>
+        <div
+          className={clsx(
+            "absolute right-4 bottom-4 flex gap-1  items-center",
+            {
+              prismo: userAddData.length || isUserFriend,
+            }
+          )}
+        >
           {userAddData.length ? (
             <>
               <UserRoundCheck size="17" /> <>User Added</>
@@ -66,11 +68,13 @@ export default function Page({ params }) {
           ) : isUserFriend ? (
             <>
               <h1>Friend</h1>
-              <div
-                onClick={() => setUnfriendToggle(!unfriendToggle)}
-                className="bg-pink-300 relative select-none hover:bg-pink-400 transition-all cursor-pointer ml-0.5 p-1 rounded-md"
-              >
-                <UserRoundCog color="white" size="22" />
+              <div className="relative select-non">
+                <button
+                  onClick={() => setUnfriendToggle(!unfriendToggle)}
+                  className="bg-pink-300 relative select-none hover:bg-pink-400 transition-all cursor-pointer ml-0.5 p-1 rounded-md"
+                >
+                  <UserRoundCog color="white" size="22" />
+                </button>
                 <UnfriendModal toggle={unfriendToggle} />
               </div>
             </>
@@ -78,14 +82,11 @@ export default function Page({ params }) {
             <button
               disabled={userAddData.length || isUserFriend}
               onClick={() => handleAddFriend()}
-              className={clsx(
-                "flex gap-1  items-center text-sm ",
-                {
-                  prismo: userAddData.length || isUserFriend,
-                  "hover:scale-105 transition-all cursor-pointer":
-                    !userAddData.length && !isUserFriend,
-                }
-              )}
+              className={clsx("flex gap-1  items-center text-sm ", {
+                prismo: userAddData.length || isUserFriend,
+                "hover:scale-105 transition-all cursor-pointer":
+                  !userAddData.length && !isUserFriend,
+              })}
             >
               <UserPlus size="17" /> <>Add Friend</>
             </button>
