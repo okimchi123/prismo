@@ -25,7 +25,7 @@ export default function ProfileUserData({ user, posts }) {
         <h1 className="FULLNAME text-lg font-medium leading-4">
           {user.firstname} {user.lastname}
         </h1>
-        <div className="FRIENDS-POSTS flex gap-3">
+        <div className="FRIENDS-POSTS flex gap-3 select-none">
           <div className="flex flex-col items-center">
             <p className="text-sm"> {friends.length} </p>
             <h2 className="leading-3 text-sm">friends</h2>
