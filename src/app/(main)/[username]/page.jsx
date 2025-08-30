@@ -67,7 +67,7 @@ export default function Page({ params }) {
             </>
           ) : isUserFriend ? (
             <>
-              <h1>Friend</h1>
+              <h1 className="select-none">Friend</h1>
               <div className="relative select-non">
                 <button
                   onClick={() => setUnfriendToggle(!unfriendToggle)}
