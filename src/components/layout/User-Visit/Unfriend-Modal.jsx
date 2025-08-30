@@ -1,12 +1,22 @@
+'use client'
 import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import ConfirmModal from "./Confirm";
 
-export default function UnfriendModal({ toggle }) {
-  const PicAnimate = {};
+export default function UnfriendModal({ toggle, setUnfriendToggle, user, currentUser, setToggleButton }) {
+  const [ confirmToggle, setConfirmToggle ] = useState(false)
+  const handleConfirm = () => {
+    setUnfriendToggle(false)
+    setConfirmToggle(true)
+  }
+
   return (
+    <>
+    <ConfirmModal confirmToggle={confirmToggle} setConfirmToggle={setConfirmToggle} user={user} currentUser={currentUser} setToggleButton={setToggleButton} />
     <AnimatePresence>
   {toggle && (
     <motion.div
-      onClick={() => console.log("pindot")}
+      onClick={handleConfirm}
       initial={{ opacity: 0, y: -7 }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0 } }}
       exit={{ opacity: 0, y: -7, transition: { duration: 0.20 } }}
@@ -16,5 +26,7 @@ export default function UnfriendModal({ toggle }) {
     </motion.div>
   )}
 </AnimatePresence>
+    </>
+    
   );
 }
