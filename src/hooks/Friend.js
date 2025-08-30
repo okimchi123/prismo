@@ -72,6 +72,13 @@ export async function AcceptRequest(fromID, toID, reqID){
     } 
 }
 
+export async function RemoveFriend(fromID, toID){
+    const receiverRef = doc(db, "users", toID, "friends", fromID)
+    const senderRef = doc(db, "users", fromID, "friends", toID)
+    await deleteDoc(receiverRef)
+    await deleteDoc(senderRef)
+}
+
 export async function RejectRequest(reqID){
     try {
         await deleteDoc(doc(db, "friend_requests", reqID))
