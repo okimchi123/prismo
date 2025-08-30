@@ -75,7 +75,7 @@ export default function Page({ params }) {
                 >
                   <UserRoundCog color="white" size="22" />
                 </button>
-                <UnfriendModal toggle={unfriendToggle} />
+                <UnfriendModal toggle={unfriendToggle} setUnfriendToggle={setUnfriendToggle} user={user} currentUser={currentUser} setToggleButton={setToggleButton} />
               </div>
             </>
           ) : (
