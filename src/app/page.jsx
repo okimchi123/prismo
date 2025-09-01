@@ -44,7 +44,7 @@ export default function Page() {
 
   useEffect(() => {
     if (user) {
-      router.push("/dashboard");
+      router.push("/home");
     }
   }, [user]);
 
