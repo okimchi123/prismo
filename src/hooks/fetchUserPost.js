@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { collection, query, where, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { userFriends } from "./state";
 
 export function useUserPosts(userId){
     const [posts, setPosts] = useState([])
@@ -26,4 +27,18 @@ export function useUserPosts(userId){
     },[userId])
 
     return {posts, loading};
+}
+
+export function getAllPosts(userID) {
+  const [allUsers, setAllUsers] = useState([]);
+  const friends = userFriends((state) => state.friend);
+
+  useEffect(() => {
+    if (!userID) return;
+
+    const friendIds = friends.map((friend) => ({ uid: friend.uid }));
+    setAllUsers([{ uid: userID }, ...friendIds]);
+  }, [userID, friends]);
+
+  return allUsers;
 }
