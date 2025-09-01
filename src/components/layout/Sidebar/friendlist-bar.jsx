@@ -21,7 +21,7 @@ export function FriendListBar() {
   const [toggleReq, setToggleReq] = useState(false);
   const { allFriends, loading } = GetUserFriends(currentUser.uid);
   const header = "prismo font-semibold";
-
+  
   const senderProfiles = FriendRequest(currentUser.uid, toggleReq);
   if (isMobile) {
     return (

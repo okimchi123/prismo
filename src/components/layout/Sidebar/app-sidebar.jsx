@@ -46,7 +46,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-lg mb-2 select-none prismo">
-            <Link className="flex items-center gap-1" href="/dashboard">
+            <Link className="flex items-center gap-1" href="/home">
               <Image src="/icon.svg" width="18" height="18" alt="icon" />
               <h1 className={`${darumadrop_one.className} mb-[6px]`}>prismo</h1>
             </Link>

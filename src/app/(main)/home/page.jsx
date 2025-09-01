@@ -8,12 +8,16 @@ import PostModal from "@/components/layout/modal/Post";
 import UserPost from "@/components/layout/Dashboard/post";
 import { useUserPosts } from "@/hooks/fetchUserPost";
 import { AnimatePresence } from "framer-motion";
+import { getAllPosts } from "@/hooks/fetchUserPost";
 
 export default function Page() {
   const user = storeUser((state) => state.user);
   const { posts, loading } = useUserPosts(user?.uid);
   
   const [isOpen, setIsOpen] = useState(false);
+
+  const AllPosts = getAllPosts(user.uid);
+  console.log(AllPosts)
 
   const onSubmit = (e) => {
     e.preventDefault();

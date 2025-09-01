@@ -6,8 +6,8 @@ import {
 
   export const items = [
     {
-      title: "Dashboard",
-      url: "/dashboard",
+      title: "Home",
+      url: "/home",
       icon: Home,
     },
     {
