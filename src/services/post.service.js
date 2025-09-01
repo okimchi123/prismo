@@ -1,22 +1,35 @@
-import {collection, addDoc, Timestamp} from 'firebase/firestore'
-import { db
+import {collection, addDoc, Timestamp, setDoc, doc} from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 
- } from '@/lib/firebase'
+export async function handlePostSubmit(postMessage, user, friends) {
+  try {
+    const docRef = await addDoc(collection(db, 'posts'), {
+      text: postMessage,
+      userId: user.uid,
+      userName: `${user.firstname} ${user.lastname}`,
+      userUsername: user.username,
+      createdAt: Timestamp.now(),
+    });
 
-export async function handlePostSubmit(postMessage, user){
-    
-    try {
-        const docRef = await addDoc(collection(db, 'posts'),
-        {
-            text: postMessage,
-            userId: user.uid,
-            userName: `${user.firstname} ${user.lastname}`,
-            userUsername: user.username,
-            createdAt: Timestamp.now(),
-        }
-    );
-    console.log("Created with id:", docRef.id)
-    } catch (error) {
-        console.error(error)
-    }
+    const feedPost = {
+      text: postMessage,
+      userId: user.uid,
+      userName: `${user.firstname} ${user.lastname}`,
+      userUsername: user.username,
+      createdAt: Timestamp.now(),
+    };
+
+    const writePromises = [
+      setDoc(doc(db, "users", user.uid, "feed", docRef.id), feedPost),
+      ...friends.map(friend =>
+        setDoc(doc(db, "users", friend.uid, "feed", docRef.id), feedPost)
+      )
+    ];
+
+    await Promise.all(writePromises);
+
+    console.log("Post created with id:", docRef.id);
+  } catch (error) {
+    console.error(error);
+  }
 }
