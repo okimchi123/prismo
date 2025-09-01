@@ -2,7 +2,7 @@
 import { ChevronLeft, Image } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { storeUser } from "@/hooks/state";
+import { storeUser, userFriends } from "@/hooks/state";
 import { Textarea } from "@/components/ui/textarea";
 import clsx from "clsx";
 import { handlePostSubmit } from "@/services/post.service";
@@ -11,12 +11,13 @@ import { motion } from "framer-motion";
 import { DisplayImage } from "@/components/ui/display-image";
 
 export default function PostModal({ onClose }) {
+  const friends = userFriends((state)=>state.friend)
   const user = storeUser((state) => state.user);
   const [postMessage, setPostMessage] = useState("");
   const handlePost = async (e) => {
     e.preventDefault();
     if (!postMessage.trim()) return;
-    handlePostSubmit(postMessage, user);
+    handlePostSubmit(postMessage, user, friends);
     toast.success("Post Created");
     setPostMessage("");
     onClose();
