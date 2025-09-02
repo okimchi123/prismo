@@ -13,7 +13,7 @@ import { getAllPosts } from "@/hooks/fetchUserPost";
 export default function Page() {
   const user = storeUser((state) => state.user);
   const { posts, loading } = useUserPosts(user?.uid);
-  
+  // change this hook instead
   const [isOpen, setIsOpen] = useState(false);
 
   const AllPosts = getAllPosts(user.uid);
@@ -53,7 +53,6 @@ export default function Page() {
         posts.map((post) => (
           <UserPost key={post.id} post={post} loading={loading} user={user} />
         ))
-        // change this user to allUserPost
       )}
     </main>
   );
