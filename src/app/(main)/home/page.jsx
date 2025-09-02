@@ -53,6 +53,7 @@ export default function Page() {
         posts.map((post) => (
           <UserPost key={post.id} post={post} loading={loading} user={user} />
         ))
+        // change this user to allUserPost
       )}
     </main>
   );
