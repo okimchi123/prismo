@@ -20,7 +20,6 @@ export default function UserPost({ post, loading, user }) {
   return (
     <>
       <AnimatePresence>
-        {" "}
         {commentModal && (
           <CommentModal
             Close={() => setCommentModal(false)}
