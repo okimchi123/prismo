@@ -8,7 +8,7 @@ import CommentModal from "../modal/CommentModal";
 import { AnimatePresence } from "framer-motion";
 import { storeUser } from "@/hooks/state";
 
-export default function UserPost({ post, loading, user }) {
+export default function UserPost({ post, user }) {
   const [commentModal, setCommentModal] = useState(false);
   const currentUser = storeUser((state) => state.user);
 
@@ -16,14 +16,13 @@ export default function UserPost({ post, loading, user }) {
     document.body.style.overflow = commentModal ? "hidden" : "auto";
   }, [commentModal]);
 
-  if (loading) return <p>Loading posts...</p>;
   return (
     <>
       <AnimatePresence>
         {commentModal && (
           <CommentModal
             Close={() => setCommentModal(false)}
-            postID={post.id}
+            postID={post.postID}
             user={user}
           />
         )}
@@ -57,7 +56,7 @@ export default function UserPost({ post, loading, user }) {
 
         <footer className="flex items-start">
           <LikeButton
-            postId={post.id}
+            postId={post.postID}
             userId={currentUser?.uid}
             currentLikes={post.likes || []}
           />
