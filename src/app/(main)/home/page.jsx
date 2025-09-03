@@ -6,18 +6,24 @@ import { useState, useEffect } from "react";
 import { storeUser } from "@/hooks/state";
 import PostModal from "@/components/layout/modal/Post";
 import UserPost from "@/components/layout/Dashboard/post";
-import { useUserPosts } from "@/hooks/fetchUserPost";
+import { getAllPosts } from "@/hooks/fetchUserPost";
 import { AnimatePresence } from "framer-motion";
 
 export default function Page() {
   const user = storeUser((state) => state.user);
-  const { posts, loading } = useUserPosts(user?.uid);
-  // change this hook instead
-  const [isOpen, setIsOpen] = useState(false);
+  const [posts, setPosts] = useState([])
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
+  useEffect(()=>{
+    async function getPosts(){
+      setPosts(await getAllPosts(user.uid))
+    }
+    if(user.uid){
+      getPosts()
+    }
+  },[user.uid])
+
+  console.log(posts)
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
@@ -47,7 +53,7 @@ export default function Page() {
         <p>No post yet</p>
       ) : (
         posts.map((post) => (
-          <UserPost key={post.id} post={post} loading={loading} user={user} />
+          <UserPost key={post.postID} post={post} user={user} />
         ))
       )}
     </main>
