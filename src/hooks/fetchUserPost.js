@@ -28,17 +28,3 @@ export function useUserPosts(userId){
 
     return {posts, loading};
 }
-
-export function getAllPosts(userID) {
-  const [allUsers, setAllUsers] = useState([]);
-  const friends = userFriends((state) => state.friend);
-
-  useEffect(() => {
-    if (!userID) return;
-
-    const friendIds = friends.map((friend) => ({ uid: friend.uid }));
-    setAllUsers([{ uid: userID }, ...friendIds]);
-  }, [userID, friends]);
-
-  return allUsers;
-}
