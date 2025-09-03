@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const privateRoutes = ["/dashboard", "/friends"];
+const privateRoutes = ["/home", "/friends"];
 const publicRoutes = ["/", "/register"];
 
 export function middleware(request) {
@@ -18,7 +18,7 @@ export function middleware(request) {
   }
 
   if (token && isPublicRoute) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.redirect(new URL("/home", request.url));
   }
 
   return NextResponse.next();
@@ -26,7 +26,7 @@ export function middleware(request) {
 
 export const config = {
   matcher: [
-    "/dashboard/:path*",
+    "/home/:path*",
     "/friends/:path*",
     "/register",
     "/",
