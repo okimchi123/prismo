@@ -32,10 +32,10 @@ export default function UserPost({ post, user }) {
           <figure className="flex gap-1">
             <DisplayImage
               img={
-                user.localPic
-                  ? user.localPic
-                  : user.dpUrl
-                  ? user.dpUrl
+                post.userLocalPic
+                  ? post.userLocalPic
+                  : post.userDP
+                  ? post.userDP
                   : "/jake.jpg"
               }
             />
