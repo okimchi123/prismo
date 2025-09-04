@@ -8,6 +8,8 @@ export async function handlePostSubmit(postMessage, user, friends) {
       userId: user.uid,
       userName: `${user.firstname} ${user.lastname}`,
       userUsername: user.username,
+      userDP: user.dpURL,
+      userLocalPic: user.localPic,
       createdAt: Timestamp.now(),
     });
 
@@ -16,6 +18,8 @@ export async function handlePostSubmit(postMessage, user, friends) {
       userId: user.uid,
       userName: `${user.firstname} ${user.lastname}`,
       userUsername: user.username,
+      userDP: user.dpURL,
+      userLocalPic: user.localPic,
       createdAt: Timestamp.now(),
     };
 
