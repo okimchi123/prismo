@@ -30,6 +30,7 @@ export function useUserPosts(userId){
 }
 
 export async function getAllPosts(userID){
+    //update this hook make it a real snapshot
     const querySnapshot = await getDocs(collection(db, 'users', userID, 'feed'));
     const data = querySnapshot.docs.map(doc => ({
     postID: doc.id,          
