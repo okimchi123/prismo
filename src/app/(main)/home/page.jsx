@@ -6,23 +6,21 @@ import { useState, useEffect } from "react";
 import { storeUser } from "@/hooks/state";
 import PostModal from "@/components/layout/modal/Post";
 import UserPost from "@/components/layout/Dashboard/post";
-import { getAllPosts } from "@/hooks/fetchUserPost";
+import { listenToAllPosts } from "@/hooks/fetchUserPost";
 import { AnimatePresence } from "framer-motion";
 
 export default function Page() {
   const user = storeUser((state) => state.user);
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([]);
 
-  useEffect(()=>{
-    async function getPosts(){
-      setPosts(await getAllPosts(user.uid))
-    }
-    if(user.uid){
-      getPosts()
-    }
-  },[user.uid])
+  useEffect(() => {
+    if (!user.uid) return;
 
-  console.log(posts)
+    const unsubscribe = listenToAllPosts(user.uid, setPosts);
+
+    return () => unsubscribe();
+  }, [user.uid]);
+
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
