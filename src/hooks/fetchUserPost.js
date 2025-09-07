@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, query, where, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { userFriends } from "./state";
 
@@ -29,12 +29,19 @@ export function useUserPosts(userId){
     return {posts, loading};
 }
 
-export async function getAllPosts(userID){
-    //update this hook make it a real snapshot
-    const querySnapshot = await getDocs(collection(db, 'users', userID, 'feed'));
-    const data = querySnapshot.docs.map(doc => ({
-    postID: doc.id,          
-    ...doc.data()        
-  }));
-    return data
+export function listenToAllPosts(userID, setPosts) {
+  const feedRef = collection(db, "users", userID, "feed");
+
+  const q = query(feedRef, orderBy("createdAt", "desc"));
+
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    const data = snapshot.docs.map((doc) => ({
+      postID: doc.id,
+      ...doc.data(),
+    }));
+
+    setPosts(data);
+  });
+
+  return unsubscribe;
 }
