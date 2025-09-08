@@ -5,7 +5,7 @@ import { DisplayImage } from "@/components/ui/display-image";
 import { useState, useEffect } from "react";
 import { storeUser } from "@/hooks/state";
 import PostModal from "@/components/layout/modal/Post";
-import UserPost from "@/components/layout/Dashboard/post";
+import UserPost from "@/components/layout/Dashboard/Post";
 import { listenToAllPosts } from "@/hooks/fetchUserPost";
 import { AnimatePresence } from "framer-motion";
 

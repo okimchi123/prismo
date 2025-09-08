@@ -1,5 +1,5 @@
 "use client";
-import UserPost from "@/components/layout/Dashboard/post";
+import UserPost from "@/components/layout/Dashboard/Post";
 
 export function OwnPost({ user, posts, loading }) {
 
