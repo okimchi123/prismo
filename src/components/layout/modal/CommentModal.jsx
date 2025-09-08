@@ -11,13 +11,14 @@ import { CommentImage, SmallDisplayImg } from "@/components/ui/display-image";
 
 export default function CommentModal({ Close, postID, user }) {
   const [commentData, setCommentData] = useState("");
+  const [loading, setLoading] = useState(false);
   const comments = getComment(postID);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!commentData.trim()) return;
-
-    await addComment(postID, commentData, user.uid, user.username);
+    setLoading(true)
+    await addComment(postID, commentData, user.uid, user.username, setLoading);
     setCommentData("");
   };
 
@@ -77,15 +78,19 @@ export default function CommentModal({ Close, postID, user }) {
             placeholder="What are your thoughts?"
             className="h-[50px] resize-none"
           />
-          <SendHorizontal
-            onClick={handleSubmit}
-            size="28"
-            color="#FFA1B3"
-            className={clsx(
-              "self-end hover:scale-120 cursor-pointer transition-all",
-              { block: commentData, hidden: !commentData }
+          <button 
+          onClick={handleSubmit}
+          disabled={loading}
+          className={clsx(
+              "self-end text-[#FFA1B3] transition-all",
+              { block: commentData, hidden: !commentData, "text-gray-400 hover:scale-100":loading, "hover:scale-120 cursor-pointer":!loading }
             )}
+          >
+            <SendHorizontal
+            size="24"
           />
+          </button>
+          
         </div>
       </motion.div>
     </motion.div>
