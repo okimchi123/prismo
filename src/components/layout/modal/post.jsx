@@ -76,7 +76,13 @@ export default function PostModal({ onClose }) {
           />
           <div className="flex items-center gap-1 text-md prismo">
             <Image size="22" />
-            <span>Photos|Videos</span>
+            <label htmlFor="postID" className="cursor-pointer" >Photos|Videos</label>
+            <input
+                id="postID"
+                type="file"
+                accept="image/*"
+                hidden
+              />
           </div>
         </section>
       </motion.form>
