@@ -130,7 +130,7 @@ export default function PostModal({ onClose }) {
               hidden
             />
           </label>
-          <div className="relative self-start">
+          <div className="relative select-none self-start">
             <div
               onClick={() => setGifModal(!gifModal)}
               className="flex cursor-pointer ml-[2px] items-center gap-1 text-md prismo"
@@ -138,7 +138,7 @@ export default function PostModal({ onClose }) {
               <img src="/icons/gif.svg" alt="gificon" className="prismo" />
               <span>GIF</span>
             </div>
-            {gifModal && <GifSearch />}
+            {gifModal && <GifSearch setGifModal={setGifModal} />}
           </div>
         </section>
       </motion.form>
