@@ -1,5 +1,5 @@
 "use client";
-import { ChevronLeft, Image, Trash } from "lucide-react";
+import { ChevronLeft, Image, Trash, ImagePlay } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { storeUser, userFriends } from "@/hooks/state";
@@ -10,8 +10,10 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { DisplayImage } from "@/components/ui/display-image";
 import NextImage from "next/image";
+import GifSearch from "./Gif";
 
 export default function PostModal({ onClose }) {
+  const [gifModal, setGifModal] = useState(false);
   const [file, setFile] = useState(null);
   const [previewPic, setPreviewPic] = useState(null);
   const friends = userFriends((state) => state.friend);
@@ -114,11 +116,12 @@ export default function PostModal({ onClose }) {
               )}
             </div>
           )}
-          <div className="flex items-center gap-1 text-md prismo">
-            <Image size="22" />
-            <label htmlFor="postID" className="cursor-pointer">
-              Photos
-            </label>
+          <label
+            htmlFor="postID"
+            className="flex cursor-pointer self-start items-center gap-1 text-md prismo mt-1 mb-1"
+          >
+            <Image size="25" />
+            <span>Photos</span>
             <input
               id="postID"
               type="file"
@@ -126,6 +129,16 @@ export default function PostModal({ onClose }) {
               onChange={handleChange}
               hidden
             />
+          </label>
+          <div className="relative self-start">
+            <div
+              onClick={() => setGifModal(!gifModal)}
+              className="flex cursor-pointer ml-[2px] items-center gap-1 text-md prismo"
+            >
+              <img src="/icons/gif.svg" alt="gificon" className="prismo" />
+              <span>GIF</span>
+            </div>
+            {gifModal && <GifSearch />}
           </div>
         </section>
       </motion.form>
