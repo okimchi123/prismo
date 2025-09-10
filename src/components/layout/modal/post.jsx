@@ -1,5 +1,5 @@
 "use client";
-import { ChevronLeft, Image } from "lucide-react";
+import { ChevronLeft, Image, Trash } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { storeUser, userFriends } from "@/hooks/state";
@@ -9,11 +9,27 @@ import { handlePostSubmit } from "@/services/post.service";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { DisplayImage } from "@/components/ui/display-image";
+import NextImage from "next/image";
 
 export default function PostModal({ onClose }) {
-  const friends = userFriends((state)=>state.friend)
+  const [file, setFile] = useState(null);
+  const [previewPic, setPreviewPic] = useState(null);
+  const friends = userFriends((state) => state.friend);
   const user = storeUser((state) => state.user);
   const [postMessage, setPostMessage] = useState("");
+  const [picHover, setPicHover] = useState(false);
+
+  const handleChange = (e) => {
+    const newFile = e.target.files[0];
+    setFile(newFile);
+    setPreviewPic(URL.createObjectURL(newFile));
+  };
+
+  const removePic = () => {
+    setFile(null);
+    setPreviewPic(null);
+  };
+
   const handlePost = async (e) => {
     e.preventDefault();
     if (!postMessage.trim()) return;
@@ -74,15 +90,42 @@ export default function PostModal({ onClose }) {
             className="mb-3"
             placeholder="What's on your mind?"
           />
+          {previewPic && (
+            <div
+              className="w-64 h-64 relative self-center"
+              onMouseOver={() => setPicHover(true)}
+              onMouseOut={() => setPicHover(false)}
+            >
+              <NextImage
+                src={previewPic}
+                alt="postPic"
+                fill
+                className="object-contain"
+              />
+              {picHover && (
+                <div className="absolute h-full w-full bg-black/50">
+                  <Trash
+                    onClick={removePic}
+                    size="28"
+                    color="white"
+                    className="absolute bottom-3 right-3 cursor-pointer hover:scale-110 transition-all"
+                  />
+                </div>
+              )}
+            </div>
+          )}
           <div className="flex items-center gap-1 text-md prismo">
             <Image size="22" />
-            <label htmlFor="postID" className="cursor-pointer" >Photos|Videos</label>
+            <label htmlFor="postID" className="cursor-pointer">
+              Photos
+            </label>
             <input
-                id="postID"
-                type="file"
-                accept="image/*"
-                hidden
-              />
+              id="postID"
+              type="file"
+              accept="image/*"
+              onChange={handleChange}
+              hidden
+            />
           </div>
         </section>
       </motion.form>
