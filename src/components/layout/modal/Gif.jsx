@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
-export default function GifSearch() {
+export default function GifSearch({setGifModal}) {
   const [query, setQuery] = useState("");
   const [gifs, setGifs] = useState([]);
+  const gifRef = useRef(null)
 
   const searchGifs = async () => {
     if (!query) return;
@@ -12,8 +13,19 @@ export default function GifSearch() {
     setGifs(data.results || []);
   };
 
+  useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (gifRef.current && !gifRef.current.contains(event.target)) {
+            setGifModal(false)
+        }
+      };
+  
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+  
   return (
-    <div className="p-4 bg-white absolute -top-22 left-0">
+    <div ref={gifRef} className="p-4 bg-white absolute -top-22 left-0">
       <div className="flex gap-2">
         <input
           type="text"
