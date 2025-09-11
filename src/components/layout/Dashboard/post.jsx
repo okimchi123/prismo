@@ -53,6 +53,17 @@ export default function UserPost({ post, user }) {
         <article className="max-w-[500px]">
           <p>{post.text}</p>
         </article>
+        {post.postMedia ? (
+          <figure className="w-64 h-64 relative self-center">
+            <Image
+              src={post.postMedia}
+              alt="postPic"
+              unoptimized
+              fill
+              className="object-contain"
+            />
+          </figure>
+        ) : <></>}
 
         <footer className="flex items-start">
           <LikeButton
