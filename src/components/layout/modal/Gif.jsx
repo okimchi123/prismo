@@ -1,10 +1,15 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-export default function GifSearch({setGifModal}) {
+export default function GifSearch({setGifModal, setPreviewPic}) {
   const [query, setQuery] = useState("");
   const [gifs, setGifs] = useState([]);
-  const gifRef = useRef(null)
+  const gifRef = useRef(null);
+
+  const selectGIF = (gif) => {
+    setPreviewPic(gif.media_formats.gif.url)
+    setGifModal(false)
+  }
 
   const searchGifs = async () => {
     if (!query) return;
@@ -47,6 +52,7 @@ export default function GifSearch({setGifModal}) {
           <img
             key={gif.id}
             src={gif.media_formats?.gif?.url}
+            onClick={()=>selectGIF(gif)}
             alt="gif"
             className="w-full h-auto rounded"
           />
