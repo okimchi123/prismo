@@ -51,8 +51,7 @@ export default function PostModal({ onClose }) {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0 }}
-        onSubmit={handlePost}
-        className="flex flex-col w-full h-full md:h-[95%] md:w-[400px] rounded-sm bg-white justify-start"
+        className="flex flex-col w-full h-full overflow-y-auto md:w-[400px] rounded-sm bg-white justify-start"
       >
         <section className="flex items-center p-2 justify-between border-b-1">
           <div className="flex items-center gap-4">
@@ -60,7 +59,7 @@ export default function PostModal({ onClose }) {
             <h1>Create post</h1>
           </div>
           <Button
-            type="submit"
+            onClick={handlePost}
             disabled={!postMessage}
             className={clsx("select-none", {
               "bg-pink-400 hover:bg-pink-500": postMessage,
@@ -101,6 +100,7 @@ export default function PostModal({ onClose }) {
               <NextImage
                 src={previewPic}
                 alt="postPic"
+                unoptimized
                 fill
                 className="object-contain"
               />
@@ -138,7 +138,7 @@ export default function PostModal({ onClose }) {
               <img src="/icons/gif.svg" alt="gificon" className="prismo" />
               <span>GIF</span>
             </div>
-            {gifModal && <GifSearch setGifModal={setGifModal} />}
+            {gifModal && <GifSearch setGifModal={setGifModal} setPreviewPic={setPreviewPic} />}
           </div>
         </section>
       </motion.form>
