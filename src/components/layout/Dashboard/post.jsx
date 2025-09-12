@@ -3,18 +3,33 @@ import { DisplayImage } from "@/components/ui/display-image";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { LikeButton } from "@/components/ui/likeButton";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import CommentModal from "../modal/CommentModal";
 import { AnimatePresence } from "framer-motion";
 import { storeUser } from "@/hooks/state";
+import { CircleEllipsis, PencilIcon, Trash } from "lucide-react";
 
 export default function UserPost({ post, user }) {
   const [commentModal, setCommentModal] = useState(false);
   const currentUser = storeUser((state) => state.user);
+  const [infoModal, setInfoModal] = useState(false);
+  const infoRef = useRef(null);
+  const infoButtonRef = useRef(null)
 
   useEffect(() => {
     document.body.style.overflow = commentModal ? "hidden" : "auto";
   }, [commentModal]);
+
+  useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (infoRef.current && !infoRef.current.contains(event.target) && !infoButtonRef.current.contains(event.target)) {
+            setInfoModal(false)
+        }
+      };
+  
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
   return (
     <>
@@ -27,7 +42,29 @@ export default function UserPost({ post, user }) {
           />
         )}
       </AnimatePresence>
-      <main className="bg-white rounded-xs w-full p-3 flex flex-col gap-2">
+      <main className="bg-white rounded-xs relative w-full p-3 flex flex-col gap-2">
+        {post.userId === user.uid && (
+          <div className=" absolute select-none right-3 top-3">
+            <CircleEllipsis
+              ref={infoButtonRef}
+              onClick={() => setInfoModal(!infoModal)}
+              size="22"
+              className="hover:scale-107 prismo transition-all cursor-pointer"
+            />
+            {infoModal && (
+              <div ref={infoRef} className="bg-white absolute flex flex-col gap-3 py-3 px-6 shadow-lg rounded-sm">
+                <button className="flex gap-1 text-green-500 cursor-pointer hover:scale-107 transition-all">
+                  <PencilIcon size="18"/>
+                  <span className="text-sm">Edit</span>
+                </button>
+                <button className="flex gap-1 text-red-500 cursor-pointer hover:scale-107 transition-all">
+                  <Trash size="18" />
+                  <span className="text-sm">Delete</span>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
         <header>
           <figure className="flex gap-1">
             <DisplayImage
@@ -63,7 +100,9 @@ export default function UserPost({ post, user }) {
               className="object-contain"
             />
           </figure>
-        ) : <></>}
+        ) : (
+          <></>
+        )}
 
         <footer className="flex items-start">
           <LikeButton
