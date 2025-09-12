@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-export default function GifSearch({setGifModal, setPreviewPic, setGif}) {
+export default function GifSearch({setGifModal, setPreviewPic, setGif, gifButtonRef}) {
   const [query, setQuery] = useState("");
   const [gifs, setGifs] = useState([]);
   const gifRef = useRef(null);
@@ -21,7 +21,7 @@ export default function GifSearch({setGifModal, setPreviewPic, setGif}) {
 
   useEffect(() => {
       const handleClickOutside = (event) => {
-        if (gifRef.current && !gifRef.current.contains(event.target)) {
+        if (gifRef.current && !gifRef.current.contains(event.target) && !gifButtonRef.current.contains(event.target)) {
             setGifModal(false)
         }
       };

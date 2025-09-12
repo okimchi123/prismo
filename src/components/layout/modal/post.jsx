@@ -1,6 +1,6 @@
 "use client";
 import { ChevronLeft, Image, Trash, ImagePlay } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { storeUser, userFriends } from "@/hooks/state";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,6 +21,7 @@ export default function PostModal({ onClose }) {
   const user = storeUser((state) => state.user);
   const [postMessage, setPostMessage] = useState("");
   const [picHover, setPicHover] = useState(false);
+  const gifButtonRef = useRef(null);
 
   const handleChange = (e) => {
     const newFile = e.target.files[0];
@@ -137,13 +138,14 @@ export default function PostModal({ onClose }) {
           </label>
           <div className="relative select-none self-start">
             <div
+              ref={gifButtonRef}
               onClick={() => setGifModal(!gifModal)}
               className="flex cursor-pointer ml-[2px] items-center gap-1 text-md prismo"
             >
               <img src="/icons/gif.svg" alt="gificon" className="prismo" />
               <span>GIF</span>
             </div>
-            {gifModal && <GifSearch setGifModal={setGifModal} setPreviewPic={setPreviewPic} setGif={setGif} />}
+            {gifModal && <GifSearch setGifModal={setGifModal} setPreviewPic={setPreviewPic} setGif={setGif} gifButtonRef={gifButtonRef} />}
           </div>
         </section>
       </motion.div>
