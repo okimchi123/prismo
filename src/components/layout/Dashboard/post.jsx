@@ -8,13 +8,15 @@ import CommentModal from "../modal/CommentModal";
 import { AnimatePresence } from "framer-motion";
 import { storeUser } from "@/hooks/state";
 import { CircleEllipsis, PencilIcon, Trash } from "lucide-react";
+import EditPost from "../modal/EditPost";
 
 export default function UserPost({ post, user }) {
   const [commentModal, setCommentModal] = useState(false);
   const currentUser = storeUser((state) => state.user);
   const [infoModal, setInfoModal] = useState(false);
   const infoRef = useRef(null);
-  const infoButtonRef = useRef(null)
+  const infoButtonRef = useRef(null);
+  const [editModal, setEditModal] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = commentModal ? "hidden" : "auto";
@@ -42,6 +44,11 @@ export default function UserPost({ post, user }) {
           />
         )}
       </AnimatePresence>
+      <AnimatePresence>
+        {editModal && (
+          <EditPost Close={()=>setEditModal(false)} />
+        )}
+      </AnimatePresence>
       <main className="bg-white rounded-xs relative w-full p-3 flex flex-col gap-2">
         {post.userId === user.uid && (
           <div className=" absolute select-none right-3 top-3">
@@ -53,7 +60,9 @@ export default function UserPost({ post, user }) {
             />
             {infoModal && (
               <div ref={infoRef} className="bg-white absolute flex flex-col gap-3 py-3 px-6 shadow-lg rounded-sm">
-                <button className="flex gap-1 text-green-500 cursor-pointer hover:scale-107 transition-all">
+                <button 
+                onClick={()=>setEditModal(true)}
+                className="flex gap-1 text-green-500 cursor-pointer hover:scale-107 transition-all">
                   <PencilIcon size="18"/>
                   <span className="text-sm">Edit</span>
                 </button>
