@@ -8,7 +8,7 @@ import CommentModal from "../modal/CommentModal";
 import { AnimatePresence } from "framer-motion";
 import { storeUser } from "@/hooks/state";
 import { CircleEllipsis, PencilIcon, Trash } from "lucide-react";
-import EditPost from "../modal/EditPost";
+import EditPost from "../Modal/EditPost";
 
 export default function UserPost({ post, user }) {
   const [commentModal, setCommentModal] = useState(false);
@@ -32,6 +32,11 @@ export default function UserPost({ post, user }) {
       document.addEventListener("mousedown", handleClickOutside);
       return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+  const editButton = () => {
+    setInfoModal(false)
+    setEditModal(true)
+  }
 
   return (
     <>
@@ -61,7 +66,7 @@ export default function UserPost({ post, user }) {
             {infoModal && (
               <div ref={infoRef} className="bg-white absolute flex flex-col gap-3 py-3 px-6 shadow-lg rounded-sm">
                 <button 
-                onClick={()=>setEditModal(true)}
+                onClick={()=>editButton()}
                 className="flex gap-1 text-green-500 cursor-pointer hover:scale-107 transition-all">
                   <PencilIcon size="18"/>
                   <span className="text-sm">Edit</span>
