@@ -1,5 +1,6 @@
 'use client'
 import { motion } from "framer-motion"
+import { Textarea } from "@/components/ui/textarea"
 
 export default function EditPost({Close}){
     return(
@@ -13,6 +14,7 @@ export default function EditPost({Close}){
         exit={{ scale: 0 }}
         className="flex flex-col rounded-sm h-[200px] w-[400px] relative bg-white justify-start"
       >
+        <Textarea placeholder="Edit post" />
         <button className="text-sm absolute right-2 top-2" onClick={Close}>
           Close
         </button>
