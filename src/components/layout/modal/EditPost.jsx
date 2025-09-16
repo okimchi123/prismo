@@ -7,7 +7,8 @@ import { editPost } from "@/services/post.service"
 import { Pencil } from "lucide-react"
 
 export default function EditPost({Close, post, friends}){
-  const [textInput, setTextInput] = useState("")
+  const [textInput, setTextInput] = useState(post.text)
+  const oldText = post.text;
 
   const handleUpdate = async () => {
     await editPost(post.userId, post.postID, textInput, friends)
@@ -30,12 +31,12 @@ export default function EditPost({Close, post, friends}){
           <h1 className="font-medium">Edit Post</h1>
         </div>
         
-        <Textarea onChange={(e)=>setTextInput(e.target.value)} placeholder={post.text} />
+        <Textarea onChange={(e)=>setTextInput(e.target.value)} value={textInput} />
         <div className="flex gap-1 self-end">
           <Button onClick={Close}>Cancel</Button>
           <Button 
           onClick={handleUpdate}
-          hidden={!textInput.trim()} className="bg-green-500 hover:bg-green-600">Save</Button>
+          hidden={textInput === oldText} className="bg-green-500 hover:bg-green-600">Save</Button>
         </div>
       </motion.div>
     </motion.main>
