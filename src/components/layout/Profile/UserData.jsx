@@ -1,7 +1,7 @@
 "use client";
 import { Pencil } from "lucide-react";
 import { useState, useEffect } from "react";
-import ProfileData from "../modal/ProfileData";
+import ProfileData from "../Modal/ProfileData";
 import { AnimatePresence } from "framer-motion";
 import { EditImage } from "@/components/ui/display-image";
 import ProfileUserData from "@/components/layout/Profile/ProfileUserData";
