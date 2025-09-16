@@ -18,7 +18,7 @@ export async function handlePostSubmit(postMessage, user, friends, gif) {
       userName: `${user.firstname} ${user.lastname}`,
       userUsername: user.username,
       userDP: user.dpURL,
-      postMedia: `${gif ? gif : null}`,
+      postMedia: gif ? gif : null,
       userLocalPic: user.localPic,
       createdAt: Timestamp.now(),
     });
@@ -29,7 +29,7 @@ export async function handlePostSubmit(postMessage, user, friends, gif) {
       userName: `${user.firstname} ${user.lastname}`,
       userUsername: user.username,
       userDP: user.dpURL,
-      postMedia: `${gif ? gif : null}`,
+      postMedia: gif ? gif : null,
       userLocalPic: user.localPic,
       createdAt: Timestamp.now(),
     };
