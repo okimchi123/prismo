@@ -9,6 +9,8 @@ import { AnimatePresence } from "framer-motion";
 import { storeUser } from "@/hooks/state";
 import { CircleEllipsis, PencilIcon, Trash } from "lucide-react";
 import EditPost from "../Modal/EditPost";
+import DeletePost from "../Modal/DeletePost";
+import { userFriends } from "@/hooks/state";
 
 export default function UserPost({ post, user }) {
   const [commentModal, setCommentModal] = useState(false);
@@ -17,6 +19,8 @@ export default function UserPost({ post, user }) {
   const infoRef = useRef(null);
   const infoButtonRef = useRef(null);
   const [editModal, setEditModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const friends = userFriends((state) => state.friend);
 
   useEffect(() => {
     document.body.style.overflow = commentModal ? "hidden" : "auto";
@@ -33,9 +37,9 @@ export default function UserPost({ post, user }) {
       return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-  const editButton = () => {
+  const editButton = (setFunction) => {
     setInfoModal(false)
-    setEditModal(true)
+    setFunction(true)
   }
 
   return (
@@ -48,10 +52,11 @@ export default function UserPost({ post, user }) {
             user={user}
           />
         )}
-      </AnimatePresence>
-      <AnimatePresence>
         {editModal && (
-          <EditPost Close={()=>setEditModal(false)} post={post} />
+          <EditPost Close={()=>setEditModal(false)} post={post} friends={friends} />
+        )}
+        {deleteModal && (
+          <DeletePost Close={()=>setDeleteModal(false)} post={post} friends={friends} />
         )}
       </AnimatePresence>
       <main className="bg-white rounded-xs relative w-full p-3 flex flex-col gap-2">
@@ -66,12 +71,14 @@ export default function UserPost({ post, user }) {
             {infoModal && (
               <div ref={infoRef} className="bg-white absolute flex flex-col gap-3 py-3 px-6 shadow-lg rounded-sm">
                 <button 
-                onClick={()=>editButton()}
+                onClick={()=>editButton(setEditModal)}
                 className="flex gap-1 text-green-500 cursor-pointer hover:scale-107 transition-all">
                   <PencilIcon size="18"/>
                   <span className="text-sm">Edit</span>
                 </button>
-                <button className="flex gap-1 text-red-500 cursor-pointer hover:scale-107 transition-all">
+                <button 
+                onClick={()=>editButton(setDeleteModal)}
+                className="flex gap-1 text-red-500 cursor-pointer hover:scale-107 transition-all">
                   <Trash size="18" />
                   <span className="text-sm">Delete</span>
                 </button>
