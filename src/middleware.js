@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const privateRoutes = ["/home", "/friends"];
+const privateRoutes = ["/home"];
 const publicRoutes = ["/", "/register"];
 
 export function middleware(request) {
@@ -27,7 +27,6 @@ export function middleware(request) {
 export const config = {
   matcher: [
     "/home/:path*",
-    "/friends/:path*",
     "/register",
     "/",
   ],

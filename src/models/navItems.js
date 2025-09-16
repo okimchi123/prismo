@@ -1,6 +1,5 @@
 import {
     Home,
-    Users,
     User,
   } from "lucide-react";
 
@@ -9,11 +8,6 @@ import {
       title: "Home",
       url: "/home",
       icon: Home,
-    },
-    {
-      title: "Friends",
-      url: "/friends",
-      icon: Users,
     },
     {
       title: "Profile",
