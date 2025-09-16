@@ -48,7 +48,7 @@ export default function UserPost({ post, user }) {
         {commentModal && (
           <CommentModal
             Close={() => setCommentModal(false)}
-            postID={post.postID}
+            postID={post.postID || post.id}
             user={user}
           />
         )}
@@ -111,7 +111,7 @@ export default function UserPost({ post, user }) {
         <article className="max-w-[500px]">
           <p>{post.text}</p>
         </article>
-        {post.postMedia ? (
+        {post.postMedia && (
           <figure className="w-64 h-64 relative self-center">
             <Image
               src={post.postMedia}
@@ -121,13 +121,11 @@ export default function UserPost({ post, user }) {
               className="object-contain"
             />
           </figure>
-        ) : (
-          <></>
         )}
 
         <footer className="flex items-start">
           <LikeButton
-            postId={post.postID}
+            postId={post.postID || post.id}
             userId={currentUser?.uid}
             currentLikes={post.likes || []}
           />
