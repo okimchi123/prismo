@@ -3,22 +3,27 @@ import { useState } from "react"
 import {doc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore"
 import { db } from "@/lib/firebase";
 
-export function LikeButton({postId, userId, currentLikes=[]}){
+export function LikeButton({postId, userId, currentLikes}){
     const [likes, setLikes] = useState(currentLikes);
 
     const hasLiked = likes.includes(userId)
-
     const toggleLike = async () => {
         const postRef = doc(db, "posts", postId)
-
+        const feedRef = doc(db, "users", userId, "feed", postId)
         try {
             if(hasLiked){
                 await updateDoc(postRef, {
                     likes: arrayRemove(userId),
                 })
+                await updateDoc(feedRef, {
+                    likes: arrayRemove(userId),
+                })
                 setLikes(likes.filter((id)=> id !== userId))
             }else{
                 await updateDoc(postRef, {
+                    likes: arrayUnion(userId),
+                })
+                await updateDoc(feedRef, {
                     likes: arrayUnion(userId),
                 })
                 setLikes([...likes, userId])
