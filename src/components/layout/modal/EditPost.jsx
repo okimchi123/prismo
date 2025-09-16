@@ -4,12 +4,13 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { editPost } from "@/services/post.service"
+import { Pencil } from "lucide-react"
 
-export default function EditPost({Close, post}){
+export default function EditPost({Close, post, friends}){
   const [textInput, setTextInput] = useState("")
 
   const handleUpdate = async () => {
-    await editPost(post.userId, post.postID, textInput)
+    await editPost(post.userId, post.postID, textInput, friends)
     Close()
   }
 
@@ -24,7 +25,11 @@ export default function EditPost({Close, post}){
         exit={{ scale: 0 }}
         className="flex flex-col gap-2 py-2 min-h-[150px] px-2 rounded-sm w-[400px] relative bg-white justify-start"
       >
-        <h1 className="font-medium mb-2 ml-1">Edit Post</h1>
+        <div className="flex items-center gap-1 mb-2 ml-1">
+          <Pencil size="18" />
+          <h1 className="font-medium">Edit Post</h1>
+        </div>
+        
         <Textarea onChange={(e)=>setTextInput(e.target.value)} placeholder={post.text} />
         <div className="flex gap-1 self-end">
           <Button onClick={Close}>Cancel</Button>
