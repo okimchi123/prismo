@@ -51,7 +51,7 @@ export default function UserPost({ post, user }) {
       </AnimatePresence>
       <AnimatePresence>
         {editModal && (
-          <EditPost Close={()=>setEditModal(false)} postText={post.text} />
+          <EditPost Close={()=>setEditModal(false)} post={post} />
         )}
       </AnimatePresence>
       <main className="bg-white rounded-xs relative w-full p-3 flex flex-col gap-2">
