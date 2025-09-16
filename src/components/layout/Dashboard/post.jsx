@@ -4,7 +4,7 @@ import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { LikeButton } from "@/components/ui/likeButton";
 import { useState, useEffect, useRef } from "react";
-import CommentModal from "../modal/CommentModal";
+import CommentModal from "../Modal/CommentModal";
 import { AnimatePresence } from "framer-motion";
 import { storeUser } from "@/hooks/state";
 import { CircleEllipsis, PencilIcon, Trash } from "lucide-react";
@@ -51,7 +51,7 @@ export default function UserPost({ post, user }) {
       </AnimatePresence>
       <AnimatePresence>
         {editModal && (
-          <EditPost Close={()=>setEditModal(false)} />
+          <EditPost Close={()=>setEditModal(false)} postText={post.text} />
         )}
       </AnimatePresence>
       <main className="bg-white rounded-xs relative w-full p-3 flex flex-col gap-2">
