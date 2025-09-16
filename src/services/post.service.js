@@ -1,10 +1,17 @@
-import { collection, addDoc, Timestamp, setDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  Timestamp,
+  setDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { toast } from "sonner";
 
 export async function handlePostSubmit(postMessage, user, friends, gif) {
   try {
-
     const docRef = await addDoc(collection(db, "posts"), {
       text: postMessage,
       userId: user.uid,
@@ -35,32 +42,35 @@ export async function handlePostSubmit(postMessage, user, friends, gif) {
     ];
 
     await Promise.all(writePromises);
-
   } catch (error) {
     console.error(error);
   }
 }
 
-export async function handlePostSubmitWithFile(postMessage, user, friends, file) {
+export async function handlePostSubmitWithFile(
+  postMessage,
+  user,
+  friends,
+  file
+) {
   try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "post_pic_upload");
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "post_pic_upload");
 
-      const res = await fetch(
-        "https://api.cloudinary.com/v1_1/dw8mhxm3l/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dw8mhxm3l/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
-      if (!res.ok) throw new Error("failed to upload image");
+    if (!res.ok) throw new Error("failed to upload image");
 
-      const data = await res.json();
-      const downloadURL = data.secure_url;
+    const data = await res.json();
+    const downloadURL = data.secure_url;
 
-      
     const docRef = await addDoc(collection(db, "posts"), {
       text: postMessage,
       userId: user.uid,
@@ -91,23 +101,52 @@ export async function handlePostSubmitWithFile(postMessage, user, friends, file)
     ];
 
     await Promise.all(writePromises);
-
   } catch (error) {
     console.error(error);
   }
 }
 
-export async function editPost(userID, postID, postText){
-  const feedRef = doc(db, 'users', userID, 'feed', postID)
-  const postRef = doc(db, 'posts', postID)
+export async function editPost(userID, postID, postText, friends) {
+  const feedRef = doc(db, "users", userID, "feed", postID);
+  const postRef = doc(db, "posts", postID);
 
   try {
-    await updateDoc(feedRef, {text:postText,})
-    await updateDoc(postRef, {text:postText,})
-  } catch (error) {
-    console.error(error)
-  }finally{
-    toast.success("Updated Post")
-  }
+    await updateDoc(feedRef, { text: postText });
+    await updateDoc(postRef, { text: postText });
 
+    const writePromises = [
+      ...friends.map((friend) =>
+        updateDoc(doc(db, "users", friend.uid, "feed", postID), {
+          text: postText,
+        })
+      ),
+    ];
+
+    await Promise.all(writePromises);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    toast.success("Updated Post");
+  }
+}
+export async function deletePostHook(userID, postID, friends) {
+  const feedRef = doc(db, "users", userID, "feed", postID);
+  const postRef = doc(db, "posts", postID);
+
+  try {
+    await deleteDoc(feedRef);
+    await deleteDoc(postRef);
+
+    const writePromises = [
+      ...friends.map((friend) =>
+        deleteDoc(doc(db, "users", friend.uid, "feed", postID))
+      ),
+    ];
+
+    await Promise.all(writePromises);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    toast.success("Deleted Post");
+  }
 }
