@@ -1,5 +1,6 @@
-import { collection, addDoc, Timestamp, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, Timestamp, setDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { toast } from "sonner";
 
 export async function handlePostSubmit(postMessage, user, friends, gif) {
   try {
@@ -94,4 +95,19 @@ export async function handlePostSubmitWithFile(postMessage, user, friends, file)
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function editPost(userID, postID, postText){
+  const feedRef = doc(db, 'users', userID, 'feed', postID)
+  const postRef = doc(db, 'posts', postID)
+
+  try {
+    await updateDoc(feedRef, {text:postText,})
+    await updateDoc(postRef, {text:postText,})
+  } catch (error) {
+    console.error(error)
+  }finally{
+    toast.success("Updated Post")
+  }
+
 }
