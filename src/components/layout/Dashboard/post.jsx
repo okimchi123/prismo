@@ -60,7 +60,7 @@ export default function UserPost({ post, user }) {
         )}
       </AnimatePresence>
       <main className="bg-white rounded-xs relative w-full p-3 flex flex-col gap-2">
-        {post.userId === user.uid && (
+        {post.userId === currentUser.uid && (
           <div className=" absolute select-none right-3 top-3">
             <CircleEllipsis
               ref={infoButtonRef}
