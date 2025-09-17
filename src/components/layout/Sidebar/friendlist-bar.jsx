@@ -15,10 +15,9 @@ import FriendRequestCard from "./friend-request";
 import { useState } from "react";
 import { GetUserFriends } from "@/hooks/FetchFriends";
 import {
-  UserCog,
+  Ellipsis,
   CircleUser,
   MessageCircleMore,
-  UserRoundMinus,
 } from "lucide-react";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
@@ -120,7 +119,7 @@ export function FriendListBar() {
                 })}
               >
                 {!hover ? (
-                  <UserCog size="22" className="" />
+                  <Ellipsis size="22" className="" />
                 ) : (
                   <>
                     <button className="cursor-pointer">
