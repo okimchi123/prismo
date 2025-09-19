@@ -21,9 +21,12 @@ import {
 } from "lucide-react";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import Message from "./Message";
 
 export function FriendListBar() {
   const currentUser = storeUser((state) => state.user);
+  const [chatModal, setChatModal] = useState(false);
+  const [selectedFriend, setSelectedFriend] = useState({});
   const isMobile = useIsMobile();
   const [toggleReq, setToggleReq] = useState(false);
   const { allFriends, loading } = GetUserFriends(currentUser.uid);
@@ -34,6 +37,16 @@ export function FriendListBar() {
   const handleViewUser = (username) => {
     router.push(username);
   };
+
+  const selectUser = (user) => {
+    setSelectedFriend(user)
+    setChatModal(true)
+  }
+  
+  const closeChat = () => {
+    setSelectedFriend({})
+    setChatModal(false)
+  }
 
   const senderProfiles = FriendRequest(currentUser.uid, toggleReq);
   if (isMobile) {
@@ -81,6 +94,7 @@ export function FriendListBar() {
   }
   return (
     <section className="md:[250px] lg:w-[300px] xl:w-[350px] h-[100vh] sticky top-0 right-0 bg-white p-4">
+    {chatModal && <Message currentUser={currentUser} chatUser={selectedFriend} close={closeChat} />}  
       <h1 className={`${header} mb-3`}>Friends</h1>
       <div className="flex flex-col gap-3 mb-6">
         {loading ? (
@@ -89,9 +103,11 @@ export function FriendListBar() {
           allFriends.map((friend) => (
             <div
               key={friend.uid}
-              className="flex gap-2 w-full relative items-center pr-3"
+              className="flex gap-2 w-full select-none relative items-center pr-3"
             >
-              <div className="flex items-center w-[70%] gap-1 pr-3 cursor-pointer hover:bg-gray-200 transition-all rounded-sm">
+              <div 
+              onClick={()=>selectUser(friend)}
+              className="flex items-center w-[70%] gap-1 pr-3 cursor-pointer hover:bg-gray-200 transition-all rounded-sm">
                 <figure className="w-8 h-8 relative">
                   <Image
                     src={
