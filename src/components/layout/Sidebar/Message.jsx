@@ -3,9 +3,23 @@ import Image from "next/image";
 import { SendHorizonal, X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { sendMessage } from "@/services/chat.service";
 
 export default function Message({ currentUser, chatUser, close }) {
-    const [textQuery, setTextQuery] = useState("")
+  const [textQuery, setTextQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      await sendMessage(currentUser.uid, chatUser.uid, textQuery);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setTextQuery("");
+    }
+  };
 
   return (
     <div className="fixed flex flex-col justify-between w-[270px] h-[330px] bottom-3 right-8 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg">
@@ -27,19 +41,36 @@ export default function Message({ currentUser, chatUser, close }) {
           </figure>
           <h1 className="text-[14px] font-medium">{chatUser.username}</h1>
         </div>
-         <button onClick={close} className="cursor-pointer hover:scale-107 transition-all"><X size="22" /></button>
+        <button
+          onClick={close}
+          className="cursor-pointer hover:scale-107 transition-all"
+        >
+          <X size="22" />
+        </button>
       </div>
-      <section>
-        chat
-      </section>
+      <section>chat</section>
       <div className="flex items-center gap-2 p-2 w-full justify-between">
-        <textarea 
-        onChange={(e)=>setTextQuery(e.target.value)}
-        className="h-[40px] w-full text-[14px] rounded-md resize-none p-2 shadow-[0_3px_10px_rgb(0,0,0,0.2)]" placeholder="type something" />
-        <button 
-        hidden={!textQuery}
-        className="hover:scale-107 transition-all cursor-pointer">
-            <SendHorizonal className="prismo" size="22" />
+        <textarea
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSubmit();
+            }
+          }}
+          onChange={(e) => setTextQuery(e.target.value)}
+          value={textQuery}
+          className="h-[40px] w-full text-[14px] rounded-md resize-none p-2 shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+          placeholder="type something"
+        />
+        <button
+          disabled={loading}
+          onClick={handleSubmit}
+          hidden={!textQuery}
+          className={`transition-all ${
+            loading ? "text-gray-500" : "cursor-pointer prismo hover:scale-107"
+          }`}
+        >
+          <SendHorizonal size="22" />
         </button>
       </div>
     </div>
