@@ -93,7 +93,7 @@ export function FriendListBar() {
     );
   }
   return (
-    <section className="md:[250px] lg:w-[300px] xl:w-[350px] h-[100vh] sticky top-0 right-0 bg-white p-4">
+    <section className="md:[250px] lg:w-[300px] xl:w-[350px] h-[100vh] select-none sticky top-0 right-0 bg-white p-4">
     {chatModal && <Message currentUser={currentUser} chatUser={selectedFriend} close={closeChat} />}  
       <h1 className={`${header} mb-3`}>Friends</h1>
       <div className="flex flex-col gap-3 mb-6">
@@ -103,7 +103,7 @@ export function FriendListBar() {
           allFriends.map((friend) => (
             <div
               key={friend.uid}
-              className="flex gap-2 w-full select-none relative items-center pr-3"
+              className="flex gap-2 w-full relative items-center pr-3"
             >
               <div 
               onClick={()=>selectUser(friend)}
