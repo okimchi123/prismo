@@ -1,3 +1,4 @@
+'use client'
 import {
   doc,
   setDoc,
@@ -5,9 +6,12 @@ import {
   addDoc,
   Timestamp,
   getDoc,
+  query,
+  orderBy,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-
+import { useEffect, useState } from "react";
 function generateChatId(uid1, uid2) {
   return uid1 > uid2 ? `${uid1}_${uid2}` : `${uid2}_${uid1}`;
 }
@@ -33,7 +37,7 @@ export async function sendMessage(senderId, receiverId, text) {
 
 export function useChatMessages(currentUserId, chatUserId) {
   const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingMessage, setLoadingMessage] = useState(true);
 
   useEffect(() => {
     if (!currentUserId || !chatUserId) return;
@@ -49,11 +53,11 @@ export function useChatMessages(currentUserId, chatUserId) {
         ...doc.data(),
       }));
       setMessages(msgs);
-      setLoading(false);
+      setLoadingMessage(false);
     });
 
     return () => unsubscribe();
   }, [currentUserId, chatUserId]);
 
-  return { messages, loading };
+  return { messages, loadingMessage };
 }
