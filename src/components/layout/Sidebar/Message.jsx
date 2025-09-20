@@ -3,11 +3,12 @@ import Image from "next/image";
 import { SendHorizonal, X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import { sendMessage } from "@/services/chat.service";
+import { sendMessage, useChatMessages } from "@/services/chat.service";
 
 export default function Message({ currentUser, chatUser, close }) {
   const [textQuery, setTextQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const {messages, loadingMessage} = useChatMessages(currentUser.uid, chatUser.uid)
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -20,7 +21,7 @@ export default function Message({ currentUser, chatUser, close }) {
       setTextQuery("");
     }
   };
-
+console.log(messages)
   return (
     <div className="fixed flex flex-col justify-between w-[270px] h-[330px] bottom-3 right-8 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg">
       <div className="flex justify-between items-center w-full p-2 shadow-[0_3px_6px_rgb(0,0,0,0.1)]">
@@ -48,7 +49,11 @@ export default function Message({ currentUser, chatUser, close }) {
           <X size="22" />
         </button>
       </div>
-      <section>chat</section>
+      {messages.map((message)=>(
+      <div key={message.id}>
+        <h1>{message.text}</h1>
+      </div>
+      ))}
       <div className="flex items-center gap-2 p-2 w-full justify-between">
         <textarea
           onKeyDown={(e) => {
