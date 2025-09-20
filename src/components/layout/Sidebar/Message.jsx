@@ -49,11 +49,32 @@ console.log(messages)
           <X size="22" />
         </button>
       </div>
-      {messages.map((message)=>(
+      <div className="flex flex-col border">
+        {messages.map((message)=>(
       <div key={message.id}>
-        <h1>{message.text}</h1>
+        {message.senderId === chatUser.uid ? (
+        <div className="flex gap-1 items-center">
+          <figure className="w-7 h-7 relative">
+            <Image
+              src={
+                chatUser.localPic
+                  ? chatUser.localPic
+                  : chatUser.dpUrl
+                  ? chatUser.dpUrl
+                  : "/jake.jpg"
+              }
+              fill
+              alt="profile_pic"
+              className="object-cover rounded-full"
+            />
+          </figure>
+        <p className="text-[12px]">{message.text}</p>
+        </div>
+        ) : <h1 className="">{message.text}</h1>}
       </div>
       ))}
+      </div>
+      
       <div className="flex items-center gap-2 p-2 w-full justify-between">
         <textarea
           onKeyDown={(e) => {
