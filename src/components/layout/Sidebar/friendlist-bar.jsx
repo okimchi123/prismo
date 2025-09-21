@@ -138,7 +138,9 @@ export function FriendListBar() {
                   <Ellipsis size="22" className="" />
                 ) : (
                   <>
-                    <button className="cursor-pointer">
+                    <button 
+                    onClick={()=>selectUser(friend)}
+                    className="cursor-pointer">
                       <MessageCircleMore size="22" color="green" />
                     </button>
                     <button 
@@ -154,7 +156,7 @@ export function FriendListBar() {
         )}
       </div>
       <div>
-        <h1 className={`${header} mb-1`}> Friend Requests </h1>
+        <h1 className={`${senderProfiles.length ? "prismo" : "text-gray-300"} font-semibold  mb-1`}> Friend Requests </h1>
         <div className="flex flex-col gap-1">
           {senderProfiles.map((user) => (
             <FriendRequestCard
