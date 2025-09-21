@@ -1,14 +1,20 @@
 "use client";
 import Image from "next/image";
 import { SendHorizonal, X } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { sendMessage, useChatMessages } from "@/services/chat.service";
 
 export default function Message({ currentUser, chatUser, close }) {
   const [textQuery, setTextQuery] = useState("");
   const [loading, setLoading] = useState(false);
-  const {messages, loadingMessage} = useChatMessages(currentUser.uid, chatUser.uid)
+  const { messages, loadingMessage } = useChatMessages(
+    currentUser.uid,
+    chatUser.uid
+  );
+  const [visibleMessages, setVisibleMessages] = useState([]);
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+  const messagesEndRef = useRef(null);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -21,7 +27,32 @@ export default function Message({ currentUser, chatUser, close }) {
       setTextQuery("");
     }
   };
-console.log(messages)
+
+  const handleScroll = (e) => {
+    if (e.target.scrollTop === 0 && messages.length > visibleMessages.length) {
+      const newPage = page + 1;
+      const start = Math.max(messages.length - newPage * pageSize, 0);
+      const end = messages.length - (page - 1) * pageSize;
+      setVisibleMessages(messages.slice(start, end));
+      setPage(newPage);
+    }
+  };
+
+  useEffect(() => {
+    const start = Math.max(messages.length - pageSize, 0);
+    const end = messages.length;
+    setVisibleMessages(messages.slice(start, end));
+    setPage(1);
+  }, [messages]);
+
+  useEffect(() => {
+  requestAnimationFrame(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  });
+}, [messages.length]);
+
+
+
   return (
     <div className="fixed flex flex-col justify-between w-[270px] h-[330px] bottom-3 right-8 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg">
       <div className="flex justify-between items-center w-full p-2 shadow-[0_3px_6px_rgb(0,0,0,0.1)]">
@@ -49,32 +80,40 @@ console.log(messages)
           <X size="22" />
         </button>
       </div>
-      <div className="flex flex-col border">
-        {messages.map((message)=>(
-      <div key={message.id}>
-        {message.senderId === chatUser.uid ? (
-        <div className="flex gap-1 items-center">
-          <figure className="w-7 h-7 relative">
-            <Image
-              src={
-                chatUser.localPic
-                  ? chatUser.localPic
-                  : chatUser.dpUrl
-                  ? chatUser.dpUrl
-                  : "/jake.jpg"
-              }
-              fill
-              alt="profile_pic"
-              className="object-cover rounded-full"
-            />
-          </figure>
-        <p className="text-[12px]">{message.text}</p>
-        </div>
-        ) : <h1 className="">{message.text}</h1>}
+      <div
+        onScroll={handleScroll}
+        className="flex flex-col flex-1 min-h-0 gap-2 py-1 px-1 overflow-y-auto"
+      >
+        {visibleMessages.map((message) => (
+          <div key={message.id}>
+            {message.senderId === chatUser.uid ? (
+              <div className="flex gap-1 items-start">
+                <figure className="w-7 h-7 relative">
+                  <Image
+                    src={
+                      chatUser.localPic
+                        ? chatUser.localPic
+                        : chatUser.dpUrl
+                        ? chatUser.dpUrl
+                        : "/jake.jpg"
+                    }
+                    fill
+                    alt="profile_pic"
+                    className="object-cover rounded-full"
+                  />
+                </figure>
+                <p className="text-[12px] max-w-[150px]">{message.text}</p>
+              </div>
+            ) : (
+              <p className="justify-self-end text-[12px] max-w-[150px]">
+                {message.text}
+              </p>
+            )}
+          </div>
+        ))}
+        <div ref={messagesEndRef} />
       </div>
-      ))}
-      </div>
-      
+
       <div className="flex items-center gap-2 p-2 w-full justify-between">
         <textarea
           onKeyDown={(e) => {
