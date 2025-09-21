@@ -87,7 +87,7 @@ export default function UserPost({ post, user }) {
           </div>
         )}
         <header>
-          <figure className="flex gap-1">
+          <figure className="flex gap-1 select-none">
             <DisplayImage
               img={
                 post.userLocalPic
