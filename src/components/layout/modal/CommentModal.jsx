@@ -18,7 +18,7 @@ export default function CommentModal({ Close, postID, user }) {
     e.preventDefault();
     if (!commentData.trim()) return;
     setLoading(true)
-    await addComment(postID, commentData, user.uid, user.username, setLoading);
+    await addComment(postID, commentData, user, setLoading);
     setCommentData("");
   };
 
@@ -42,10 +42,10 @@ export default function CommentModal({ Close, postID, user }) {
             <div key={comment.id} className="comment-card flex gap-2">
               <SmallDisplayImg
                 img={
-                  user.localPic
-                    ? user.localPic
-                    : user.dpUrl
-                    ? user.dpUrl
+                  comment.userLocalPic
+                    ? comment.userLocalPic
+                    : comment.userDP
+                    ? comment.userDP
                     : "/jake.jpg"
                 }
               />
