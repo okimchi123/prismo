@@ -1,3 +1,4 @@
+'use client'
 import {
   doc,
   onSnapshot,
@@ -9,7 +10,9 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { toast } from "sonner";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { useState, useEffect } from "react";
+import { storeUser } from "@/hooks/state";
 
 export async function registerUser(userData) {
   const usernameQuery = query(
@@ -53,34 +56,36 @@ export async function registerUser(userData) {
   }
 }
 
-export function listenToUserProfile(onSuccess, onError) {
-  const unsubscribeAuthState = auth.onAuthStateChanged((user) => {
+export function initUserListener() {
+  const { setUser, clearUser } = storeUser.getState();
+
+  const unsubscribeAuth = auth.onAuthStateChanged((user) => {
     if (!user) {
-      onError?.("User not authenticated");
+      clearUser();
       return;
     }
 
     const userRef = doc(db, "users", user.uid);
 
-    const unsubscribe = onSnapshot(
+    const unsubscribeProfile = onSnapshot(
       userRef,
       (docSnap) => {
         if (docSnap.exists()) {
-          onSuccess({ uid: user.uid, ...docSnap.data() });
+          setUser({ uid: user.uid, ...docSnap.data() });
         } else {
-          onError?.("User document does not exist");
+          clearUser();
         }
       },
       (error) => {
-        console.error("Failed to listen to user profile:", error);
-        onError?.(error.message);
+        console.error("User profile listener error:", error);
+        clearUser();
       }
     );
 
-    return unsubscribe;
+    return unsubscribeProfile;
   });
 
-  return () => unsubscribeAuthState();
+  return unsubscribeAuth;
 }
 
 export async function logout() {

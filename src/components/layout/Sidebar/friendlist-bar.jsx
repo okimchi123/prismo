@@ -29,7 +29,7 @@ export function FriendListBar() {
   const [selectedFriend, setSelectedFriend] = useState({});
   const isMobile = useIsMobile();
   const [toggleReq, setToggleReq] = useState(false);
-  const { allFriends, loading } = GetUserFriends(currentUser.uid);
+  const { allFriends, loading } = GetUserFriends(currentUser?.uid);
   const header = "prismo font-semibold";
   const [hover, setHover] = useState(false);
   const router = useRouter();
@@ -48,7 +48,7 @@ export function FriendListBar() {
     setChatModal(false)
   }
 
-  const senderProfiles = FriendRequest(currentUser.uid, toggleReq);
+  const senderProfiles = FriendRequest(currentUser?.uid, toggleReq);
   if (isMobile) {
     return (
       <Sheet>
