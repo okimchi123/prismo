@@ -4,7 +4,7 @@ import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { LikeButton } from "@/components/ui/likeButton";
 import { useState, useEffect, useRef } from "react";
-import CommentModal from "../Modal/CommentModal";
+import CommentModal from "../modal/CommentModal";
 import { AnimatePresence } from "framer-motion";
 import { storeUser } from "@/hooks/state";
 import { CircleEllipsis, PencilIcon, Trash } from "lucide-react";
