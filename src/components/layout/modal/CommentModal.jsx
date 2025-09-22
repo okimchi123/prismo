@@ -64,11 +64,15 @@ export default function CommentModal({ Close, postID, user }) {
           ))}
         </section>
         <div className="footer absolute w-[94%] flex gap-2 justify-start items-start bottom-2 left-3 ">
-          {user.localPic ? (
-            <CommentImage img={user.localPic} />
-          ) : (
-            <CommentImage img={user.dpURL} />
-          )}
+          <CommentImage
+                img={
+                  user.localPic
+                    ? user.localPic
+                    : user.userDP
+                    ? user.userDP
+                    : "/jake.jpg"
+                }
+              />
 
           <Textarea
             value={commentData}
