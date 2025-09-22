@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/use-mobile";
-import FriendRequest from "@/hooks/FriendRequest";
+import useFriendRequest from "@/hooks/FriendRequest";
 import { storeUser } from "@/hooks/state";
 import FriendRequestCard from "./friend-request";
 import { useState } from "react";
@@ -48,7 +48,7 @@ export function FriendListBar() {
     setChatModal(false)
   }
 
-  const senderProfiles = FriendRequest(currentUser?.uid, toggleReq);
+  const senderProfiles = useFriendRequest(currentUser?.uid, toggleReq);
   if (isMobile) {
     return (
       <Sheet>

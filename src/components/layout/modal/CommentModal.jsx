@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { SendHorizontal } from "lucide-react";
 import clsx from "clsx";
-import { addComment, getComment } from "@/services/comment.service";
+import { addComment, useComment } from "@/services/comment.service";
 import { formatDistanceToNow } from "date-fns";
 import { motion } from "framer-motion";
 import { CommentImage, SmallDisplayImg } from "@/components/ui/display-image";
@@ -12,7 +12,7 @@ import { CommentImage, SmallDisplayImg } from "@/components/ui/display-image";
 export default function CommentModal({ Close, postID, user }) {
   const [commentData, setCommentData] = useState("");
   const [loading, setLoading] = useState(false);
-  const comments = getComment(postID);
+  const comments = useComment(postID);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -33,7 +33,7 @@ export async function addComment(
   }
 }
 
-export function getComment(postID) {
+export function useComment(postID) {
   const [comment, setComment] = useState([]);
 
   useEffect(() => {

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { fetchPendingRequests, fetchSenderUser } from "./Friend";
 
-export default function FriendRequest(userID, toggle) {
+export default function useFriendRequest(userID, toggle) {
   const [requester, setRequester] = useState([]);
   const [senderProfiles, setSenderProfiles] = useState([]);
   useEffect(() => {

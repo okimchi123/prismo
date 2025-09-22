@@ -9,7 +9,7 @@ import { getAllUsers } from "@/hooks/fetchAllUser";
 import { storeUser } from "@/hooks/state";
 import { AddFriend } from "@/hooks/Friend";
 import { toast } from "sonner";
-import GetAdds from "@/hooks/GetAdds";
+import useAdds from "@/hooks/GetAdds";
 import clsx from "clsx";
 import { userFriends } from "@/hooks/state";
 import UnfriendModal from "@/components/layout/User-Visit/Unfriend-Modal";
@@ -47,7 +47,7 @@ export default function Page({ params }) {
   const isUserFriend = friends?.find((friend) => friend.uid === user.uid);
   const { posts, loading } = useUserPosts(user?.uid);
 
-  const userAddData = GetAdds(currentUser.uid, user.uid, toggleButton);
+  const userAddData = useAdds(currentUser.uid, user.uid, toggleButton);
   return (
     <div className="flex mt-[2%] min-w-[420px] rounded-lg flex-col items-start">
       <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">

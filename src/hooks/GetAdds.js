@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 import { getUserAdds } from "./Friend"
 
-export default function GetAdds(userID, addedUserID, toggleButton){
+export default function useAdds(userID, addedUserID, toggleButton){
     const [addData, setAddData] = useState([])
 
     useEffect(()=>{
