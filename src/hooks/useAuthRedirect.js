@@ -9,8 +9,8 @@ export function useAuthRedirect(page) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user && page === "login") {
-        router.replace("/dashboard");
-      } else if (!user && page === "dashboard") {
+        router.replace("/home");
+      } else if (!user && page === "home") {
         router.replace("/");
       } else {
         setLoading(false);
