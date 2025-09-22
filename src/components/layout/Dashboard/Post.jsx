@@ -8,8 +8,8 @@ import CommentModal from "../modal/CommentModal";
 import { AnimatePresence } from "framer-motion";
 import { storeUser } from "@/hooks/state";
 import { CircleEllipsis, PencilIcon, Trash } from "lucide-react";
-import EditPost from "../Modal/EditPost";
-import DeletePost from "../Modal/DeletePost";
+import EditPost from "../modal/EditPost";
+import DeletePost from "../modal/DeletePost";
 import { userFriends } from "@/hooks/state";
 
 export default function UserPost({ post, user }) {
