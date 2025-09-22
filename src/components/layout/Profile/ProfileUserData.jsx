@@ -11,10 +11,10 @@ export default function ProfileUserData({ user, posts }) {
         <figure className="w-18 h-18 relative">
           <EditImage
             img={
-              user.localPic
+              user?.localPic
                 ? user.localPic
-                : user.dpUrl
-                ? user.dpUrl
+                : user?.dpURL
+                ? user.dpURL
                 : "/jake.jpg"
             }
           />
@@ -23,7 +23,7 @@ export default function ProfileUserData({ user, posts }) {
 
       <div className="USER-DATA flex flex-col gap-2 h-[100px] py-2 justify-between">
         <h1 className="FULLNAME text-lg font-medium leading-4">
-          {user.firstname} {user.lastname}
+          {user?.firstname} {user?.lastname}
         </h1>
         <div className="FRIENDS-POSTS flex gap-3 select-none">
           <div className="flex flex-col items-center">
