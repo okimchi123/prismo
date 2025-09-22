@@ -8,24 +8,27 @@ import PostModal from "@/components/layout/Modal/Post";
 import UserPost from "@/components/layout/Dashboard/Post";
 import { listenToAllPosts } from "@/hooks/fetchUserPost";
 import { AnimatePresence } from "framer-motion";
+import Loading from "@/components/Loading";
 
 export default function Page() {
-  const user = storeUser((state) => state.user);
+  const { user, loading } = storeUser();
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    if (!user.uid) return;
+    if (!user) return;
 
     const unsubscribe = listenToAllPosts(user.uid, setPosts);
 
     return () => unsubscribe();
-  }, [user.uid]);
+  }, [user]);
 
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
+
+  if(loading) return <Loading />
 
   return (
     <main className="flex flex-col md:w-[400px] items-center gap-2 sm:py-0 md:py-2 px-2">

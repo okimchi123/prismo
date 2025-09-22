@@ -32,11 +32,12 @@ const navItems = items;
 export function AppSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const user = storeUser((state) => state.user);
+  const {user, clearUser }= storeUser();
 
   const handleLogout = async () => {
-    await logout();
     router.push("/");
+    clearUser();
+    await logout();
   };
 
   const defStyle = "";
@@ -85,7 +86,7 @@ export function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="">
                 <SidebarMenuButton>
-                  <User2 /> {user.email}
+                  <User2 /> {user?.email}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
