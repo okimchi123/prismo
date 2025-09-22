@@ -80,8 +80,8 @@ export default function PostModal({ onClose }) {
               img={
                 user.localPic
                   ? user.localPic
-                  : user.dpUrl
-                  ? user.dpUrl
+                  : user.dpURL
+                  ? user.dpURL
                   : "/jake.jpg"
               }
             />
