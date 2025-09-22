@@ -22,8 +22,8 @@ export async function addComment(
       userID: user.uid,
       userName: user.username,
       commentData,
-      userDP: user.dpURL,
-      userLocalPic: user.localPic,
+      userDP: user.dpURL ? user.dpURL : null,
+      userLocalPic: user.localPic ? user.localPic : null,
       createdAt: Timestamp.now(),
     });
   } catch (error) {
