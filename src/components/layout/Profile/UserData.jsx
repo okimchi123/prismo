@@ -32,7 +32,7 @@ export default function UserData({ user, posts }) {
             className="transition-all prismo hover:scale-115 cursor-pointer"
           />
         </button>
-        <h1 className="prismo font-semibold mb-2">{user.username}</h1>
+        <h1 className="prismo font-semibold mb-2">{user?.username}</h1>
         <ProfileUserData user={user} posts={posts}/>
       </section>
     </>
