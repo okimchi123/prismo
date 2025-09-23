@@ -1,6 +1,6 @@
 "use client";
 import { db } from "@/lib/firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { fetchAFriend } from "./Friend";
 import { userFriends } from "./state";
@@ -41,4 +41,15 @@ export function GetUserFriends(userID) {
   }, [friends]);
 
   return { allFriends, loading };
+}
+export async function getUserFriendCounts(userID){
+  const userRef = collection(db, "users", userID, "friends");
+  const snapshot = await getDocs(userRef)
+
+  const friends = snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return friends.length
 }
