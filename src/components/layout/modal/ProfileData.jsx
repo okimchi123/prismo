@@ -58,7 +58,7 @@ export default function ProfileData({ close, user }) {
         await ChangeUserData(user.uid, userData);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       toast.success("Updated!");
       setTimeout(() => {

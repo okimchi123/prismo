@@ -2,7 +2,7 @@
 import { EditImage } from "@/components/ui/display-image";
 import { userFriends } from "@/hooks/state";
 
-export default function ProfileUserData({ user, posts }) {
+export default function ProfileUserData({ user, posts, friendCount, visited }) {
   const friends = userFriends((state)=>state.friend)
 
   return (
@@ -27,7 +27,7 @@ export default function ProfileUserData({ user, posts }) {
         </h1>
         <div className="FRIENDS-POSTS flex gap-3 select-none">
           <div className="flex flex-col items-center">
-            <p className="text-sm"> {friends.length} </p>
+            <p className="text-sm"> {visited ? friendCount : friends.length} </p>
             <h2 className="leading-3 text-sm">friends</h2>
           </div>
           <div className="flex flex-col items-center">

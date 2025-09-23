@@ -27,7 +27,7 @@ export async function addComment(
       createdAt: Timestamp.now(),
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   } finally {
     setLoading(false);
   }

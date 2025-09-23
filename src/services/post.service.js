@@ -17,9 +17,7 @@ export async function handlePostSubmit(postMessage, user, friends, gif) {
       userId: user.uid,
       userName: `${user.firstname} ${user.lastname}`,
       userUsername: user.username,
-      userDP: user.dpURL ? user.dpUrl : null,
       postMedia: gif ? gif : null, 
-      userLocalPic: user.localPic ? user.localPic : null,
       createdAt: Timestamp.now(),
     });
 
@@ -28,9 +26,7 @@ export async function handlePostSubmit(postMessage, user, friends, gif) {
       userId: user.uid,
       userName: `${user.firstname} ${user.lastname}`,
       userUsername: user.username,
-      userDP: user.dpURL ? user.dpUrl : null,
       postMedia: gif ? gif : null,
-      userLocalPic: user.localPic ? user.localPic : null,
       createdAt: Timestamp.now(),
     };
 
@@ -76,9 +72,7 @@ export async function handlePostSubmitWithFile(
       userId: user.uid,
       userName: `${user.firstname} ${user.lastname}`,
       userUsername: user.username,
-      userDP: user.dpURL ? user.dpUrl : null,
       postMedia: downloadURL,
-      userLocalPic: user.localPic ? user.localPic : null,
       createdAt: Timestamp.now(),
     });
 
@@ -87,9 +81,7 @@ export async function handlePostSubmitWithFile(
       userId: user.uid,
       userName: `${user.firstname} ${user.lastname}`,
       userUsername: user.username,
-      userDP: user.dpURL ? user.dpUrl : null,
       postMedia: downloadURL,
-      userLocalPic: user.localPic ? user.localPic : null,
       createdAt: Timestamp.now(),
     };
 

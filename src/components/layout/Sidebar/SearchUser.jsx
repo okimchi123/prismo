@@ -52,7 +52,6 @@ export default function SearchUser() {
             <ul className="divide-y divide-gray-100">
               {filteredUsers.map((user, index) => {
                 const slug = user.username.toLowerCase();
-                console.log(slug)
                 return (
                 <li
                   onClick={()=>handleSelectUser(user.username.toLowerCase())}

@@ -13,14 +13,16 @@ import useAdds from "@/hooks/GetAdds";
 import clsx from "clsx";
 import { userFriends } from "@/hooks/state";
 import UnfriendModal from "@/components/layout/User-Visit/Unfriend-Modal";
+import { getUserFriendCounts } from "@/hooks/FetchFriends";
 
 export default function Page({ params }) {
   const { username } = use(params);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [unfriendToggle, setUnfriendToggle] = useState(false);
   const [toggleButton, setToggleButton] = useState(false);
   const currentUser = storeUser((state) => state.user);
   const friends = userFriends((state) => state.friend);
+  const [friendCounts, setFriendCounts] = useState(0);
 
   async function handleAddFriend() {
     setToggleButton(true);
@@ -40,19 +42,18 @@ export default function Page({ params }) {
         return u.username.toLowerCase() === username;
       });
       setUser(user);
+      setFriendCounts(await getUserFriendCounts(user.uid))
     }
     fetchUsers();
   }, [username]);
-
-  const isUserFriend = friends?.find((friend) => friend.uid === user.uid);
+  const isUserFriend = friends?.find((friend) => friend.uid === user?.uid);
   const { posts, loading } = useUserPosts(user?.uid);
-
-  const userAddData = useAdds(currentUser.uid, user.uid, toggleButton);
+  const userAddData = useAdds(currentUser?.uid, user?.uid, toggleButton);
   return (
     <div className="flex mt-[2%] min-w-[420px] rounded-lg flex-col items-start">
       <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
-        <h1 className="prismo font-semibold mb-2">{user.username}</h1>
-        <ProfileUserData user={user} posts={posts} />
+        <h1 className="prismo font-semibold mb-2">{user?.username}</h1>
+        <ProfileUserData user={user} posts={posts} friendCount={friendCounts} visited={true} />
         <div
           className={clsx(
             "absolute right-4 bottom-4 flex gap-1  items-center",
