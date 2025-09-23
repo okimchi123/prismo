@@ -41,7 +41,11 @@ export default function UserPost({ post, user }) {
     setInfoModal(false)
     setFunction(true)
   }
-
+  let postUser = null;
+  const friendUser = friends.find(f => f.uid === post.userId);
+  if(user.uid === post.userId){
+    postUser = user
+  }
   return (
     <>
       <AnimatePresence>
@@ -90,10 +94,14 @@ export default function UserPost({ post, user }) {
           <figure className="flex gap-1 select-none">
             <DisplayImage
               img={
-                post.userLocalPic
-                  ? post.userLocalPic
-                  : post.userDP
-                  ? post.userDP
+                friendUser?.localPic
+                  ? friendUser?.localPic
+                  : friendUser?.dpURL
+                  ? friendUser?.dpURL
+                  : postUser?.localPic 
+                  ? postUser?.localPic 
+                  : postUser?.dpURL
+                  ? postUser?.dpURL
                   : "/jake.jpg"
               }
             />
