@@ -31,13 +31,13 @@ export function FriendListBar() {
   const [toggleReq, setToggleReq] = useState(false);
   const { allFriends, loading } = GetUserFriends(currentUser?.uid);
   const header = "prismo font-semibold";
-  const [hover, setHover] = useState(false);
+  const [hover, setHover] = useState("");
   const router = useRouter();
 
   const handleViewUser = (username) => {
     router.push(username);
   };
-
+  
   const selectUser = (user) => {
     setSelectedFriend(user)
     setChatModal(true)
@@ -60,33 +60,78 @@ export function FriendListBar() {
             <SheetTitle className="prismo">Friends</SheetTitle>
           </SheetHeader>
           <main className="px-4">
-            <section className="flex flex-col gap-3">
+            <section className="flex flex-col border gap-3 mb-5">
               {loading ? (
-                <h1>loading...</h1>
-              ) : (
-                allFriends.map((friend) => (
-                  <div key={friend.uid} className="flex items-center gap-2">
-                    <figure className="w-10 h-10 relative">
-                      <Image
-                        src={
-                          friend.localPic
-                            ? friend.localPic
-                            : friend.dpUrl
-                            ? friend.dpUrl
-                            : "/jake.jpg"
-                        }
-                        fill
-                        alt="profile_pic"
-                        className="object-cover rounded-md"
-                      />
-                    </figure>
-                    <span className="text-[18px] font-semibold">
-                      {friend.username}
-                    </span>
-                  </div>
-                ))
-              )}
+          <h1>loading...</h1>
+        ) : (
+          allFriends.map((friend) => (
+            <div
+              key={friend.uid}
+              className="flex gap-2 w-full relative items-center pr-3"
+            >
+              <div 
+              onClick={()=>selectUser(friend)}
+              className="flex items-center w-[70%] gap-1 pr-3 cursor-pointer hover:bg-gray-200 transition-all rounded-sm">
+                <figure className="w-8 h-8 relative">
+                  <Image
+                    src={
+                      friend.dpUrl
+                        ? friend.dpUrl
+                        : friend.localPic
+                        ? friend.localPic
+                        : "/jake.jpg"
+                    }
+                    fill
+                    alt="profile_pic"
+                    className="object-cover rounded-md"
+                  />
+                </figure>
+                <span className="text-[14px] font-regular">
+                  {friend.username}
+                </span>
+              </div>
+              <div
+                onMouseEnter={() => setHover(friend.username)}
+                onMouseLeave={() => setHover("")}
+                className={clsx("absolute right-0 flex gap-3", {
+                  "p-1": hover !== friend.username,
+                  "py-1 pl-4 pr-8": hover === friend.username,
+                })}
+              >
+                {hover !== friend.username ? (
+                  <Ellipsis size="22" className="" />
+                ) : (
+                  <>
+                    <button 
+                    onClick={()=>selectUser(friend)}
+                    className="cursor-pointer">
+                      <MessageCircleMore size="22" color="green" />
+                    </button>
+                    <button 
+                    onClick={()=>handleViewUser(friend.username.toLowerCase())}
+                    className="cursor-pointer">
+                      <CircleUser size="22" color="blue" />
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          ))
+        )}
             </section>
+            <div>
+        <h1 className={`${senderProfiles.length ? "prismo" : "text-gray-300"} font-semibold  mb-1`}> Friend Requests </h1>
+        <div className="flex flex-col gap-1">
+          {senderProfiles.map((user) => (
+            <FriendRequestCard
+              fromUser={user}
+              toUser={currentUser}
+              key={user.uid}
+              setToggle={setToggleReq}
+            />
+          ))}
+        </div>
+      </div>
           </main>
         </SheetContent>
       </Sheet>
@@ -127,14 +172,14 @@ export function FriendListBar() {
                 </span>
               </div>
               <div
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
+                onMouseEnter={() => setHover(friend.username)}
+                onMouseLeave={() => setHover("")}
                 className={clsx("absolute right-0 flex gap-3", {
-                  "p-1": !hover,
-                  "py-1 pl-4 pr-8": hover,
+                  "p-1": hover !== friend.username,
+                  "py-1 pl-4 pr-8": hover === friend.username,
                 })}
               >
-                {!hover ? (
+                {hover !== friend.username ? (
                   <Ellipsis size="22" className="" />
                 ) : (
                   <>
