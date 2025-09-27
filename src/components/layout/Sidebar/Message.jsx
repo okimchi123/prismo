@@ -3,6 +3,8 @@ import Image from "next/image";
 import { SendHorizonal, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { sendMessage, useChatMessages } from "@/services/chat.service";
+import { useIsMobile } from "@/hooks/use-mobile";
+import clsx from "clsx";
 
 export default function Message({ currentUser, chatUser, close }) {
   const [textQuery, setTextQuery] = useState("");
@@ -15,6 +17,7 @@ export default function Message({ currentUser, chatUser, close }) {
   const [page, setPage] = useState(1);
   const pageSize = 10;
   const messagesEndRef = useRef(null);
+  const isMobile = useIsMobile();
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -51,10 +54,13 @@ export default function Message({ currentUser, chatUser, close }) {
   });
 }, [messages.length]);
 
-
-
   return (
-    <div className="fixed flex flex-col justify-between w-[270px] h-[330px] bottom-3 right-8 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg">
+    <div className={clsx(`fixed flex flex-col justify-between z-1000  bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg`,
+      {
+        "w-full h-full top-0 left-0":isMobile,
+        "w-[270px] h-[330px] bottom-3 right-8 ":!isMobile,
+      }
+    )}>
       <div className="flex justify-between items-center w-full p-2 shadow-[0_3px_6px_rgb(0,0,0,0.1)]">
         <div className="flex gap-2 items-center">
           <figure className="w-9 h-9 relative">
@@ -82,7 +88,7 @@ export default function Message({ currentUser, chatUser, close }) {
       </div>
       <div
         onScroll={handleScroll}
-        className="flex flex-col flex-1 min-h-0 gap-2 py-1 px-1 overflow-y-auto"
+        className="flex flex-col border justify-end flex-1 min-h-0 gap-2 py-1 px-1 overflow-y-auto"
       >
         {visibleMessages.map((message) => (
           <div key={message.id}>
