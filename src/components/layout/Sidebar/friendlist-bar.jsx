@@ -60,6 +60,7 @@ export function FriendListBar() {
             <SheetTitle className="prismo">Friends</SheetTitle>
           </SheetHeader>
           <main className="px-4">
+            {chatModal && <Message currentUser={currentUser} chatUser={selectedFriend} close={closeChat} />}
             <section className="flex flex-col border gap-3 mb-5">
               {loading ? (
           <h1>loading...</h1>
@@ -185,12 +186,12 @@ export function FriendListBar() {
                   <>
                     <button 
                     onClick={()=>selectUser(friend)}
-                    className="cursor-pointer">
+                    className="cursor-pointer hover:scale-110 transition-all">
                       <MessageCircleMore size="22" color="green" />
                     </button>
                     <button 
                     onClick={()=>handleViewUser(friend.username.toLowerCase())}
-                    className="cursor-pointer">
+                    className="cursor-pointer hover:scale-110 transition-all">
                       <CircleUser size="22" color="blue" />
                     </button>
                   </>
