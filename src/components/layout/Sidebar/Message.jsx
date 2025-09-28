@@ -49,18 +49,21 @@ export default function Message({ currentUser, chatUser, close }) {
   }, [messages]);
 
   useEffect(() => {
-  requestAnimationFrame(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  });
-}, [messages.length]);
+    requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    });
+  }, [messages.length]);
 
   return (
-    <div className={clsx(`fixed flex flex-col justify-between z-1000  bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg`,
-      {
-        "w-full h-full top-0 left-0":isMobile,
-        "w-[270px] h-[330px] bottom-3 right-8 ":!isMobile,
-      }
-    )}>
+    <div
+      className={clsx(
+        `fixed flex flex-col justify-between z-1000  bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg`,
+        {
+          "w-full h-full top-0 left-0": isMobile,
+          "w-[270px] h-[330px] bottom-3 right-8 ": !isMobile,
+        }
+      )}
+    >
       <div className="flex justify-between items-center w-full p-2 shadow-[0_3px_6px_rgb(0,0,0,0.1)]">
         <div className="flex gap-2 items-center">
           <figure className="w-9 h-9 relative">
@@ -111,9 +114,11 @@ export default function Message({ currentUser, chatUser, close }) {
                 <p className="text-[12px] max-w-[150px]">{message.text}</p>
               </div>
             ) : (
-              <p className="justify-self-end text-[12px] max-w-[150px]">
-                {message.text}
-              </p>
+              <div className="flex justify-end">
+                <p className="text-[12px] max-w-[150px] bg-blue-100 p-1 rounded">
+                  {message.text}
+                </p>
+              </div>
             )}
           </div>
         ))}
