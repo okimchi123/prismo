@@ -15,10 +15,9 @@ export default function Message({ currentUser, chatUser, close }) {
   );
   const [visibleMessages, setVisibleMessages] = useState([]);
   const [page, setPage] = useState(1);
-  const pageSize = 10;
   const messagesEndRef = useRef(null);
   const isMobile = useIsMobile();
-
+  const pageSize = isMobile ? 20 : 10;
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -32,14 +31,18 @@ export default function Message({ currentUser, chatUser, close }) {
   };
 
   const handleScroll = (e) => {
-    if (e.target.scrollTop === 0 && messages.length > visibleMessages.length) {
-      const newPage = page + 1;
-      const start = Math.max(messages.length - newPage * pageSize, 0);
-      const end = messages.length - (page - 1) * pageSize;
-      setVisibleMessages(messages.slice(start, end));
-      setPage(newPage);
-    }
-  };
+  if (e.target.scrollTop === 0 && messages.length > visibleMessages.length) {
+    const newPage = page + 1;
+    const start = Math.max(messages.length - newPage * pageSize, 0);
+    const end = messages.length - page * pageSize;
+
+    const newMessages = messages.slice(start, end);
+
+    setVisibleMessages((prev) => [...newMessages, ...prev]);
+    setPage(newPage);
+  }
+};
+
 
   useEffect(() => {
     const start = Math.max(messages.length - pageSize, 0);
@@ -89,9 +92,10 @@ export default function Message({ currentUser, chatUser, close }) {
           <X size="22" />
         </button>
       </div>
-      <div
+      <div className="flex flex-col flex-1 min-h-0 justify-end">
+        <div
         onScroll={handleScroll}
-        className="flex flex-col border flex-1 min-h-0 gap-2 py-1 px-1 overflow-y-auto"
+        className="flex flex-col gap-2 py-1 px-1 max-h-[580px] overflow-y-auto"
       >
         {visibleMessages.map((message) => (
           <div key={message.id}>
@@ -124,7 +128,7 @@ export default function Message({ currentUser, chatUser, close }) {
         ))}
         <div ref={messagesEndRef} />
       </div>
-
+      </div>
       <div className="flex items-center gap-2 p-2 w-full justify-between">
         <textarea
           onKeyDown={(e) => {
