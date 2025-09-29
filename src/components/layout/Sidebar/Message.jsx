@@ -111,11 +111,11 @@ export default function Message({ currentUser, chatUser, close }) {
                     className="object-cover rounded-full"
                   />
                 </figure>
-                <p className="text-[12px] max-w-[150px]">{message.text}</p>
+                <p className="text-[12px] max-w-[150px] bg-pink-100 p-1 rounded">{message.text}</p>
               </div>
             ) : (
               <div className="flex justify-end">
-                <p className="text-[12px] max-w-[150px] bg-blue-100 p-1 rounded">
+                <p className="text-[12px] max-w-[150px] bg-yellow-100 p-1 rounded">
                   {message.text}
                 </p>
               </div>
