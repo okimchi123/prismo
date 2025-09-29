@@ -91,7 +91,7 @@ export default function Message({ currentUser, chatUser, close }) {
       </div>
       <div
         onScroll={handleScroll}
-        className="flex flex-col border justify-end flex-1 min-h-0 gap-2 py-1 px-1 overflow-y-auto"
+        className="flex flex-col border flex-1 min-h-0 gap-2 py-1 px-1 overflow-y-auto"
       >
         {visibleMessages.map((message) => (
           <div key={message.id}>
