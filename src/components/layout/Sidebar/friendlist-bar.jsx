@@ -36,6 +36,7 @@ export function FriendListBar() {
 
   const handleViewUser = (username) => {
     router.push(username);
+    setHover("")
   };
   
   const selectUser = (user) => {
