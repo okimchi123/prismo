@@ -42,7 +42,7 @@ export default function Page({ params }) {
         return u.username.toLowerCase() === username;
       });
       setUser(user);
-      setFriendCounts(await getUserFriendCounts(user.uid))
+      setFriendCounts(await getUserFriendCounts(user?.uid))
     }
     fetchUsers();
   }, [username]);
