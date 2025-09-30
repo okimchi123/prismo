@@ -43,7 +43,7 @@ export default function UserPost({ post, user }) {
   }
   let postUser = null;
   const friendUser = friends.find(f => f.uid === post.userId);
-  if(user.uid === post.userId){
+  if(user?.uid === post.userId){
     postUser = user
   }
   return (
@@ -64,7 +64,7 @@ export default function UserPost({ post, user }) {
         )}
       </AnimatePresence>
       <main className="bg-white rounded-xs relative w-full p-3 flex flex-col gap-2">
-        {post.userId === currentUser.uid && (
+        {post.userId === currentUser?.uid && (
           <div className=" absolute select-none right-3 top-3">
             <CircleEllipsis
               ref={infoButtonRef}
