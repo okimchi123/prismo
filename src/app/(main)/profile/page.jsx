@@ -10,7 +10,7 @@ export default function Page() {
   const { posts, loading } = useUserPosts(user?.uid);
 
   return (
-    <div className="flex mt-[2%] min-w-[400px] rounded-lg flex-col items-start">
+    <div className="flex mt-[2%] min-w-[380px] rounded-lg flex-col items-start">
       <UserData user={user} posts={posts} />
 
       <OwnPost user={user} posts={posts} loading={loading} />
