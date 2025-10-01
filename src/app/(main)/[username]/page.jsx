@@ -50,7 +50,7 @@ export default function Page({ params }) {
   const { posts, loading } = useUserPosts(user?.uid);
   const userAddData = useAdds(currentUser?.uid, user?.uid, toggleButton);
   return (
-    <div className="flex mt-[2%] min-w-[420px] rounded-lg flex-col items-start">
+    <div className="flex mt-[2%] min-w-[380px] rounded-lg flex-col items-start">
       <section className="bg-white relative pt-1 pb-3 px-3 w-full mb-2 rounded-lg">
         <h1 className="prismo font-semibold mb-2">{user?.username}</h1>
         <ProfileUserData user={user} posts={posts} friendCount={friendCounts} visited={true} />
